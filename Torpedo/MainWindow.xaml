@@ -55,6 +55,28 @@
         <Border Margin="20" BorderThickness="1" BorderBrush="Green">
             <Canvas x:Name="canvas" Background="Black" Height="500" Width="500">
                 <!-- egy kattintható canvas grid legyen 50x50 -->
+                
+                <!-- horizontal lines -->
+                <Line X1="50" Y1="0" X2="50" Y2="500" Stroke="Green"/>
+                <Line X1="100" Y1="0" X2="100" Y2="500" Stroke="Green"/>
+                <Line X1="150" Y1="0" X2="150" Y2="500" Stroke="Green"/>
+                <Line X1="200" Y1="0" X2="200" Y2="500" Stroke="Green"/>
+                <Line X1="250" Y1="0" X2="250" Y2="500" Stroke="Green"/>
+                <Line X1="300" Y1="0" X2="300" Y2="500" Stroke="Green"/>
+                <Line X1="350" Y1="0" X2="350" Y2="500" Stroke="Green"/>
+                <Line X1="400" Y1="0" X2="400" Y2="500" Stroke="Green"/>
+                <Line X1="450" Y1="0" X2="450" Y2="500" Stroke="Green"/>
+                
+                <!-- horizontal lines -->
+                <Line X1="0" Y1="50" X2="500" Y2="50" Stroke="Green"/>
+                <Line X1="0" Y1="100" X2="500" Y2="100" Stroke="Green"/>
+                <Line X1="0" Y1="150" X2="500" Y2="150" Stroke="Green"/>
+                <Line X1="0" Y1="200" X2="500" Y2="200" Stroke="Green"/>
+                <Line X1="0" Y1="250" X2="500" Y2="250" Stroke="Green"/>
+                <Line X1="0" Y1="300" X2="500" Y2="300" Stroke="Green"/>
+                <Line X1="0" Y1="350" X2="500" Y2="350" Stroke="Green"/>
+                <Line X1="0" Y1="400" X2="500" Y2="400" Stroke="Green"/>
+                <Line X1="0" Y1="450" X2="500" Y2="450" Stroke="Green"/>
             </Canvas>
         </Border>
     </StackPanel>
