@@ -5,8 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Torpedo"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Torpedo Game 2000"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+    <StackPanel Background="Black">
+        <StackPanel Background="White" Height="50">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
 
-    </Grid>
+
+                <TextBlock Grid.Row="0" Name="turnCounter" Text="Turn:" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Name="player1Name" Text="Player 1" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="Remaining units" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="2" Name="player2Name" Text="Player 2" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Column="0" Name="player1Points" Text="Points:" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
+
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0" Name="player1RemainingUnits" Text="1 2 3 4 5" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Name="player2RemainingUnits" Text="1 2 3 4 5" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <TextBlock Grid.Column="2" Name="player2Points" Text="Points:" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </Grid>
+        </StackPanel>
+        <Border Margin="20" BorderThickness="1" BorderBrush="Green">
+            <Canvas Background="Black" Height="500" Width="500"/>
+            <!-- egy kattintható canvas grid legyen 50x50 -->
+        </Border>
+    </StackPanel>
 </Window>
