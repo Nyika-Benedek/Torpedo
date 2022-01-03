@@ -23,6 +23,7 @@ namespace Torpedo
     {
         private const int BattlefieldWidth = 10;
         private const int BattlefieldHeight = 10;
+        private const int FieldSize = 50;
         public MainWindow()
         {
             InitializeComponent();
@@ -31,8 +32,9 @@ namespace Torpedo
             DrawPoint(new Coordinate(0, 1), false);
         }
 
-        private void DrawPoint(Coordinate position, Boolean isHit) {
-            var shape = new Ellipse();
+        private void DrawPoint(Coordinate position, Boolean isHit) 
+        {
+            var shape = new Rectangle();
             if (isHit)
                 shape.Fill = Brushes.Red;
             else
@@ -45,6 +47,22 @@ namespace Torpedo
             Canvas.SetLeft(shape, unitX * position.X);
             Canvas.SetTop(shape, unitY * position.Y);
             canvas.Children.Add(shape);
+        }
+
+        private void Shoot(object sender, MouseButtonEventArgs e)
+        {
+            //csak akkor csináljon bármit ha nem egy már kirajzolt pontra kattintunk
+            if (!(e.OriginalSource is Rectangle))
+            {
+                DrawPoint(GetMousePosition(e), true);
+            }
+        }
+
+        private Coordinate GetMousePosition(MouseButtonEventArgs e)
+        {
+            int x = (int)(Mouse.GetPosition(canvas).X / FieldSize);
+            int y = (int)(Mouse.GetPosition(canvas).Y / FieldSize);
+            return new Coordinate(x, y);
         }
     }
 }

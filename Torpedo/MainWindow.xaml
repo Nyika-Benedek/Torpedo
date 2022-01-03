@@ -53,7 +53,7 @@
             </Grid>
         </StackPanel>
         <Border Margin="20" BorderThickness="1" BorderBrush="Green">
-            <Canvas x:Name="canvas" Background="Black" Height="500" Width="500">
+            <Canvas x:Name="canvas" Background="Black" Height="500" Width="500" MouseLeftButtonDown="Shoot">
                 <!-- egy kattintható canvas grid legyen 50x50 -->
                 
                 <!-- horizontal lines -->
