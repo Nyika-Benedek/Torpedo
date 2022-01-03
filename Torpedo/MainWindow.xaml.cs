@@ -68,5 +68,20 @@ namespace Torpedo
             int y = (int)(Mouse.GetPosition(canvas).Y / FieldSize);
             return new Coordinate(x, y);
         }
+
+        private void NewGame(object sender, RoutedEventArgs e)
+        {
+            // TODO
+        }
+
+        private void Query(object sender, RoutedEventArgs e)
+        {
+            // TODO
+        }
+
+        private void DatabaseCheck(object sender, RoutedEventArgs e)
+        {
+            // TODO
+        }
     }
 }

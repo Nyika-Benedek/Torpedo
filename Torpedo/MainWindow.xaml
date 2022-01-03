@@ -7,8 +7,16 @@
         mc:Ignorable="d"
         Title="Torpedo Game 2000"
         SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        >
+    
     <StackPanel Background="Black">
+        <ToolBar Grid.Row="0" VerticalAlignment="Bottom" Padding="0" >
+            <Button Content="New Game" Click="NewGame"/>
+            <Button Content="Query" Click="Query"/>
+            <Button Content="Check database" Click="DatabaseCheck"/>
+        </ToolBar>
+
         <StackPanel Background="White" Height="50">
             <Grid>
                 <Grid.RowDefinitions>
