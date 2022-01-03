@@ -28,8 +28,10 @@ namespace Torpedo
         {
             InitializeComponent();
 
+            
             DrawPoint(new Coordinate(0, 0), true);
             DrawPoint(new Coordinate(0, 1), false);
+            
         }
 
         private void DrawPoint(Coordinate position, Boolean isHit) 
