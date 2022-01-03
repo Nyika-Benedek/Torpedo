@@ -44,8 +44,8 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Name="player1RemainingUnits" Text="1 2 3 4 5" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Name="player2RemainingUnits" Text="1 2 3 4 5" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Name="player1RemainingUnits" Text="2 3 4 5" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Name="player2RemainingUnits" Text="2 3 4 5" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
 
                     <TextBlock Grid.Column="2" Name="player2Points" Text="Points:" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
@@ -53,8 +53,9 @@
             </Grid>
         </StackPanel>
         <Border Margin="20" BorderThickness="1" BorderBrush="Green">
-            <Canvas Background="Black" Height="500" Width="500"/>
-            <!-- egy kattintható canvas grid legyen 50x50 -->
+            <Canvas x:Name="canvas" Background="Black" Height="500" Width="500">
+                <!-- egy kattintható canvas grid legyen 50x50 -->
+            </Canvas>
         </Border>
     </StackPanel>
 </Window>
