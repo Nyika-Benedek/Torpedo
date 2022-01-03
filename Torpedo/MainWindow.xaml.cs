@@ -28,20 +28,22 @@ namespace Torpedo
         {
             InitializeComponent();
 
-            
             DrawPoint(new Coordinate(0, 0), true);
             DrawPoint(new Coordinate(0, 1), false);
-            
+
         }
 
-        private void DrawPoint(Coordinate position, Boolean isHit) 
+        private void DrawPoint(Coordinate position, bool isHit)
         {
             var shape = new Rectangle();
             if (isHit)
+            {
                 shape.Fill = Brushes.Red;
+            }
             else
+            {
                 shape.Fill = Brushes.LightBlue;
-
+            }
             var unitY = canvas.Width / BattlefieldWidth;
             var unitX = canvas.Height / BattlefieldHeight;
             shape.Width = unitY;
@@ -53,7 +55,7 @@ namespace Torpedo
 
         private void Shoot(object sender, MouseButtonEventArgs e)
         {
-            //csak akkor csináljon bármit ha nem egy már kirajzolt pontra kattintunk
+            // csak akkor csináljon bármit ha nem egy már kirajzolt pontra kattintunk
             if (!(e.OriginalSource is Rectangle))
             {
                 DrawPoint(GetMousePosition(e), true);
