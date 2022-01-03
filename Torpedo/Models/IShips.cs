@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Torpedo.Models
 {
-    internal interface IShips
+    public interface IShips
     {
         List<Coordinate> Parts { get; set; }
         int Size { get => Parts.Count; }

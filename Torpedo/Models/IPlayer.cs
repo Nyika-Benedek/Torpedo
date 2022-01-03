@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Torpedo.Models
 {
-    internal interface IPlayer
+    public interface IPlayer
     {
         public string Name { get; set; }
         public IBattlefield Battlefield { get; set; }

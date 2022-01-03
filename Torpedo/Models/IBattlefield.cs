@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Torpedo.Models
 {
-    internal interface IBattlefield
+    public interface IBattlefield
     {
         List<Coordinate> Shoots { get; set; }
         List<IShips> Ships { get; set; }

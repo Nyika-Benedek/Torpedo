@@ -57,17 +57,14 @@ namespace Torpedo
         {
             // IGame.getCurrentPlayer().getIBattleField().Shoots().Stream().Foreach( (coordinate) -> DrawPoint(coordinate))
             // Model -> IGame.NextPlayer().getIBattleField().Shoot(coordinate) hozzáadja a lövések listájához
-
-
-
             // csak akkor csináljon bármit ha nem egy már kirajzolt pontra kattintunk
             if (!(e.OriginalSource is Rectangle))
             {
-                DrawPoint(GetMousePosition(e), true);
+                DrawPoint(GetMousePosition(), true);
             }
         }
 
-        private Coordinate GetMousePosition(MouseButtonEventArgs e)
+        private Coordinate GetMousePosition()
         {
             int x = (int)(Mouse.GetPosition(canvas).X / FieldSize);
             int y = (int)(Mouse.GetPosition(canvas).Y / FieldSize);
@@ -76,17 +73,17 @@ namespace Torpedo
 
         private void NewGame(object sender, RoutedEventArgs e)
         {
-            // TODO
+            throw new NotImplementedException();
         }
 
         private void Query(object sender, RoutedEventArgs e)
         {
-            // TODO
+            throw new NotImplementedException();
         }
 
         private void DatabaseCheck(object sender, RoutedEventArgs e)
         {
-            // TODO
+            throw new NotImplementedException();
         }
     }
 }
