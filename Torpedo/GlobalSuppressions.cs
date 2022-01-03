@@ -6,9 +6,10 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.App")]
-[assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.logic.IBattlefield")]
-[assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.logic.IGame")]
-[assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.logic.IPlayer")]
+[assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.Models.IBattlefield")]
+[assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.Models.IGame")]
+[assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.Models.IPlayer")]
 [assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.MainWindow")]
 [assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.Models.Coordinate")]
-[assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.Models.Ships")]
+[assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.Models.IShips")]
+[assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.Models.Game")]

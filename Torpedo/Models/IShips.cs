@@ -4,9 +4,10 @@ using System.Text;
 
 namespace Torpedo.Models
 {
-    interface Ships
+    internal interface IShips
     {
         List<Coordinate> Parts { get; set; }
-        int size { get => Parts.Count; }
+        int Size { get => Parts.Count; }
+        bool Sunk { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Torpedo.Models
 {
-    struct Coordinate
+    internal struct Coordinate
     {
         public int X { get; set; }
         public int Y { get; set; }

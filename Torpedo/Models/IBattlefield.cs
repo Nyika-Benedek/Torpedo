@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Torpedo.Models;
 
-namespace Torpedo.logic
+namespace Torpedo.Models
 {
-    interface IBattlefield
+    internal interface IBattlefield
     {
         List<Coordinate> Shoots { get; set; }
-        List<Ships> Ships { get; set; }
+        List<IShips> Ships { get; set; }
+
+        public void Shoot(Coordinate coordinate);
+
+        public List<Coordinate> Hits();
     }
 }

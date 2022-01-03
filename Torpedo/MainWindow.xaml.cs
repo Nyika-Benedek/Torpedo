@@ -55,6 +55,11 @@ namespace Torpedo
 
         private void Shoot(object sender, MouseButtonEventArgs e)
         {
+            // IGame.getCurrentPlayer().getIBattleField().Shoots().Stream().Foreach( (coordinate) -> DrawPoint(coordinate))
+            // Model -> IGame.NextPlayer().getIBattleField().Shoot(coordinate) hozzáadja a lövések listájához
+
+
+
             // csak akkor csináljon bármit ha nem egy már kirajzolt pontra kattintunk
             if (!(e.OriginalSource is Rectangle))
             {
