@@ -13,3 +13,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.Models.Coordinate")]
 [assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.Models.IShips")]
 [assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.Models.Game")]
+[assembly: SuppressMessage("Correctness", "LRT001:There is only one restricted namespace", Justification = "<Approved>", Scope = "type", Target = "~T:Torpedo.NewGameWindow")]

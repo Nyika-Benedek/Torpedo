@@ -1,0 +1,20 @@
+﻿<Window x:Class="Torpedo.QueryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Torpedo"
+        mc:Ignorable="d"
+        Title="QueryWindow" Height="450" Width="800">
+    <DataGrid>
+        <DataGrid.Columns>
+            <DataGridTextColumn Header="Date" IsReadOnly="True" Binding="{Binding Date}" Width="*"/>
+            <DataGridTextColumn Header="Turns" IsReadOnly="True" Binding="{Binding Turns}" Width="*"/>
+            <DataGridTextColumn Header="Winner" IsReadOnly="True" Binding="{Binding Winner}" Width="*"/>
+            <DataGridTextColumn Header="Player1" IsReadOnly="True" Binding="{Binding Player1}" Width="*"/>
+            <DataGridTextColumn Header="Player1 Score" IsReadOnly="True" Binding="{Binding Player1Score}" Width="*"/>
+            <DataGridTextColumn Header="Player2" IsReadOnly="True" Binding="{Binding Player2}" Width="*"/>
+            <DataGridTextColumn Header="Player2 Score" IsReadOnly="True" Binding="{Binding Player2Score}" Width="*"/>
+        </DataGrid.Columns>
+    </DataGrid>
+</Window>

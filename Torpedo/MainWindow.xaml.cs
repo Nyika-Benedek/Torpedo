@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Torpedo.Models;
 
 namespace Torpedo
@@ -24,6 +25,7 @@ namespace Torpedo
         private const int BattlefieldWidth = 10;
         private const int BattlefieldHeight = 10;
         private const int FieldSize = 50;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -73,17 +75,54 @@ namespace Torpedo
 
         private void NewGame(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            // Set Player Names
+            var newGameWindow = new NewGameWindow();
+            newGameWindow.ShowDialog();
+            player1Name.Text = newGameWindow.Player1Name;
+            player2Name.Text = newGameWindow.Player2Name;
+
+            // Set Player 1 ships
+            MessageBox.Show($"Ask {player2Name.Text} to turn away and start your shipplacement turn!");
+
+            // Do something bc its not working              <------------------------------------------------
+            //MessageBox.Show(Mouse.LeftButton.ToString());
+            for (int i = 2; i < 5; i++)
+            {
+                var shipPlacementWindow = new ShipPlacementWindow();
+                shipPlacementWindow.ShowDialog();
+                while (true)
+                {
+                    if ((System.Windows.Input.Mouse.LeftButton == MouseButtonState.Pressed))
+                    {
+                        MessageBox.Show(Mouse.Captured.ToString());
+                    }
+                }
+            }
+
+            //throw new NotImplementedException();
+
         }
 
         private void Query(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var queryWindow = new QueryWindow();
+            queryWindow.ShowDialog();
+            //throw new NotImplementedException();
         }
 
         private void DatabaseCheck(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            // TODO Check is there an existing data file.
+            if (true)
+            {
+                MessageBox.Show("Database is available!");
+            }
+            else
+            {
+                MessageBox.Show("There is no database!");
+            }
+
+            //throw new NotImplementedException();
         }
     }
 }
