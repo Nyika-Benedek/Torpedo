@@ -6,11 +6,11 @@ namespace Torpedo.Models
 {
     public interface IGame
     {
-        public List<IPlayer> Players { get; set; }
-        public IPlayer CurrentPlayer { get; set; }
+        public List<IPlayer> Players { get; }
+        public IPlayer CurrentPlayer { get; }
 
-        public int Turn { get; set; }
-        public IPlayer Winner { get; set; }
+        public int Turn { get; }
+        public IPlayer Winner { get; }
 
         abstract void Start();
 

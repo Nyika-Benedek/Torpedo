@@ -6,11 +6,10 @@ namespace Torpedo.Models
 {
     public interface IBattlefield
     {
-        List<Coordinate> Shoots { get; set; }
-        List<IShips> Ships { get; set; }
+        List<Coordinate> Shoots { get; }
+        List<IShips> Ships { get; }
 
-        public void Shoot(Coordinate coordinate);
-
-        public List<Coordinate> Hits();
+        abstract void AddShips(IShips ship);
+        abstract void Shoot(Coordinate coordinate);
     }
 }
