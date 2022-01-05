@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Torpedo.Models
 {
-    public struct Coordinate
+    public class Coordinate
     {
         public int X { get; set; }
         public int Y { get; set; }
@@ -13,6 +13,33 @@ namespace Torpedo.Models
         {
             this.X = x;
             this.Y = y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Coordinate);
+        }
+
+        public bool Equals(Coordinate other)
+        {
+            return other != null
+                && this.X == other.X
+                && this.Y == other.Y;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.X, this.Y);
+        }
+
+        public static bool operator ==(Coordinate left, Coordinate right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Coordinate left, Coordinate right)
+        {
+            return !(left == right);
         }
     }
 }
