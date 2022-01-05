@@ -5,27 +5,31 @@ namespace Torpedo.Models
 {
     public class Game : IGame
     {
-        public List<IPlayer> Players { get; set; }
-        public IPlayer CurrentPlayer { get; set; }
-        public int Turn { get; set; }
-        public IPlayer Winner { get; set; }
+        public List<IPlayer> Players { get; private set; }
+        public IPlayer CurrentPlayer { get; private set; }
+        public int Turn { get; private set; }
+        public IPlayer Winner { get; private set; }
+
+        private int _playerIndex = 0;
+        private const int _maxPoints = 14;
 
         public bool IsEnded()
         {
-            throw new NotImplementedException();
+            foreach (IPlayer player in Players)
+            {
+                if (player.Points == _maxPoints)
+                {
+                    Winner = player;
+                    return true;
+                }
+            }
+            return false;
         }
 
         public IPlayer NextPlayer()
         {
-            foreach (IPlayer player in Players)
-            {
-                if (player != CurrentPlayer)
-                {
-                    CurrentPlayer = player;
-                    break;
-                }
-            }
-            return CurrentPlayer;
+            _playerIndex++;
+            return Players.ToArray()[_playerIndex % 2];
         }
 
         public void Start()
@@ -49,6 +53,15 @@ namespace Torpedo.Models
             Turn = 0;
             CurrentPlayer = null;
             Players = new List<IPlayer>(2);
+        }
+
+        public void AddPlayer(IPlayer player)
+        {
+            if (Players.Count >= 2)
+            {
+                throw new OverflowException("trying to add too many players to the game");
+            }
+            Players.Add(player);
         }
     }
 }

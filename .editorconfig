@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# LRT001: There is only one restricted namespace
+dotnet_diagnostic.LRT001.severity = none
