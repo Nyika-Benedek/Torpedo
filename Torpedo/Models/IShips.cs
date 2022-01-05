@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Torpedo.Models
 {
@@ -8,6 +6,8 @@ namespace Torpedo.Models
     {
         List<Coordinate> Parts { get; set; }
         int Size { get => Parts.Count; }
-        bool Sunk { get; set; }
+        int Hits { get; }
+        abstract bool IsHit(Coordinate position);
+        bool Sunk { get => Parts.Count.Equals(Hits); }
     }
 }
