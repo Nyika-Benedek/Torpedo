@@ -29,7 +29,7 @@ namespace Torpedo.Models
         public IPlayer NextPlayer()
         {
             _playerIndex++;
-            return Players.ToArray()[_playerIndex % 2];
+            return CurrentPlayer = Players.ToArray()[_playerIndex % 2];
         }
 
         public void Start()
