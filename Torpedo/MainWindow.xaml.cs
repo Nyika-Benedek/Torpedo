@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +26,10 @@ namespace Torpedo
         private const int BattlefieldWidth = 10;
         private const int BattlefieldHeight = 10;
         private const int FieldSize = 50;
+
+        // states
+        private bool inShipPlacement = false;
+        private int currentShipSize = 2;
 
         public MainWindow()
         {
@@ -55,14 +60,22 @@ namespace Torpedo
             canvas.Children.Add(shape);
         }
 
-        private void Shoot(object sender, MouseButtonEventArgs e)
+        private void onCanvasClick(object sender, MouseButtonEventArgs e)
         {
             // IGame.getCurrentPlayer().getIBattleField().Shoots().Stream().Foreach( (coordinate) -> DrawPoint(coordinate))
-            // Model -> IGame.NextPlayer().getIBattleField().Shoot(coordinate) hozzáadja a lövések listájához
+            // Model -> IGame.NextPlayer().getIBattleField().onCanvasClick(coordinate) hozzáadja a lövések listájához
             // csak akkor csináljon bármit ha nem egy már kirajzolt pontra kattintunk
-            if (!(e.OriginalSource is Rectangle))
+            if (!inShipPlacement)
             {
-                DrawPoint(GetMousePosition(), true);
+
+                if (!(e.OriginalSource is Rectangle))
+                {
+                    DrawPoint(GetMousePosition(), true);
+                }
+            }
+            else
+            { 
+
             }
         }
 
@@ -73,33 +86,27 @@ namespace Torpedo
             return new Coordinate(x, y);
         }
 
-        private void NewGame(object sender, RoutedEventArgs e)
+        private IGame game;
+        private async void NewGame(object sender, RoutedEventArgs e)
         {
+            game = new Game();
             // Set Player Names
             var newGameWindow = new NewGameWindow();
             newGameWindow.ShowDialog();
+            //game.AddPlayer(newGameWindow.Player1Name);
+            //game.AddPlayer(newGameWindow.Player2Name);
             player1Name.Text = newGameWindow.Player1Name;
             player2Name.Text = newGameWindow.Player2Name;
 
-            // Set Player 1 ships
+            shipPlacementGrid.Visibility = Visibility.Visible;
+            placeShipButton.Content = $"Place ship {currentShipSize}";
             MessageBox.Show($"Ask {player2Name.Text} to turn away and start your shipplacement turn!");
+            // Set Player 1 ships...
+            inShipPlacement = true;
+        }
 
-            // Do something bc its not working              <------------------------------------------------
-            //MessageBox.Show(Mouse.LeftButton.ToString());
-            for (int i = 2; i < 5; i++)
-            {
-                var shipPlacementWindow = new ShipPlacementWindow();
-                shipPlacementWindow.ShowDialog();
-                while (true)
-                {
-                    if ((System.Windows.Input.Mouse.LeftButton == MouseButtonState.Pressed))
-                    {
-                        MessageBox.Show(Mouse.Captured.ToString());
-                    }
-                }
-            }
-
-            //throw new NotImplementedException();
+        private void PlaceShip(object sender, RoutedEventArgs e)
+        {
 
         }
 
@@ -110,6 +117,7 @@ namespace Torpedo
             //throw new NotImplementedException();
         }
 
+        // TODO Implement Entity Framework
         private void DatabaseCheck(object sender, RoutedEventArgs e)
         {
             // TODO Check is there an existing data file.
@@ -123,6 +131,16 @@ namespace Torpedo
             }
 
             //throw new NotImplementedException();
+        }
+
+        private void onChecked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void onUnchecked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
