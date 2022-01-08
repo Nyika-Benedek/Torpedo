@@ -10,11 +10,11 @@ namespace Torpedo.Models
             Hits = 0;
         }
 
-        public bool IsHit(Coordinate position)
+        public bool IsHit(Coordinate coordinate)
         {
             foreach (Coordinate part in Parts)
             {
-                if (part == position)
+                if (part == coordinate)
                 {
                     Hits++;
                     return true;

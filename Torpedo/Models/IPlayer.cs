@@ -6,10 +6,10 @@ namespace Torpedo.Models
 {
     public interface IPlayer
     {
-        public string Name { get; set; }
-        public IBattlefield Battlefield { get; set; }
+        public string Name { get; }
+        public IBattlefield Battlefield { get; }
 
-        public int Points { get; set; }
+        public int Points { get; }
 
     }
 }
