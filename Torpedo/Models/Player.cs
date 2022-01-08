@@ -8,6 +8,8 @@ namespace Torpedo.Models
     {
         public string Name { get; private set; }
         public IBattlefield Battlefield { get; private set; }
+
+        public BattlefieldBuilder BattlefieldBuilder { get; private set;}
         public int Points { get; set; }
 
         public void AddPoint() { Points++; }
@@ -15,8 +17,13 @@ namespace Torpedo.Models
         public Player(string name)
         {
             Name = name;
-            Battlefield = new Battlefield();
+            BattlefieldBuilder = new BattlefieldBuilder();
             Points = 0;
+        }
+
+        public void BuildBattlefield()
+        {
+            Battlefield = BattlefieldBuilder.Build();
         }
     }
 }

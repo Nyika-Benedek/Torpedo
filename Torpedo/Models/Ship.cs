@@ -26,5 +26,10 @@ namespace Torpedo.Models
         public List<Coordinate> Parts { get; set; }
 
         public int Hits { get; private set; }
+        
+        public Ship(Coordinate coordinate, MyVector vector)
+        {
+
+        }
     }
 }

@@ -63,5 +63,6 @@ namespace Torpedo.Models
             }
             Players.Add(player);
         }
+
     }
 }

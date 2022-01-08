@@ -8,8 +8,10 @@ namespace Torpedo.Models
     {
         public string Name { get; }
         public IBattlefield Battlefield { get; }
+        public BattlefieldBuilder BattlefieldBuilder { get; }
 
         public int Points { get; }
-
+        public abstract void AddPoint();
+        public abstract void BuildBattlefield();
     }
 }
