@@ -65,11 +65,11 @@
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="placeShipButton" Content="Place ship" Click="PlaceShip" Width="150"/>
-            <CheckBox Content="Vertical Placement" Grid.Column="1" Margin="-4 3 0 0" Checked="onChecked" Unchecked="onUnchecked" Foreground="White"/>
+            <Label Name="ShipToPlace" Content="Placing ship 2" Width="150" Foreground="White"/>
+            <CheckBox Content="Vertical Placement" Grid.Column="1" Margin="-4 3 0 0" Checked="SetVerticalPlaceMent" Unchecked="SetHorizontalPlaceMent" Foreground="White"/>
         </Grid>
         <Border Margin="20" BorderThickness="1" BorderBrush="Green">
-            <Canvas x:Name="canvas" Background="Black" Height="500" Width="500" MouseLeftButtonDown="onCanvasClick">
+            <Canvas x:Name="canvas" Background="Black" Height="500" Width="500" MouseLeftButtonDown="CanvasClick">
                 <!-- egy kattintható canvas grid legyen 50x50 -->
                 
                 <!-- horizontal lines -->

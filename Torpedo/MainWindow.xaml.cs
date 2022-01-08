@@ -28,8 +28,10 @@ namespace Torpedo
         private const int FieldSize = 50;
 
         // states
-        private bool inShipPlacement = false;
-        private int currentShipSize = 2;
+        private IGame _game;
+        private bool _inShipPlacement = false;
+        private int _currentShipSize = 2;
+        private Direction _currentDirection = Direction.Horizontal;
 
         public MainWindow()
         {
@@ -40,6 +42,7 @@ namespace Torpedo
 
         }
 
+        // Shooting in game
         private void DrawPoint(Coordinate position, bool isHit)
         {
             var shape = new Rectangle();
@@ -60,12 +63,80 @@ namespace Torpedo
             canvas.Children.Add(shape);
         }
 
-        private void onCanvasClick(object sender, MouseButtonEventArgs e)
+        // Drawing multiple point like in ship placement state
+        private void DrawPoints(Coordinate position, MyVector vector)
+        {
+            // TODO Check collision with other ships
+            bool isValidPosition = true;
+            if (vector.Way == Direction.Horizontal)
+            {
+                if (BattlefieldWidth - position.X < _currentShipSize)
+                {
+                    isValidPosition = false;
+                }
+            }
+            else
+            {
+                if (BattlefieldHeight - position.Y < _currentShipSize)
+                {
+                    isValidPosition = false;
+                }
+            }
+
+            if (isValidPosition)
+            {
+                var shape = new Rectangle();
+                shape.Fill = Brushes.Yellow;
+                var unitY = canvas.Width / BattlefieldWidth;
+                var unitX = canvas.Height / BattlefieldHeight;
+                shape.Width = unitY;
+                shape.Height = unitX;
+                Canvas.SetLeft(shape, unitX * position.X);
+                Canvas.SetTop(shape, unitY * position.Y);
+                canvas.Children.Add(shape);
+
+                if (vector.Way == Direction.Horizontal)
+                {
+                    for (int i = 1; i < vector.Size; i++)
+                    {
+                        shape = new Rectangle();
+                        shape.Fill = Brushes.Yellow;
+                        shape.Width = unitY;
+                        shape.Height = unitX;
+                        Canvas.SetLeft(shape, unitX * position.X + unitX * i);
+                        Canvas.SetTop(shape, unitY * position.Y);
+                        canvas.Children.Add(shape);
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < vector.Size; i++)
+                    {
+                        shape = new Rectangle();
+                        shape.Fill = Brushes.Yellow;
+                        shape.Width = unitY;
+                        shape.Height = unitX;
+                        Canvas.SetLeft(shape, unitX * position.X);
+                        Canvas.SetTop(shape, unitY * position.Y + unitY * i);
+                        canvas.Children.Add(shape);
+                    }
+                }
+                _currentShipSize++;
+                ShipToPlace.Content = $"Placing Ship {_currentShipSize}";
+                // TODO: Hozzáadni a kirajzolt shippet a játékosunkhoz
+            }
+            else
+            {
+                MessageBox.Show("Invalid ship position!");
+            }
+        }
+
+        private void CanvasClick(object sender, MouseButtonEventArgs e)
         {
             // IGame.getCurrentPlayer().getIBattleField().Shoots().Stream().Foreach( (coordinate) -> DrawPoint(coordinate))
-            // Model -> IGame.NextPlayer().getIBattleField().onCanvasClick(coordinate) hozzáadja a lövések listájához
+            // Model -> IGame.NextPlayer().getIBattleField().CanvasClick(coordinate) hozzáadja a lövések listájához
             // csak akkor csináljon bármit ha nem egy már kirajzolt pontra kattintunk
-            if (!inShipPlacement)
+            if (!_inShipPlacement)
             {
 
                 if (!(e.OriginalSource is Rectangle))
@@ -74,9 +145,14 @@ namespace Torpedo
                 }
             }
             else
-            { 
-
+            {
+                if (!(e.OriginalSource is Rectangle))
+                {
+                    DrawPoints(GetMousePosition(), new MyVector(_currentDirection, _currentShipSize));
+                }
             }
+
+            // TODO: Ha mind a 2 játékos shipje el van tárolva az utolsó CanvasClick-nél akkor lépjen vissza !_inShipPlacement-be és töntesse el a ShipPlacementGrid-et
         }
 
         private Coordinate GetMousePosition()
@@ -86,10 +162,9 @@ namespace Torpedo
             return new Coordinate(x, y);
         }
 
-        private IGame game;
         private async void NewGame(object sender, RoutedEventArgs e)
         {
-            game = new Game();
+            _game = new Game();
             // Set Player Names
             var newGameWindow = new NewGameWindow();
             newGameWindow.ShowDialog();
@@ -99,15 +174,20 @@ namespace Torpedo
             player2Name.Text = newGameWindow.Player2Name;
 
             shipPlacementGrid.Visibility = Visibility.Visible;
-            placeShipButton.Content = $"Place ship {currentShipSize}";
+            ShipToPlace.Content = $"Place ship {_currentShipSize}";
             MessageBox.Show($"Ask {player2Name.Text} to turn away and start your shipplacement turn!");
             // Set Player 1 ships...
-            inShipPlacement = true;
+            _inShipPlacement = true;
         }
 
-        private void PlaceShip(object sender, RoutedEventArgs e)
+        private void SetVerticalPlaceMent(object sender, RoutedEventArgs e)
         {
+            _currentDirection = Direction.Vertical;
+        }
 
+        private void SetHorizontalPlaceMent(object sender, RoutedEventArgs e)
+        {
+            _currentDirection = Direction.Horizontal;
         }
 
         private void Query(object sender, RoutedEventArgs e)
@@ -131,16 +211,6 @@ namespace Torpedo
             }
 
             //throw new NotImplementedException();
-        }
-
-        private void onChecked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void onUnchecked(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
