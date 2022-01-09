@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -21,18 +22,21 @@ namespace Torpedo
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+    enum Type { Hit, Miss, Ship }
     public partial class MainWindow : Window
     {
         private const int BattlefieldWidth = 10;
         private const int BattlefieldHeight = 10;
         private const int FieldSize = 50;
-        private enum Type { Hit, Miss, Ship}
+        
 
         // states
         private IGame _game;
         private bool _inShipPlacement = false;
         private int _currentShipSize = 2;
         private IShips.Direction _currentDirection = IShips.Direction.Horizontal;
+        private bool isDatabaseExists;
 
         public MainWindow()
         {
@@ -40,6 +44,15 @@ namespace Torpedo
 
             DrawPoint(new Coordinate(0, 0), Type.Miss);
             DrawPoint(new Coordinate(0, 1), Type.Hit);
+
+            if (File.Exists("ScoreBoard"))
+            {
+                isDatabaseExists = true;
+            }
+            else
+            {
+                isDatabaseExists = false;
+            }
 
         }
 
@@ -199,16 +212,22 @@ namespace Torpedo
 
         private void Query(object sender, RoutedEventArgs e)
         {
-            var queryWindow = new QueryWindow();
-            queryWindow.ShowDialog();
-            //throw new NotImplementedException();
+            if (isDatabaseExists)
+            {
+                var queryWindow = new QueryWindow();
+                queryWindow.ShowDialog();
+            }
+            else
+            {
+                // Hiba esetén!
+                // PackageManager Console: Update-Database
+                MessageBox.Show("The database is not exist, please generate it first!");
+            }
         }
 
-        // TODO Implement Entity Framework
         private void DatabaseCheck(object sender, RoutedEventArgs e)
         {
-            // TODO Check is there an existing data file.
-            if (true)
+            if (isDatabaseExists)
             {
                 MessageBox.Show("Database is available!");
             }
@@ -216,8 +235,6 @@ namespace Torpedo
             {
                 MessageBox.Show("There is no database!");
             }
-
-            //throw new NotImplementedException();
         }
     }
 }
