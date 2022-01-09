@@ -31,11 +31,10 @@ namespace Torpedo
 
         // states
         private IGame _game;
-        private bool _inShipPlacement = false;
+        //private bool _inShipPlacement = false;
         private int _currentShipSize = 2;
         private IShips.Direction _currentDirection = IShips.Direction.Horizontal;
-        private Direction _currentDirection = Direction.Horizontal;
-        private bool isDatabaseExists;
+        private bool _isDatabaseExists;
 
         public MainWindow()
         {
@@ -46,11 +45,11 @@ namespace Torpedo
 
             if (File.Exists("ScoreBoard"))
             {
-                isDatabaseExists = true;
+                _isDatabaseExists = true;
             }
             else
             {
-                isDatabaseExists = false;
+                _isDatabaseExists = false;
             }
 
         }
@@ -80,13 +79,13 @@ namespace Torpedo
             canvas.Children.Add(shape);
         }
 
-        // Drawing multiple point like in ship placement state
-        private void DrawPoints(Coordinate position, MyVector vector)
+        private void PlaceShip(Coordinate position, MyVector vector)
         {
-            // TODO Check collision with other ships
             bool isValidPosition = true;
+
             if (vector.Way == IShips.Direction.Horizontal)
             {
+                // Too close to the right side of the battlefield
                 if (BattlefieldWidth - position.X < _currentShipSize)
                 {
                     isValidPosition = false;
@@ -94,12 +93,62 @@ namespace Torpedo
             }
             else
             {
+                // Too close to the bottom side of the battlefield
                 if (BattlefieldHeight - position.Y < _currentShipSize)
                 {
                     isValidPosition = false;
                 }
             }
 
+            var ships = _game.CurrentPlayer.BattlefieldBuilder.Ships;
+            var shipPositions = new List<Coordinate>(14);
+
+            foreach (var ship in ships)
+            {
+                shipPositions.AddRange(ship.Parts);
+            }
+
+            IShip newShip = new Ship(position, vector);
+
+            // Checkin if there is a collision with other already placed whips
+            foreach (var shipPart in shipPositions)
+            {
+                for (int i = 1; i <= vector.Size; i++)
+                {
+                    if (position == shipPart)
+                    {
+                        isValidPosition = false;
+                    }
+                }
+            }
+
+            if (isValidPosition)
+            {
+                _game.CurrentPlayer.BattlefieldBuilder.AddShip(new Ship(position, vector));
+                DrawPoint(position, Type.Ship);
+
+                if (vector.Way == IShips.Direction.Horizontal)
+                {
+                    for (int i = 1; i < vector.Size; i++)
+                    {
+                        position.X++;
+                        //DrawPoint()
+                    }
+                }
+                else
+                {
+                    for (int i = 1; i < vector.Size; i++)
+                    {
+
+                    }
+                }
+                _currentShipSize++;
+                ShipToPlace.Content = $"Placing Ship {_currentShipSize}";
+                
+            }
+        }
+            
+            /*
             if (isValidPosition)
             {
                 var shape = new Rectangle();
@@ -146,12 +195,11 @@ namespace Torpedo
             else
             {
                 MessageBox.Show("Invalid ship position!");
-            }
-        }
+            }*/
 
         private void CanvasClick(object sender, MouseButtonEventArgs e)
         {
-            if (!_inShipPlacement)
+            if (_game.State == GameState.Battle)
             {
                 if (!(e.OriginalSource is Rectangle))
                 {
@@ -166,7 +214,7 @@ namespace Torpedo
             {
                 if (!(e.OriginalSource is Rectangle))
                 {
-                    DrawPoints(GetMousePosition(), new MyVector(_currentDirection, _currentShipSize));
+                    PlaceShip(GetMousePosition(), new MyVector(_currentDirection, _currentShipSize));
                 }
             }
 
@@ -196,7 +244,6 @@ namespace Torpedo
             _game.NextPlayer();
             MessageBox.Show($"Ask {_game.CurrentPlayer.Name} to turn away and start your shipplacement turn!");
             // Set Player 1 ships...
-            _inShipPlacement = true;
         }
 
         private void SetVerticalPlaceMent(object sender, RoutedEventArgs e)
@@ -211,7 +258,7 @@ namespace Torpedo
 
         private void Query(object sender, RoutedEventArgs e)
         {
-            if (isDatabaseExists)
+            if (_isDatabaseExists)
             {
                 var queryWindow = new QueryWindow();
                 queryWindow.ShowDialog();
@@ -226,7 +273,7 @@ namespace Torpedo
 
         private void DatabaseCheck(object sender, RoutedEventArgs e)
         {
-            if (isDatabaseExists)
+            if (_isDatabaseExists)
             {
                 MessageBox.Show("Database is available!");
             }

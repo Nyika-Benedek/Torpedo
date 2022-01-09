@@ -6,6 +6,7 @@ namespace Torpedo.Models
 {
     public interface IGame
     {
+        public GameState State { get; set; }
         public List<IPlayer> Players { get; }
         public IPlayer CurrentPlayer { get; }
 

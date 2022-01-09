@@ -3,8 +3,10 @@ using System.Collections.Generic;
 
 namespace Torpedo.Models
 {
+    public enum GameState { NotStarted, ShipPlacement, Battle, Finished }
     public class Game : IGame
     {
+        public GameState State { get; set; } = GameState.Battle;
         public List<IPlayer> Players { get; private set; }
         public IPlayer CurrentPlayer { get; private set; }
         public int Turn { get; private set; }
@@ -44,6 +46,8 @@ namespace Torpedo.Models
             playerB.SetEnemyBattlefield(playerA.Battlefield);
 
             RandomizeStartingPlayer();
+
+            State = GameState.Battle;
         }
 
         internal void RandomizeStartingPlayer()
@@ -61,6 +65,7 @@ namespace Torpedo.Models
             Turn = 0;
             CurrentPlayer = null;
             Players = new List<IPlayer>(2);
+            State = GameState.ShipPlacement;
         }
 
         public void AddPlayer(IPlayer player)
