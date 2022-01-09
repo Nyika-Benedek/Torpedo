@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Torpedo.Models;
 
-namespace Torpedo.Models
+namespace Torpedo.Interfaces
 {
     public interface IPlayer
     {

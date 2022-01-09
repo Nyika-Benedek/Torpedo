@@ -22,12 +22,14 @@ namespace Torpedo
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+    enum Type { Hit, Miss, Ship }
     public partial class MainWindow : Window
     {
         private const int BattlefieldWidth = 10;
         private const int BattlefieldHeight = 10;
         private const int FieldSize = 50;
-        private enum Type { Hit, Miss, Ship}
+        
 
         // states
         private IGame _game;

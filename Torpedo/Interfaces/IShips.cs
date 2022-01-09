@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Torpedo.Models;
 
-namespace Torpedo.Models
+namespace Torpedo.Interfaces
 {
     public interface IShips
     {
