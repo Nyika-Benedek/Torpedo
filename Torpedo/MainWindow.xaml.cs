@@ -27,11 +27,13 @@ namespace Torpedo
         private const int BattlefieldWidth = 10;
         private const int BattlefieldHeight = 10;
         private const int FieldSize = 50;
+        private enum Type { Hit, Miss, Ship}
 
         // states
         private IGame _game;
         private bool _inShipPlacement = false;
         private int _currentShipSize = 2;
+        private IShips.Direction _currentDirection = IShips.Direction.Horizontal;
         private Direction _currentDirection = Direction.Horizontal;
         private bool isDatabaseExists;
 
@@ -39,8 +41,8 @@ namespace Torpedo
         {
             InitializeComponent();
 
-            DrawPoint(new Coordinate(0, 0), true);
-            DrawPoint(new Coordinate(0, 1), false);
+            DrawPoint(new Coordinate(0, 0), Type.Miss);
+            DrawPoint(new Coordinate(0, 1), Type.Hit);
 
             if (File.Exists("ScoreBoard"))
             {
@@ -54,16 +56,20 @@ namespace Torpedo
         }
 
         // Shooting in game
-        private void DrawPoint(Coordinate position, bool isHit)
+        private void DrawPoint(Coordinate position, Type type)
         {
             var shape = new Rectangle();
-            if (isHit)
+            if (type == Type.Miss)
             {
                 shape.Fill = Brushes.Red;
             }
-            else
+            else if (type == Type.Ship)
             {
                 shape.Fill = Brushes.LightBlue;
+            }
+            else
+            {
+                shape.Fill = Brushes.Yellow;
             }
             var unitY = canvas.Width / BattlefieldWidth;
             var unitX = canvas.Height / BattlefieldHeight;
@@ -79,7 +85,7 @@ namespace Torpedo
         {
             // TODO Check collision with other ships
             bool isValidPosition = true;
-            if (vector.Way == Direction.Horizontal)
+            if (vector.Way == IShips.Direction.Horizontal)
             {
                 if (BattlefieldWidth - position.X < _currentShipSize)
                 {
@@ -105,8 +111,9 @@ namespace Torpedo
                 Canvas.SetLeft(shape, unitX * position.X);
                 Canvas.SetTop(shape, unitY * position.Y);
                 canvas.Children.Add(shape);
+                //TODO (Beninek) DrawPoint(new Coordinate(), Type.Ship);
 
-                if (vector.Way == Direction.Horizontal)
+                if (vector.Way == IShips.Direction.Horizontal)
                 {
                     for (int i = 1; i < vector.Size; i++)
                     {
@@ -134,7 +141,7 @@ namespace Torpedo
                 }
                 _currentShipSize++;
                 ShipToPlace.Content = $"Placing Ship {_currentShipSize}";
-                // TODO: Hozzáadni a kirajzolt shippet a játékosunkhoz
+                _game.CurrentPlayer.BattlefieldBuilder.AddShip(new Ship(GetMousePosition(), vector));
             }
             else
             {
@@ -144,16 +151,16 @@ namespace Torpedo
 
         private void CanvasClick(object sender, MouseButtonEventArgs e)
         {
-            // IGame.getCurrentPlayer().getIBattleField().Shoots().Stream().Foreach( (coordinate) -> DrawPoint(coordinate))
-            // Model -> IGame.NextPlayer().getIBattleField().CanvasClick(coordinate) hozzáadja a lövések listájához
-            // csak akkor csináljon bármit ha nem egy már kirajzolt pontra kattintunk
             if (!_inShipPlacement)
             {
-
                 if (!(e.OriginalSource is Rectangle))
                 {
-                    DrawPoint(GetMousePosition(), true);
+                    Coordinate shot = GetMousePosition();
+                    _game.CurrentPlayer.EnemyBattlefield.Shoot(shot);
                 }
+                _game.NextPlayer();
+
+                // TODO kirajzolni a következő játékos számára a csatamezőt
             }
             else
             {
@@ -179,26 +186,27 @@ namespace Torpedo
             // Set Player Names
             var newGameWindow = new NewGameWindow();
             newGameWindow.ShowDialog();
-            //game.AddPlayer(newGameWindow.Player1Name);
-            //game.AddPlayer(newGameWindow.Player2Name);
+            _game.AddPlayer(new Player(newGameWindow.Player1Name));
+            _game.AddPlayer(new Player (newGameWindow.Player2Name));
             player1Name.Text = newGameWindow.Player1Name;
             player2Name.Text = newGameWindow.Player2Name;
 
             shipPlacementGrid.Visibility = Visibility.Visible;
             ShipToPlace.Content = $"Place ship {_currentShipSize}";
-            MessageBox.Show($"Ask {player2Name.Text} to turn away and start your shipplacement turn!");
+            _game.NextPlayer();
+            MessageBox.Show($"Ask {_game.CurrentPlayer.Name} to turn away and start your shipplacement turn!");
             // Set Player 1 ships...
             _inShipPlacement = true;
         }
 
         private void SetVerticalPlaceMent(object sender, RoutedEventArgs e)
         {
-            _currentDirection = Direction.Vertical;
+            _currentDirection = IShips.Direction.Vertical;
         }
 
         private void SetHorizontalPlaceMent(object sender, RoutedEventArgs e)
         {
-            _currentDirection = Direction.Horizontal;
+            _currentDirection = IShips.Direction.Horizontal;
         }
 
         private void Query(object sender, RoutedEventArgs e)

@@ -17,5 +17,6 @@ namespace Torpedo.Models
         abstract bool IsEnded();
 
         abstract IPlayer NextPlayer();
+        public abstract void AddPlayer(IPlayer player);
     }
 }

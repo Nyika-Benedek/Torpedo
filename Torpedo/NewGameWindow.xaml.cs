@@ -54,7 +54,7 @@ namespace Torpedo
 
             Player1Name = Player1.Text;
             Player2Name = Player2.Text;
-
+            
             Close();
         }
     }

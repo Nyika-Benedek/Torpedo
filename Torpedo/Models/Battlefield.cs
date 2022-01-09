@@ -4,16 +4,11 @@ using System.Text;
 
 namespace Torpedo.Models
 {
-    class Battlefield : IBattlefield
+    public class Battlefield : IBattlefield
     {
-        public List<Coordinate> Shoots { get; private set; }
 
+        public List<(Coordinate, bool)> Shots { get; private set; }
         private List<IShips> _ships;
-
-        public void AddShips(IShips ship)
-        {
-            _ships.Add(ship);
-        }
 
         public void Shoot(Coordinate coordinate)
         {
@@ -25,7 +20,12 @@ namespace Torpedo.Models
                     isHitAny = true;
                 }
             }
+            Shots.Add((coordinate, isHitAny));
 
+        }
+        public Battlefield(List<IShips> ships)
+        {
+            _ships = ships;
         }
     }
 }

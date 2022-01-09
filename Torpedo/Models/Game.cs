@@ -29,13 +29,21 @@ namespace Torpedo.Models
         public IPlayer NextPlayer()
         {
             _playerIndex++;
-            return Players.ToArray()[_playerIndex % 2];
+            return CurrentPlayer = Players.ToArray()[_playerIndex % 2];
         }
 
         public void Start()
         {
+            IPlayer playerA = NextPlayer();
+            IPlayer playerB = NextPlayer();
+
+            playerA.BuildBattlefield();
+            playerB.BuildBattlefield();
+
+            playerA.SetEnemyBattlefield(playerB.Battlefield);
+            playerB.SetEnemyBattlefield(playerA.Battlefield);
+
             RandomizeStartingPlayer();
-            throw new NotImplementedException();
         }
 
         internal void RandomizeStartingPlayer()

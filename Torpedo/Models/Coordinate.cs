@@ -41,5 +41,9 @@ namespace Torpedo.Models
         {
             return !(left == right);
         }
+        public override string ToString()
+        {
+            return "X" + this.X + "Y" + this.Y;
+        }
     }
 }
