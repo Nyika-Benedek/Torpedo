@@ -6,7 +6,7 @@ namespace Torpedo.Models
 {
     public interface IBattlefield
     {
-        List<Coordinate> Shoots { get; }
+        List<(Coordinate, bool)> Shots { get; }
         abstract void Shoot(Coordinate coordinate);
     }
 }

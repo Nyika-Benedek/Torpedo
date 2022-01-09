@@ -139,19 +139,16 @@ namespace Torpedo
 
         private void CanvasClick(object sender, MouseButtonEventArgs e)
         {
-            
             if (!_inShipPlacement)
             {
-                // _game.CurrentPlayer.BattleField.Shoots().Stream().Foreach( (coordinate) -> DrawPoint(coordinate, type))
-                // _game.NextPlayer().BattleField.Shoot(coordinate) hozzáadja a lövések listájához
-                // csak akkor csináljon bármit ha nem egy már kirajzolt pontra kattintunk
-
                 if (!(e.OriginalSource is Rectangle))
                 {
-                    DrawPoint(GetMousePosition(), Type.Miss);
-                    //TODO to return a value with IsHit
-                    
+                    Coordinate shot = GetMousePosition();
+                    _game.CurrentPlayer.EnemyBattlefield.Shoot(shot);
                 }
+                _game.NextPlayer();
+
+                // TODO kirajzolni a következő játékos számára a csatamezőt
             }
             else
             {
