@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:Torpedo"
         mc:Ignorable="d"
         Title="QueryWindow" Height="450" Width="800">
-    <DataGrid>
+    <DataGrid Name="QueryGrid">
         <DataGrid.Columns>
-            <DataGridTextColumn Header="Date" IsReadOnly="True" Binding="{Binding Date}" Width="*"/>
+            <DataGridTextColumn Header="Date" IsReadOnly="True" Binding="{Binding Date}" Width="1.5*"/>
             <DataGridTextColumn Header="Turns" IsReadOnly="True" Binding="{Binding Turns}" Width="*"/>
             <DataGridTextColumn Header="Winner" IsReadOnly="True" Binding="{Binding Winner}" Width="*"/>
             <DataGridTextColumn Header="Player1" IsReadOnly="True" Binding="{Binding Player1}" Width="*"/>

@@ -9,6 +9,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Torpedo.Entity;
+using Torpedo.Entity.ENTITYFORDUMIES;
 
 namespace Torpedo
 {
@@ -20,6 +22,15 @@ namespace Torpedo
         public QueryWindow()
         {
             InitializeComponent();
+
+            DatabaseCommands database = new DatabaseCommands();
+            database.AddEntry(new DatabaseModel(DateTime.Now, 5, "Hardcoded entry via Entity Framework", "Player1", 15, "Player2", 2));
+            QueryGrid.Items.Add(new DatabaseModel(DateTime.Now, 5, "Hardcoded entry", "Player1", 15, "Player2", 2));
+
+            foreach (var item in database.GetScoreBoard())
+            {
+                QueryGrid.Items.Add(item);
+            }
         }
     }
 }
