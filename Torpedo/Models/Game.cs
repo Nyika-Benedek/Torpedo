@@ -34,8 +34,16 @@ namespace Torpedo.Models
 
         public void Start()
         {
+            IPlayer playerA = NextPlayer();
+            IPlayer playerB = NextPlayer();
+
+            playerA.BuildBattlefield();
+            playerB.BuildBattlefield();
+
+            playerA.SetEnemyBattlefield(playerB.Battlefield);
+            playerB.SetEnemyBattlefield(playerA.Battlefield);
+
             RandomizeStartingPlayer();
-            throw new NotImplementedException();
         }
 
         internal void RandomizeStartingPlayer()
@@ -63,6 +71,5 @@ namespace Torpedo.Models
             }
             Players.Add(player);
         }
-
     }
 }

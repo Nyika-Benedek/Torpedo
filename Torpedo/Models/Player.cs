@@ -8,10 +8,10 @@ namespace Torpedo.Models
     {
         public string Name { get; private set; }
         public IBattlefield Battlefield { get; private set; }
+        public IBattlefield EnemyBattlefield { get; private set; }
 
         public BattlefieldBuilder BattlefieldBuilder { get; private set;}
         public int Points { get; set; }
-
         public void AddPoint() { Points++; }
 
         public Player(string name)
@@ -24,6 +24,19 @@ namespace Torpedo.Models
         public void BuildBattlefield()
         {
             Battlefield = BattlefieldBuilder.Build();
+            BattlefieldBuilder = null;
+        }
+
+        public void SetEnemyBattlefield(IBattlefield enemyBattlefield)
+        {
+            if (EnemyBattlefield == null)
+            {
+                EnemyBattlefield = enemyBattlefield;
+            }
+            else
+            {
+                throw new InvalidOperationException("Already assigned");
+            }
         }
     }
 }
