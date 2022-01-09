@@ -148,7 +148,7 @@ namespace Torpedo
                 }
                 _game.NextPlayer();
 
-                // TODO kirajzolni a következő játékos számára a csatamezőt
+                // TODO kirajzolni a következő játékos számára az ellenfél csatamezőjét
             }
             else
             {

@@ -6,13 +6,16 @@ namespace Torpedo.Models
 {
     public class AI : Player
     {
+        private enum Playstyle { Random, Found, Sink}
+        private Playstyle _playstyle;
         private static readonly string _aiName = "AI";
         public AI() : base(_aiName)
         {
+            _playstyle = Playstyle.Random;
         }
-        public Coordinate Act(IBattlefield enemyBattlefield)
+        public void Act(IBattlefield enemyBattlefield)
         {
-            return new Coordinate(0, 0); // TODO create an agent that decides where to shoot
+            // TODO create an agent that decides where to shoot
         }
     }
 }
