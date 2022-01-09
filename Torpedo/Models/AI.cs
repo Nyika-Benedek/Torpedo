@@ -13,8 +13,20 @@ namespace Torpedo.Models
         {
             _playstyle = Playstyle.Random;
         }
-        public void Act(IBattlefield enemyBattlefield)
+        public void Act()
         {
+            switch (_playstyle)
+            {
+                case Playstyle.Random:
+                {
+                    EnemyBattlefield.Shoot(AIUtils.GenerateRandomShoot(EnemyBattlefield));
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
             // TODO create an agent that decides where to shoot
         }
     }

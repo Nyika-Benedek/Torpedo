@@ -22,19 +22,20 @@ namespace Torpedo
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+    enum Type { Hit, Miss, Ship }
     public partial class MainWindow : Window
     {
         private const int BattlefieldWidth = 10;
         private const int BattlefieldHeight = 10;
         private const int FieldSize = 50;
-        private enum Type { Hit, Miss, Ship}
+        
 
         // states
         private IGame _game;
         private bool _inShipPlacement = false;
         private int _currentShipSize = 2;
         private IShips.Direction _currentDirection = IShips.Direction.Horizontal;
-        private Direction _currentDirection = Direction.Horizontal;
         private bool isDatabaseExists;
 
         public MainWindow()
