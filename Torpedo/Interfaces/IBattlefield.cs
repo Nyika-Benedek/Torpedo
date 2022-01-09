@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Torpedo.Models;
 
-namespace Torpedo.Models
+namespace Torpedo.Interfaces
 {
     public interface IBattlefield
     {
