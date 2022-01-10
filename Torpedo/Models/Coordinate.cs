@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Torpedo.Interfaces;
+using Torpedo.AIModule;
 
 namespace Torpedo.Models
 {
@@ -37,7 +38,7 @@ namespace Torpedo.Models
 
         public bool Equals(Coordinate other)
         {
-            return other != null
+            return !(other is null)
                 && this.X == other.X
                 && this.Y == other.Y;
         }
@@ -59,6 +60,30 @@ namespace Torpedo.Models
         public override string ToString()
         {
             return "X" + this.X + "Y" + this.Y;
+        }
+
+        public Coordinate Shift(Directions direction)
+        {
+            switch (direction)
+            {
+                case Directions.Left:
+                    {
+                        return new Coordinate(X - 1, Y);
+                    }
+                case Directions.Top:
+                    {
+                        return new Coordinate(X, Y - 1);
+                    }
+                case Directions.Bottom:
+                    {
+                        return new Coordinate(X, Y + 1);
+                    }
+                case Directions.Right:
+                    {
+                        return new Coordinate(X + 1, Y);
+                    }
+            }
+            return this;
         }
     }
 }

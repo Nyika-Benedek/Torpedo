@@ -31,17 +31,17 @@ namespace Torpedo
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// How many grids in the battlefield in a row
+        /// How many cells in the battlefield in a row
         /// </summary>
-        private const int BattlefieldWidth = 10;
+        public const int BattlefieldWidth = 10;
 
         /// <summary>
-        /// How many grids in the battlefield in a collumn
+        /// How many cells in the battlefield in a collumn
         /// </summary>
-        private const int BattlefieldHeight = 10;
+        public const int BattlefieldHeight = 10;
 
         /// <summary>
-        /// Size of one grid (in pixels)
+        /// Size of one cell (in pixels)
         /// </summary>
         private const int FieldSize = 50;
 
@@ -143,7 +143,7 @@ namespace Torpedo
                 {
                     try
                     {
-                        if (shipPart == newPart)
+                        if (shipPart.Equals( newPart))
                         {
                             isValidPosition = false;
                         }
