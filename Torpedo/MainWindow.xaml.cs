@@ -21,24 +21,39 @@ using Torpedo.Models;
 namespace Torpedo
 {
     /// <summary>
+    /// This represent what should drawn on the canvas
+    /// </summary>
+    public enum Type { Hit, Miss, Ship }
+
+    /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    /// 
-    enum Type { Hit, Miss, Ship }
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// How many grids in the battlefield in a row
+        /// </summary>
         private const int BattlefieldWidth = 10;
+
+        /// <summary>
+        /// How many grids in the battlefield in a collumn
+        /// </summary>
         private const int BattlefieldHeight = 10;
+
+        /// <summary>
+        /// Size of one grid (in pixels)
+        /// </summary>
         private const int FieldSize = 50;
-        
 
         // states
         private IGame _game;
-        //private bool _inShipPlacement = false;
         private int _currentShipSize = 2;
         private IShips.Direction _currentDirection = IShips.Direction.Horizontal;
         private bool _isDatabaseExists;
 
+        /// <summary>
+        /// This window will open on the start.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -54,10 +69,13 @@ namespace Torpedo
             {
                 _isDatabaseExists = false;
             }
-
         }
 
-        // Shooting in game
+        /// <summary>
+        /// Making a square fill it up with the correct color by the type, then draw it on the canvas at the given coordinate
+        /// </summary>
+        /// <param name="position">The coordinate, where to draw</param>
+        /// <param name="type">What type to draw(color)</param>
         private void DrawPoint(Coordinate position, Type type)
         {
             var shape = new Rectangle();
@@ -82,6 +100,11 @@ namespace Torpedo
             canvas.Children.Add(shape);
         }
 
+        /// <summary>
+        /// This method takes a given coordinate and its vector to try draw it, if it fits in the canvas
+        /// </summary>
+        /// <param name="position">Coordinate where to start draw</param>
+        /// <param name="vector">The vector to continue in one line</param>
         private void PlaceShip(Coordinate position, MyVector vector)
         {
             bool isValidPosition = true;
@@ -129,10 +152,8 @@ namespace Torpedo
                     {
                         MessageBox.Show(e.ToString());
                     }
-                    
                 }
             }
-
             if (isValidPosition)
             {
                 _game.CurrentPlayer.BattlefieldBuilder.AddShip(newShip);
@@ -149,6 +170,11 @@ namespace Torpedo
             }
         }
 
+        /// <summary>
+        /// Call the correct method after clicking on canvas based on which game phase are we currently in
+        /// </summary>
+        /// <param name="sender">The object we clicked(canvas)</param>
+        /// <param name="e">Data of the mouse related event</param>
         private void CanvasClick(object sender, MouseButtonEventArgs e)
         {
             // Dont try to shoot if there is no game ion progress
@@ -182,6 +208,10 @@ namespace Torpedo
             // TODO: Ha mind a 2 játékos shipje el van tárolva az utolsó CanvasClick-nél akkor lépjen vissza !_inShipPlacement-be és töntesse el a ShipPlacementGrid-et
         }
 
+        /// <summary>
+        /// Takes the mouse position on the canvas and convert it into coordinate
+        /// </summary>
+        /// <returns>A coordinate which grid is the mouse in</returns>
         private Coordinate GetMousePosition()
         {
             int x = (int)(Mouse.GetPosition(canvas).X / FieldSize);
@@ -189,7 +219,12 @@ namespace Torpedo
             return new Coordinate(x, y);
         }
 
-        private async void NewGame(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Clicking on the New Game button call this method and starts the process of creating a new game
+        /// </summary>
+        /// <param name="sender">The object we clicked</param>
+        /// <param name="e">Data of the mouse related event</param>
+        private void NewGame(object sender, RoutedEventArgs e)
         {
             _game = new Game();
             // Set Player Names
@@ -207,16 +242,31 @@ namespace Torpedo
             // Set Player 1 ships...
         }
 
+        /// <summary>
+        /// Set the ship placement's direction to vertical
+        /// </summary>
+        /// <param name="sender">The object we clicked</param>
+        /// <param name="e">Data of the mouse related event</param>
         private void SetVerticalPlaceMent(object sender, RoutedEventArgs e)
         {
             _currentDirection = IShips.Direction.Vertical;
         }
 
+        /// <summary>
+        /// Set the ship placement's direction to horizontal
+        /// </summary>
+        /// <param name="sender">The object we clicked</param>
+        /// <param name="e">Data of the mouse related event</param>
         private void SetHorizontalPlaceMent(object sender, RoutedEventArgs e)
         {
             _currentDirection = IShips.Direction.Horizontal;
         }
 
+        /// <summary>
+        /// Opens the window to reach the database
+        /// </summary>
+        /// <param name="sender">The object we clicked</param>
+        /// <param name="e">Data of the mouse related event</param>
         private void Query(object sender, RoutedEventArgs e)
         {
             if (_isDatabaseExists)
@@ -232,6 +282,11 @@ namespace Torpedo
             }
         }
 
+        /// <summary>
+        /// Checks is the Database is exists, then message the user about it's state
+        /// </summary>
+        /// <param name="sender">The object we clicked</param>
+        /// <param name="e">Data of the mouse related event</param>
         private void DatabaseCheck(object sender, RoutedEventArgs e)
         {
             if (_isDatabaseExists)

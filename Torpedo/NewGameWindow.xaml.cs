@@ -25,12 +25,23 @@ namespace Torpedo
 
         public string Player1Name { get; private set; }
         public string Player2Name { get; private set; }
+
+        /// <summary>
+        /// Set the Player2's name to AI and clock it's contet
+        /// </summary>
+        /// <param name="sender">The object we clicked</param>
+        /// <param name="e">Data of the mouse related event</param>
         private void onChecked(object sender, RoutedEventArgs e)
         {
             Player2.IsEnabled = false;
             Player2.Text = "AI";
         }
 
+        /// <summary>
+        /// Delete the Player2's name and unlock it's content
+        /// </summary>
+        /// <param name="sender">The object we clicked</param>
+        /// <param name="e">Data of the mouse related event</param>
         private void onUnchecked(object sender, RoutedEventArgs e)
         {
             Player2.IsEnabled = true;

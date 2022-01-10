@@ -4,11 +4,26 @@ using Torpedo.Interfaces;
 
 namespace Torpedo.Models
 {
+    /// <summary>
+    /// This class is define the grids of the battlefield.
+    /// </summary>
     public class Coordinate
     {
+        /// <summary>
+        /// Represents X coordinate(Horizontal)
+        /// </summary>
         public int X { get; set; }
+
+        /// <summary>
+        /// Represents Y coordinate(Vertical)
+        /// </summary>
         public int Y { get; set; }
 
+        /// <summary>
+        /// Constructor of Coordinate
+        /// </summary>
+        /// <param name="x">X coordinate</param>
+        /// <param name="y">Y coordinate</param>
         public Coordinate(int x, int y)
         {
             this.X = x;

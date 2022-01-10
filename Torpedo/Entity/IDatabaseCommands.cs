@@ -4,10 +4,13 @@ using System.Text;
 
 namespace Torpedo.Entity.ENTITYFORDUMIES
 {
-    interface IDatabaseCommands
+    /// <summary>
+    /// This Interface describes all the available operations that can be used on the database.
+    /// </summary>
+    public interface IDatabaseCommands
     {
         List<DatabaseModel> GetScoreBoard();
 
-        void AddEntry(DatabaseModel database);
+        void AddEntry(DatabaseModel entry);
     }
 }

@@ -19,6 +19,9 @@ namespace Torpedo
     /// </summary>
     public partial class QueryWindow : Window
     {
+        /// <summary>
+        /// Query the database's content, then fills up the QueryGrid's Datagrids
+        /// </summary>
         public QueryWindow()
         {
             InitializeComponent();
