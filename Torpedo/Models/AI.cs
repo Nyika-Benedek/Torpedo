@@ -25,7 +25,7 @@ namespace Torpedo.Models
                     break;
                 }
             }
-            // TODO create an agent that decides where to shoot
+            // TODO create an agent that decides where (and how playstyles change) to shoot
         }
     }
 }
