@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Torpedo.Interfaces;
 
 namespace Torpedo.Models
@@ -6,7 +7,7 @@ namespace Torpedo.Models
     public enum GameState { NotStarted, ShipPlacement, Battle, Finished }
     public class Game : IGame
     {
-        public GameState State { get; set; } = GameState.Battle;
+        public GameState State { get; set; } = GameState.NotStarted;
         public List<IPlayer> Players { get; private set; }
         public IPlayer CurrentPlayer { get; private set; }
         public int Turn { get; private set; }

@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Torpedo.Interfaces;
 using Torpedo.Models;
 
 namespace Torpedo
@@ -110,97 +111,52 @@ namespace Torpedo
                 shipPositions.AddRange(ship.Parts);
             }
 
-            IShip newShip = new Ship(position, vector);
+            IShips newShip = new Ship(position, vector);
 
             // Checkin if there is a collision with other already placed whips
             foreach (var shipPart in shipPositions)
             {
-                for (int i = 1; i <= vector.Size; i++)
+                foreach (var newPart in newShip.Parts)
                 {
-                    if (position == shipPart)
+                    try
                     {
-                        isValidPosition = false;
+                        if (shipPart == newPart)
+                        {
+                            isValidPosition = false;
+                        }
                     }
+                    catch (NullReferenceException e)
+                    {
+                        MessageBox.Show(e.ToString());
+                    }
+                    
                 }
             }
 
             if (isValidPosition)
             {
-                _game.CurrentPlayer.BattlefieldBuilder.AddShip(new Ship(position, vector));
-                DrawPoint(position, Type.Ship);
+                _game.CurrentPlayer.BattlefieldBuilder.AddShip(newShip);
 
-                if (vector.Way == IShips.Direction.Horizontal)
+                foreach (var part in newShip.Parts)
                 {
-                    for (int i = 1; i < vector.Size; i++)
-                    {
-                        position.X++;
-                        //DrawPoint()
-                    }
-                }
-                else
-                {
-                    for (int i = 1; i < vector.Size; i++)
-                    {
-
-                    }
+                    DrawPoint(part, Type.Ship);
                 }
                 _currentShipSize++;
-                ShipToPlace.Content = $"Placing Ship {_currentShipSize}";
-                
-            }
-        }
-            
-            /*
-            if (isValidPosition)
-            {
-                var shape = new Rectangle();
-                shape.Fill = Brushes.Yellow;
-                var unitY = canvas.Width / BattlefieldWidth;
-                var unitX = canvas.Height / BattlefieldHeight;
-                shape.Width = unitY;
-                shape.Height = unitX;
-                Canvas.SetLeft(shape, unitX * position.X);
-                Canvas.SetTop(shape, unitY * position.Y);
-                canvas.Children.Add(shape);
-                //TODO (Beninek) DrawPoint(new Coordinate(), Type.Ship);
-
-                if (vector.Way == IShips.Direction.Horizontal)
-                {
-                    for (int i = 1; i < vector.Size; i++)
-                    {
-                        shape = new Rectangle();
-                        shape.Fill = Brushes.Yellow;
-                        shape.Width = unitY;
-                        shape.Height = unitX;
-                        Canvas.SetLeft(shape, unitX * position.X + unitX * i);
-                        Canvas.SetTop(shape, unitY * position.Y);
-                        canvas.Children.Add(shape);
-                    }
-                }
-                else
-                {
-                    for (int i = 1; i < vector.Size; i++)
-                    {
-                        shape = new Rectangle();
-                        shape.Fill = Brushes.Yellow;
-                        shape.Width = unitY;
-                        shape.Height = unitX;
-                        Canvas.SetLeft(shape, unitX * position.X);
-                        Canvas.SetTop(shape, unitY * position.Y + unitY * i);
-                        canvas.Children.Add(shape);
-                    }
-                }
-                _currentShipSize++;
-                ShipToPlace.Content = $"Placing Ship {_currentShipSize}";
-                _game.CurrentPlayer.BattlefieldBuilder.AddShip(new Ship(GetMousePosition(), vector));
             }
             else
             {
-                MessageBox.Show("Invalid ship position!");
-            }*/
+                MessageBox.Show("Invalid Ship position");
+            }
+        }
 
         private void CanvasClick(object sender, MouseButtonEventArgs e)
         {
+            // Dont try to shoot if there is no game ion progress
+            if (_game is null || _game.State == GameState.Finished)
+            {
+                return;
+            }
+
             if (_game.State == GameState.Battle)
             {
                 if (!(e.OriginalSource is Rectangle))
@@ -211,13 +167,16 @@ namespace Torpedo
                 _game.NextPlayer();
 
                 // TODO kirajzolni a következő játékos számára az ellenfél csatamezőjét
+                return;
             }
-            else
+
+            if (_game.State == GameState.ShipPlacement)
             {
                 if (!(e.OriginalSource is Rectangle))
                 {
                     PlaceShip(GetMousePosition(), new MyVector(_currentDirection, _currentShipSize));
                 }
+                return;
             }
 
             // TODO: Ha mind a 2 játékos shipje el van tárolva az utolsó CanvasClick-nél akkor lépjen vissza !_inShipPlacement-be és töntesse el a ShipPlacementGrid-et
