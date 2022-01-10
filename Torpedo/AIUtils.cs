@@ -10,6 +10,7 @@ namespace Torpedo
 {
     public static class AIUtils
     {
+        Coordinate _lastShoot;
         public static bool isCellShooted(IBattlefield battlefield, Coordinate coordinate)
         {
             bool result = false;
@@ -22,8 +23,6 @@ namespace Torpedo
             }
             return result;
         }
-
-        
 
         public static Coordinate GenerateRandomShoot(IBattlefield battlefield)
         {
@@ -38,7 +37,30 @@ namespace Torpedo
                 coordinate = new Coordinate(x, y);
             }
             while (AIUtils.isCellShooted(battlefield, coordinate) == true);
+            _lastShoot = coordinate;
             return coordinate;
         } 
+
+        public static Coordinate found(IBattlefield battlefield)
+        {
+            Coordinate coordinate;
+            if(AIUtils.isCellShooted(battlefield, _lastShoot.X - 1) == false && _lastShoot.X - 1 >= 0)
+            { 
+                coordinate = _lastShoot.X - 1; 
+            }
+            else if (AIUtils.isCellShooted(battlefield, _lastShoot.Y - 1) == false && _lastShoot.Y - 1 >= 0)
+            {
+                coordinate = _lastShoot.Y - 1;
+            }
+            else if (AIUtils.isCellShooted(battlefield, _lastShoot.X + 1) == false && _lastShoot.X + 1 <= 9)
+            {
+                coordinate = _lastShoot.X + 1;
+            }
+            else if (AIUtils.isCellShooted(battlefield, _lastShoot.Y + 1) == false && _lastShoot.Y + 1 <= 9)
+            {
+                coordinate = _lastShoot.Y + 1;
+            }
+            return coordinate;
+        }
     }
 }
