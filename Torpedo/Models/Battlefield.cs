@@ -9,7 +9,7 @@ namespace Torpedo.Models
         public List<(Coordinate, bool)> Shots { get; private set; }
         private List<IShips> _ships;
 
-        public void Shoot(Coordinate coordinate)
+        public bool Shoot(Coordinate coordinate)
         {
             bool isHitAny = false;
             foreach (Ship ship in _ships)
@@ -20,7 +20,7 @@ namespace Torpedo.Models
                 }
             }
             Shots.Add((coordinate, isHitAny));
-
+            return isHitAny;
         }
         public Battlefield(List<IShips> ships)
         {
