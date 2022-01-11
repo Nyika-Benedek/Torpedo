@@ -63,7 +63,7 @@ namespace Torpedo.Models
         /// <returns>string: line of ship parts</returns>
         public override string ToString()
         {
-            string result = "";
+            string result = string.Empty;
             foreach (Coordinate coordinate in Parts)
             {
                 result = result + coordinate.ToString() + ' ';

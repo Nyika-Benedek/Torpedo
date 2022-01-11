@@ -220,8 +220,6 @@ namespace Torpedo
             ClearCanvas();
         }
 
-
-
         /// <summary>
         /// This method helps to build up the battlefields by adding ships to the current player's battlefield
         /// </summary>

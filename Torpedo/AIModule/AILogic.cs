@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Torpedo.Models;
 using Torpedo.Interfaces;
+using Torpedo.Models;
 
 namespace Torpedo.AIModule
 {

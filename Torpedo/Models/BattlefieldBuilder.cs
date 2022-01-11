@@ -10,7 +10,6 @@ namespace Torpedo.Models
     /// </summary>
     public class BattlefieldBuilder
     {
-
         public List<IShips> Ships { get; } = new List<IShips>(4);
 
         /// <summary>

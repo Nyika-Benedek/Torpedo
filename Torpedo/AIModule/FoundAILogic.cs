@@ -29,7 +29,7 @@ namespace Torpedo.AIModule
             foreach (Directions direction in Enum.GetValues(typeof(Directions)))
             {
                 proposed = Focus.Shift(direction);
-                if (!AIUtils.IsCellShooted(AI.EnemyBattlefield, proposed) && AIUtils.IsInField(proposed))
+                if (!AIUtils.IsCellShot(AI.EnemyBattlefield, proposed) && AIUtils.IsInField(proposed))
                 {
                     return proposed;
                 }

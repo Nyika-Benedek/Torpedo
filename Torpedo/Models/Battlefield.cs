@@ -8,7 +8,6 @@ namespace Torpedo.Models
     /// </summary>
     public class Battlefield : IBattlefield
     {
-
         public List<(Coordinate, bool)> Shots { get; } = new List<(Coordinate, bool)>();
         private readonly List<IShips> _ships;
 

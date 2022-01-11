@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Torpedo.AIModule;
 using Torpedo.Interfaces;
-using System.Linq;
 
 namespace Torpedo.Models
 {
@@ -13,7 +13,7 @@ namespace Torpedo.Models
         /// <summary>
         /// There are 3 different behivaur the AI could act
         /// </summary>
-        private enum PlayStyle { Random, Found, Sink}
+        private enum PlayStyle { Random, Found, Sink }
         public List<(Coordinate, bool)> ShotHistory { get; } = new List<(Coordinate, bool)>(MainWindow.BattlefieldWidth * MainWindow.BattlefieldHeight);
         public List<IShips> Ships { get => BattlefieldBuilder.Ships; }
         private PlayStyle _playStyle = PlayStyle.Random;

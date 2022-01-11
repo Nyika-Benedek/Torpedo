@@ -11,7 +11,7 @@ namespace Torpedo
     /// <summary>
     /// The directions enum is made to define the four directions we can shoot at after a successful hit.
     /// </summary>
-    public enum Directions { Left, Right, Top, Bottom };
+    public enum Directions { Left, Right, Top, Bottom }
 
     /// <summary>
     /// This class contains all static method wich helps the AI's decision
