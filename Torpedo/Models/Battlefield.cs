@@ -30,6 +30,22 @@ namespace Torpedo.Models
             Shots.Add((coordinate, isHitAny));
             return isHitAny;
         }
+
+        public List<int> RemainingShips(IBattlefield battlefield)
+        {
+            List<int> result = new List<int>(_ships.Count);
+
+            foreach (IShips ship in _ships)
+            {
+                if (ship.Sunk)
+                {
+                    result.Add(ship.Size);
+                }
+            }
+            return result;
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// Constructor
         /// </summary>

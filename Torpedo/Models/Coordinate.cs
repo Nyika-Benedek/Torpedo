@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Torpedo.Interfaces;
 using Torpedo.AIModule;
+using Torpedo.Interfaces;
 
 namespace Torpedo.Models
 {

@@ -177,7 +177,7 @@ namespace Torpedo
         /// Calls the AI to get a recommended choice to place a ship
         /// </summary>
         /// <returns>A</returns>
-        private (Coordinate, MyVector) AIPlacingOneShip()
+        private (Coordinate, MyVector) AIPlacingOneShip() // TODO to AI
         {
             // TODO: Call the AI to get a random ship position
             return (new Coordinate(0, 0), new MyVector(IShips.Direction.Horizontal, 2));
@@ -186,7 +186,7 @@ namespace Torpedo
         /// <summary>
         /// Calls the AIPlacingOneShip() until its gives enough ship locations
         /// </summary>
-        private void AIPlacingShips()
+        private void AIPlacingShips() //TODO to AI
         {
             while (_currentShipSize != 6)
             {
@@ -200,7 +200,7 @@ namespace Torpedo
         /// </summary>
         /// <param name="position">Coordinate: starting point</param>
         /// <param name="vector">MyVector: (<see cref="IShips.Direction"/>, int: size) from the point</param>
-        private void AddShipToAIBattlefield(Coordinate position, MyVector vector)
+        private void AddShipToAIBattlefield(Coordinate position, MyVector vector) // TODO checks goes into addship returns if placed bool
         {
             UpdateScoreBoard();
             bool isValidPosition = IsShipWithinBattlefield(position, vector);
@@ -241,7 +241,7 @@ namespace Torpedo
                     _game.Start();
                     shipPlacementGrid.Visibility = Visibility.Collapsed;
                     VsAiLabel.Visibility = Visibility.Visible;
-                    MessageBox.Show("Let the battle begin!");
+                    _ = MessageBox.Show("Let the battle begin!");
                     UpdateScoreBoard();
                     _game.NextPlayer();
                 }
@@ -256,7 +256,7 @@ namespace Torpedo
         /// <param name="position"><see cref="Coordinate"/>: starting postion</param>
         /// <param name="vector"><see cref="MyVector"/>: (<see cref="IShips.Direction"/>: direction, int: size)</param>
         /// <returns>bool: Yes, if its within, no otherwise</returns>
-        private bool IsShipWithinBattlefield(Coordinate position, MyVector vector)
+        private bool IsShipWithinBattlefield(Coordinate position, MyVector vector) // TODO static in Builder
         {
             if (vector.Way == IShips.Direction.Horizontal)
             {
@@ -350,7 +350,7 @@ namespace Torpedo
             }
             else
             {
-                MessageBox.Show("Invalid Ship position");
+                _ = MessageBox.Show("Invalid Ship position");
             }
         }
 
@@ -478,7 +478,7 @@ namespace Torpedo
             var newGameWindow = new NewGameWindow();
             newGameWindow.ShowDialog();
             _game.AddPlayer(new Player(newGameWindow.Player1Name));
-            _game.AddPlayer(new Player (newGameWindow.Player2Name));
+            _game.AddPlayer(new Player(newGameWindow.Player2Name));
             player1Name.Text = newGameWindow.Player1Name;
             player2Name.Text = newGameWindow.Player2Name;
             if (newGameWindow.Player2Name == "AI")
@@ -508,7 +508,7 @@ namespace Torpedo
         /// </summary>
         /// <param name="sender">The object we clicked</param>
         /// <param name="e">Data of the mouse related event</param>
-        private void SetVerticalPlaceMent(object sender, RoutedEventArgs e)
+        private void SetVerticalPlacement(object sender, RoutedEventArgs e)
         {
             _currentDirection = IShips.Direction.Vertical;
         }
@@ -518,7 +518,7 @@ namespace Torpedo
         /// </summary>
         /// <param name="sender">The object we clicked</param>
         /// <param name="e">Data of the mouse related event</param>
-        private void SetHorizontalPlaceMent(object sender, RoutedEventArgs e)
+        private void SetHorizontalPlacement(object sender, RoutedEventArgs e)
         {
             _currentDirection = IShips.Direction.Horizontal;
         }
