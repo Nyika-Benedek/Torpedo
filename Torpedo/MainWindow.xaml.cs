@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Torpedo.Entity;
 using Torpedo.Interfaces;
 using Torpedo.Models;
 
@@ -50,6 +52,7 @@ namespace Torpedo
         private int _currentShipSize = 2;
         private IShips.Direction _currentDirection = IShips.Direction.Horizontal;
         private bool _isDatabaseExists;
+        private bool _isPlayer1 = true;
 
         /// <summary>
         /// This window will open on the start.
@@ -100,6 +103,64 @@ namespace Torpedo
             canvas.Children.Add(shape);
         }
 
+        private void ClearCanvas()
+        {
+            foreach (UIElement child in canvas.Children)
+            {
+                if (child is Rectangle)
+                {
+                    child.Visibility = Visibility.Collapsed;
+                }
+            }
+        }
+
+        private void DrawBattlefield()
+        {
+            foreach ((Coordinate, bool) item in _game.CurrentPlayer.EnemyBattlefield.Shots)
+            {
+                Type fieldType;
+                if (item.Item2)
+                {
+                    fieldType = Type.Hit;
+                }
+                else
+                {
+                    fieldType = Type.Miss;
+                }
+
+                DrawPoint(item.Item1, fieldType);
+            }
+        }
+
+        private void RedrawCanvas()
+        {
+            ClearCanvas();
+            DrawBattlefield();
+        }
+
+        public void UpdateScoreBoard()
+        {
+            player1Points.Text = Convert.ToString(value: _game.CurrentPlayer.Points, new NumberFormatInfo());
+            player2Points.Text = Convert.ToString(value: _game.CurrentPlayer.Points, new NumberFormatInfo());
+            turnCounter.Text = $"Turn: {_game.Turn}";
+            // TODO: Remaining Units
+            
+            if (_game.CurrentPlayer.Name == player1Name.Text)
+            {
+                player1Name.Foreground = Brushes.Red;
+                //player1Name.FontWeight = SystemFonts.;
+                //player1Name.FontWeight = FontWeight.Bold;
+                player2Name.Foreground = Brushes.Black;
+                //MessageBox.Show(_game.CurrentPlayer.Name);
+            }
+            else
+            {
+                player2Name.Foreground = Brushes.Red;
+                player1Name.Foreground = Brushes.Black;
+            }
+            _isPlayer1 = !_isPlayer1;
+        }
+
         /// <summary>
         /// This method takes a given coordinate and its vector to try draw it, if it fits in the canvas
         /// </summary>
@@ -108,6 +169,7 @@ namespace Torpedo
         private void PlaceShip(Coordinate position, MyVector vector)
         {
             bool isValidPosition = true;
+            UpdateScoreBoard();
 
             if (vector.Way == IShips.Direction.Horizontal)
             {
@@ -162,6 +224,23 @@ namespace Torpedo
                 {
                     DrawPoint(part, Type.Ship);
                 }
+                if (_currentShipSize == 5)
+                {
+                    if (_game.NextPlayer().BattlefieldBuilder.Ships.Count != 0)
+                    {
+                        _game.Start();
+                        shipPlacementGrid.Visibility = Visibility.Collapsed;
+                        ClearCanvas();
+                        MessageBox.Show("Let the battle begin!");
+                        _currentShipSize = 2;
+                        UpdateScoreBoard();
+                        return;
+                    }
+                    MessageBox.Show($"Ask {_game.NextPlayer().Name} to turn away and start your shipplacement turn!");
+                    _game.NextPlayer();
+                    ClearCanvas();
+                    _currentShipSize = 1;
+                }
                 _currentShipSize++;
             }
             else
@@ -177,7 +256,7 @@ namespace Torpedo
         /// <param name="e">Data of the mouse related event</param>
         private void CanvasClick(object sender, MouseButtonEventArgs e)
         {
-            // Dont try to shoot if there is no game ion progress
+            // Dont try to shoot if there is no game in progress
             if (_game is null || _game.State == GameState.Finished)
             {
                 return;
@@ -188,11 +267,27 @@ namespace Torpedo
                 if (!(e.OriginalSource is Rectangle))
                 {
                     Coordinate shot = GetMousePosition();
-                    _game.CurrentPlayer.EnemyBattlefield.Shoot(shot);
+                    if (_game.CurrentPlayer.EnemyBattlefield.Shoot(shot))
+                    {
+                        _game.CurrentPlayer.AddPoint();
+                    }
+                    if (_game.IsEnded())
+                    {
+                        MessageBox.Show($"Congratulation {_game.CurrentPlayer.Name} you destroyed your enemies!");
+                        _game.State = GameState.Finished;
+                        DatabaseCommands database = new DatabaseCommands();
+                        database.AddEntry(new DatabaseModel(
+                            5,
+                            _game.Winner.Name,
+                            _game.CurrentPlayer.Name,
+                            _game.CurrentPlayer.Points,
+                            _game.NextPlayer().Name,
+                            _game.CurrentPlayer.Points));
+                    }
+                    _game.NextPlayer();
+                    UpdateScoreBoard();
+                    RedrawCanvas();
                 }
-                _game.NextPlayer();
-
-                // TODO kirajzolni a következő játékos számára az ellenfél csatamezőjét
                 return;
             }
 
@@ -226,6 +321,7 @@ namespace Torpedo
         /// <param name="e">Data of the mouse related event</param>
         private void NewGame(object sender, RoutedEventArgs e)
         {
+            ClearCanvas();
             _game = new Game();
             // Set Player Names
             var newGameWindow = new NewGameWindow();
@@ -238,8 +334,10 @@ namespace Torpedo
             shipPlacementGrid.Visibility = Visibility.Visible;
             ShipToPlace.Content = $"Place ship {_currentShipSize}";
             _game.NextPlayer();
-            MessageBox.Show($"Ask {_game.CurrentPlayer.Name} to turn away and start your shipplacement turn!");
+            MessageBox.Show($"Ask {_game.NextPlayer().Name} to turn away and start your shipplacement turn!");
             // Set Player 1 ships...
+            _game.NextPlayer();
+            UpdateScoreBoard();
         }
 
         /// <summary>

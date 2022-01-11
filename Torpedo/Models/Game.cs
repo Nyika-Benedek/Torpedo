@@ -13,7 +13,7 @@ namespace Torpedo.Models
         public int Turn { get; private set; }
         public IPlayer Winner { get; private set; }
 
-        private int _playerIndex = 0;
+        private int _playerIndex = -1;
         private const int _maxPoints = 14;
 
         public bool IsEnded()

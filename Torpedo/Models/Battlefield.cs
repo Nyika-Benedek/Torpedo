@@ -24,6 +24,7 @@ namespace Torpedo.Models
         }
         public Battlefield(List<IShips> ships)
         {
+            Shots = new List<(Coordinate, bool)>();
             _ships = ships;
         }
     }

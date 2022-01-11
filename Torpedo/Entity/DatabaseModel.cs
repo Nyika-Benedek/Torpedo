@@ -64,5 +64,16 @@ namespace Torpedo.Entity
             Player2 = player2;
             Player2Score = player2Score;
         }
+
+        public DatabaseModel(int turns, string winner, string player1, int player1Score, string player2, int player2Score)
+        {
+            Date = DateTime.Now;
+            Turns = turns;
+            Winner = winner;
+            Player1 = player1;
+            Player1Score = player1Score;
+            Player2 = player2;
+            Player2Score = player2Score;
+        }
     }
 }

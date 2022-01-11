@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Torpedo.Entity.ENTITYFORDUMIES
+namespace Torpedo.Entity
 {
     /// <summary>
     /// This class is responsible to provides all the necessary operation, to be able to apply changes on the active database, and make queries from it.
