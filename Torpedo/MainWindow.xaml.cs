@@ -200,42 +200,12 @@ namespace Torpedo
         /// </summary>
         /// <param name="position">Coordinate: starting point</param>
         /// <param name="vector">MyVector: (<see cref="IShips.Direction"/>, int: size) from the point</param>
-        private void AddShipToAIBattlefield(Coordinate position, MyVector vector) // TODO checks goes into addship returns if placed bool
+        private void AddShipToAIBattlefield(Coordinate position, MyVector vector)
         {
             UpdateScoreBoard();
-            bool isValidPosition = IsShipWithinBattlefield(position, vector);
-            var ships = _game.CurrentPlayer.BattlefieldBuilder.Ships;
-            var shipPositions = new List<Coordinate>(14);
-
-            foreach (var ship in ships)
-            {
-                shipPositions.AddRange(ship.Parts);
-            }
-
             IShips newShip = new Ship(position, vector);
-
-            // Checkin if there is a collision with other already placed ships
-            foreach (var shipPart in shipPositions)
+            if (_game.CurrentPlayer.BattlefieldBuilder.TryToAddShip(newShip))
             {
-                foreach (var newPart in newShip.Parts)
-                {
-                    try
-                    {
-                        if (shipPart.Equals(newPart))
-                        {
-                            isValidPosition = false;
-                        }
-                    }
-                    catch (NullReferenceException ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
-                }
-            }
-            if (isValidPosition)
-            {
-                _game.CurrentPlayer.BattlefieldBuilder.AddShip(newShip);
-
                 if (_currentShipSize == 5)
                 {
                     _game.Start();
@@ -250,32 +220,7 @@ namespace Torpedo
             ClearCanvas();
         }
 
-        /// <summary>
-        /// Checks if the given ship is in the battlefield
-        /// </summary>
-        /// <param name="position"><see cref="Coordinate"/>: starting postion</param>
-        /// <param name="vector"><see cref="MyVector"/>: (<see cref="IShips.Direction"/>: direction, int: size)</param>
-        /// <returns>bool: Yes, if its within, no otherwise</returns>
-        private bool IsShipWithinBattlefield(Coordinate position, MyVector vector) // TODO static in Builder
-        {
-            if (vector.Way == IShips.Direction.Horizontal)
-            {
-                // Too close to the right side of the battlefield
-                if (BattlefieldWidth - position.X < _currentShipSize)
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                // Too close to the bottom side of the battlefield
-                if (BattlefieldHeight - position.Y < _currentShipSize)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+
 
         /// <summary>
         /// This method helps to build up the battlefields by adding ships to the current player's battlefield
@@ -285,39 +230,10 @@ namespace Torpedo
         private void PlaceShip(Coordinate position, MyVector vector)
         {
             UpdateScoreBoard();
-            bool isValidPosition = IsShipWithinBattlefield(position, vector);
-            var ships = _game.CurrentPlayer.BattlefieldBuilder.Ships;
-            var shipPositions = new List<Coordinate>(14);
-
-            foreach (var ship in ships)
-            {
-                shipPositions.AddRange(ship.Parts);
-            }
-
             IShips newShip = new Ship(position, vector);
 
-            // Checkin if there is a collision with other already placed ships
-            foreach (var shipPart in shipPositions)
+            if (_game.CurrentPlayer.BattlefieldBuilder.TryToAddShip(newShip))
             {
-                foreach (var newPart in newShip.Parts)
-                {
-                    try
-                    {
-                        if (shipPart.Equals(newPart))
-                        {
-                            isValidPosition = false;
-                        }
-                    }
-                    catch (NullReferenceException ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
-                }
-            }
-            if (isValidPosition)
-            {
-                _game.CurrentPlayer.BattlefieldBuilder.AddShip(newShip);
-
                 foreach (var part in newShip.Parts)
                 {
                     DrawPoint(part, Type.Ship);
