@@ -9,8 +9,8 @@ namespace Torpedo.Models
     public class Battlefield : IBattlefield
     {
 
-        public List<(Coordinate, bool)> Shots { get; private set; }
-        private List<IShips> _ships;
+        public List<(Coordinate, bool)> Shots { get; } = new List<(Coordinate, bool)>();
+        private readonly List<IShips> _ships;
 
         /// <summary>
         /// Shoot at a coordinate and checks if it was a hit
@@ -50,10 +50,6 @@ namespace Torpedo.Models
         /// Constructor
         /// </summary>
         /// <param name="ships">List of <see cref="IShips"/> to place it on the battlefield</param>
-        public Battlefield(List<IShips> ships)
-        {
-            Shots = new List<(Coordinate, bool)>();
-            _ships = ships;
-        }
+        public Battlefield(List<IShips> ships) => _ships = ships;
     }
 }

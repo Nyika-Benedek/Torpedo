@@ -11,21 +11,13 @@ namespace Torpedo.Models
     public class BattlefieldBuilder
     {
 
-        public List<IShips> Ships { get; private set; }
-
-        public BattlefieldBuilder()
-        {
-            Ships = new List<IShips>(4);
-        }
+        public List<IShips> Ships { get; } = new List<IShips>(4);
 
         /// <summary>
         /// Finalizes the Battlefiled, where ship positions are inaccessable.
         /// </summary>
         /// <returns>new <see cref="Battlefield"/> filled with ships</returns>
-        public Battlefield Build()
-        {
-            return new Battlefield(Ships);
-        }
+        public Battlefield Build() => new Battlefield(Ships);
 
         /// <summary>
         /// Add a ship to the builder object.

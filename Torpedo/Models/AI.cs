@@ -13,10 +13,9 @@ namespace Torpedo.Models
         /// <summary>
         /// There are 3 different behivaur the AI could act
         /// </summary>
-        private enum Playstyle { Random, Found, Sink}
-        public List<(Coordinate, bool)> ShotHistory { get; private set; }
-
-        private Playstyle _playStyle;
+        private enum PlayStyle { Random, Found, Sink}
+        public List<(Coordinate, bool)> ShotHistory { get; } = new List<(Coordinate, bool)>(MainWindow.BattlefieldWidth * MainWindow.BattlefieldHeight);
+        private PlayStyle _playStyle = PlayStyle.Random;
         private static readonly string _aiName = "AI";
 
         /// <summary>
@@ -24,9 +23,12 @@ namespace Torpedo.Models
         /// </summary>
         public AI() : base(_aiName)
         {
-            _playStyle = Playstyle.Random;
-            ShotHistory = new List<(Coordinate, bool)>(MainWindow.BattlefieldWidth * MainWindow.BattlefieldHeight);
         }
+
+        /// <summary>
+        /// Build the <see cref="Battlefield"/> of the player
+        /// </summary>
+        public new void BuildBattlefield() => Battlefield = BattlefieldBuilder.Build();
 
         /// <summary>
         /// Calls an AI behivour based on the current agent playstyle, and the agent send an advised position to shoot at
@@ -36,12 +38,12 @@ namespace Torpedo.Models
             AILogic logic;
             switch (_playStyle)
             {
-                case Playstyle.Found:
+                case PlayStyle.Found:
                     {
                         logic = new FoundAILogic(this, ShotHistory.Last().Item1);
                         break;
                     }
-                case Playstyle.Random:
+                case PlayStyle.Random:
                     {
                         logic = new RandomAILogic(this);
                         break;
@@ -58,9 +60,9 @@ namespace Torpedo.Models
             {
                  advised = logic.Act();
             }
-            catch (NowhereToShootException ex)
+            catch (NowhereToShootException)
             {
-                _playStyle = Playstyle.Random;
+                _playStyle = PlayStyle.Random;
                 logic = new RandomAILogic(this);
                 advised = logic.Act();
             }
@@ -70,7 +72,7 @@ namespace Torpedo.Models
 
             if (isHit)
             {
-                _playStyle = Playstyle.Found;
+                _playStyle = PlayStyle.Found;
             }
         }
     }

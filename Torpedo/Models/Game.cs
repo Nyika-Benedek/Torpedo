@@ -15,10 +15,10 @@ namespace Torpedo.Models
     public class Game : IGame
     {
         public GameState State { get; set; } = GameState.NotStarted;
-        public List<IPlayer> Players { get; private set; }
+        public List<IPlayer> Players { get; private set; } = new List<IPlayer>(2);
         public IPlayer CurrentPlayer { get; private set; }
-        public int Turn { get; private set; }
-        public IPlayer Winner { get; private set; }
+        public int Turn { get; private set; } = 0;
+        public IPlayer Winner { get; private set; } = null;
 
         private int _playerIndex = -1;
         private const int _maxPoints = 14;
@@ -84,14 +84,7 @@ namespace Torpedo.Models
         /// <summary>
         /// Constructor
         /// </summary>
-        public Game()
-        {
-            Winner = null;
-            Turn = 0;
-            CurrentPlayer = null;
-            Players = new List<IPlayer>(2);
-            State = GameState.ShipPlacement;
-        }
+        public Game() => State = GameState.ShipPlacement;
 
         /// <summary>
         /// Add player to the game

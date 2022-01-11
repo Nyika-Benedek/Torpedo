@@ -9,23 +9,18 @@ namespace Torpedo.Models
     public class Player : IPlayer
     {
         public string Name { get; private set; }
-        public IBattlefield Battlefield { get; private set; }
+        public IBattlefield Battlefield { get; protected set; }
         public IBattlefield EnemyBattlefield { get; private set; }
 
-        public BattlefieldBuilder BattlefieldBuilder { get; private set; }
-        public int Points { get; set; }
+        public BattlefieldBuilder BattlefieldBuilder { get; private set; } = new BattlefieldBuilder();
+        public int Points { get; set; } = 0;
         public void AddPoint() { Points++; }
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="name">string: Name of the player</param>
-        public Player(string name)
-        {
-            Name = name;
-            BattlefieldBuilder = new BattlefieldBuilder();
-            Points = 0;
-        }
+        public Player(string name) => Name = name;
 
         /// <summary>
         /// Build the <see cref="Battlefield"/> of the player

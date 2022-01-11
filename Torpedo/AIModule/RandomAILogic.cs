@@ -22,9 +22,6 @@ namespace Torpedo.AIModule
         /// It shooting radom to try hit something
         /// </summary>
         /// <returns>It returns the recommended <see cref="Coordinate"/></returns>
-        public override Coordinate Act()
-        {
-            return AIUtils.GenerateRandomShoot(AI.EnemyBattlefield);
-        }
+        public override Coordinate Act() => AIUtils.GenerateRandomShoot(AI.EnemyBattlefield);
     }
 }

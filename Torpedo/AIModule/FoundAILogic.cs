@@ -14,17 +14,14 @@ namespace Torpedo.AIModule
         /// Constructor of FoundAILogic
         /// </summary>
         /// <param name="aI">The used <see cref="AI"/> agent</param>
-        /// <param name="focus"></param>
-        public FoundAILogic(AI aI, Coordinate focus) : base(aI)
-        {
-            Focus = focus;
-        }
+        /// <param name="focus">Coordinate where the part of a ship was hit successfully.</param>
+        public FoundAILogic(AI aI, Coordinate focus) : base(aI) => Focus = focus;
         public Coordinate Focus { get; private set; }
         /// <summary>
         /// Tries to hit the four possible neighbours of the hit coordinate.
         /// </summary>
         /// <param name="battlefield">The used <see cref="Battlefield"/></param>
-        /// <returns>It returns the recommended <see cref="Coordinate"/></returns>
+        /// <returns>It returns the recommended <see cref="Coordinate"/>.</returns>
         public override Coordinate Act()
         {
             Coordinate proposed;
