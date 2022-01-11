@@ -53,6 +53,7 @@ namespace Torpedo
         private IShips.Direction _currentDirection = IShips.Direction.Horizontal;
         private bool _isDatabaseExists;
         private bool _isPlayer1 = true;
+        private bool _isAI = false;
 
         /// <summary>
         /// This window will open on the start.
@@ -144,7 +145,6 @@ namespace Torpedo
             player2Points.Text = Convert.ToString(value: _game.CurrentPlayer.Points, new NumberFormatInfo());
             turnCounter.Text = $"Turn: {_game.Turn}";
             // TODO: Remaining Units
-            
             if (_game.CurrentPlayer.Name == player1Name.Text)
             {
                 player1Name.Foreground = Brushes.Red;
@@ -161,33 +161,25 @@ namespace Torpedo
             _isPlayer1 = !_isPlayer1;
         }
 
-        /// <summary>
-        /// This method takes a given coordinate and its vector to try draw it, if it fits in the canvas
-        /// </summary>
-        /// <param name="position">Coordinate where to start draw</param>
-        /// <param name="vector">The vector to continue in one line</param>
-        private void PlaceShip(Coordinate position, MyVector vector)
+        private (Coordinate, MyVector) AIPlacingOneShip()
         {
-            bool isValidPosition = true;
+            // TODO: Call the AI to get a random ship position
+            return (new Coordinate(0, 0), new MyVector(IShips.Direction.Horizontal, 2));
+        }
+
+        private void AIPlacingShips()
+        {
+            while (_currentShipSize != 6)
+            {
+                (Coordinate position, MyVector vector) = AIPlacingOneShip();
+                AddShipToAIBattlefield(position, vector);
+            }
+        }
+
+        private void AddShipToAIBattlefield(Coordinate position, MyVector vector)
+        {
             UpdateScoreBoard();
-
-            if (vector.Way == IShips.Direction.Horizontal)
-            {
-                // Too close to the right side of the battlefield
-                if (BattlefieldWidth - position.X < _currentShipSize)
-                {
-                    isValidPosition = false;
-                }
-            }
-            else
-            {
-                // Too close to the bottom side of the battlefield
-                if (BattlefieldHeight - position.Y < _currentShipSize)
-                {
-                    isValidPosition = false;
-                }
-            }
-
+            bool isValidPosition = IsShipWithinBattlefield(position, vector);
             var ships = _game.CurrentPlayer.BattlefieldBuilder.Ships;
             var shipPositions = new List<Coordinate>(14);
 
@@ -198,21 +190,97 @@ namespace Torpedo
 
             IShips newShip = new Ship(position, vector);
 
-            // Checkin if there is a collision with other already placed whips
+            // Checkin if there is a collision with other already placed ships
             foreach (var shipPart in shipPositions)
             {
                 foreach (var newPart in newShip.Parts)
                 {
                     try
                     {
-                        if (shipPart.Equals( newPart))
+                        if (shipPart.Equals(newPart))
                         {
                             isValidPosition = false;
                         }
                     }
-                    catch (NullReferenceException e)
+                    catch (NullReferenceException ex)
                     {
-                        MessageBox.Show(e.ToString());
+                        MessageBox.Show(ex.ToString());
+                    }
+                }
+            }
+            if (isValidPosition)
+            {
+                _game.CurrentPlayer.BattlefieldBuilder.AddShip(newShip);
+
+                if (_currentShipSize == 5)
+                {
+                    _game.Start();
+                    shipPlacementGrid.Visibility = Visibility.Collapsed;
+                    VsAiLabel.Visibility = Visibility.Visible;
+                    MessageBox.Show("Let the battle begin!");
+                    UpdateScoreBoard();
+                    _game.NextPlayer();
+                }
+                _currentShipSize++;
+            }
+            ClearCanvas();
+        }
+
+        private bool IsShipWithinBattlefield(Coordinate position, MyVector vector)
+        {
+            if (vector.Way == IShips.Direction.Horizontal)
+            {
+                // Too close to the right side of the battlefield
+                if (BattlefieldWidth - position.X < _currentShipSize)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                // Too close to the bottom side of the battlefield
+                if (BattlefieldHeight - position.Y < _currentShipSize)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// This method helps to build up the battlefields by adding ships to the current player's battlefield
+        /// </summary>
+        /// <param name="position">Coordinate where to start draw</param>
+        /// <param name="vector">The vector to continue in one line</param>
+        private void PlaceShip(Coordinate position, MyVector vector)
+        {
+            UpdateScoreBoard();
+            bool isValidPosition = IsShipWithinBattlefield(position, vector);
+            var ships = _game.CurrentPlayer.BattlefieldBuilder.Ships;
+            var shipPositions = new List<Coordinate>(14);
+
+            foreach (var ship in ships)
+            {
+                shipPositions.AddRange(ship.Parts);
+            }
+
+            IShips newShip = new Ship(position, vector);
+
+            // Checkin if there is a collision with other already placed ships
+            foreach (var shipPart in shipPositions)
+            {
+                foreach (var newPart in newShip.Parts)
+                {
+                    try
+                    {
+                        if (shipPart.Equals(newPart))
+                        {
+                            isValidPosition = false;
+                        }
+                    }
+                    catch (NullReferenceException ex)
+                    {
+                        MessageBox.Show(ex.ToString());
                     }
                 }
             }
@@ -236,10 +304,17 @@ namespace Torpedo
                         UpdateScoreBoard();
                         return;
                     }
-                    MessageBox.Show($"Ask {_game.NextPlayer().Name} to turn away and start your shipplacement turn!");
-                    _game.NextPlayer();
-                    ClearCanvas();
-                    _currentShipSize = 1;
+                    if (_isAI)
+                    {
+                        AIPlacingShips();
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Ask {_game.NextPlayer().Name} to turn away and start your shipplacement turn!");
+                        _game.NextPlayer();
+                        ClearCanvas();
+                        _currentShipSize = 1;
+                    }
                 }
                 _currentShipSize++;
             }
@@ -247,6 +322,27 @@ namespace Torpedo
             {
                 MessageBox.Show("Invalid Ship position");
             }
+        }
+
+        private (Coordinate, bool) AIShoot()
+        {
+            // TODO: Get AI shoot recommendation
+            // _game.CurrentPlayer.EnemyBattlefield.Shoot(shoot)
+            return (new Coordinate(0, 0), true /*_game.CurrentPlayer.EnemyBattlefield.Shoot(shoot)*/);
+        }
+
+        private void PostWinCondition()
+        {
+            MessageBox.Show($"Congratulation {_game.CurrentPlayer.Name} you destroyed your enemies!");
+            _game.State = GameState.Finished;
+            DatabaseCommands database = new DatabaseCommands();
+            database.AddEntry(new DatabaseModel(
+                5,
+                _game.Winner.Name,
+                _game.CurrentPlayer.Name,
+                _game.CurrentPlayer.Points,
+                _game.NextPlayer().Name,
+                _game.CurrentPlayer.Points));
         }
 
         /// <summary>
@@ -273,18 +369,35 @@ namespace Torpedo
                     }
                     if (_game.IsEnded())
                     {
-                        MessageBox.Show($"Congratulation {_game.CurrentPlayer.Name} you destroyed your enemies!");
-                        _game.State = GameState.Finished;
-                        DatabaseCommands database = new DatabaseCommands();
-                        database.AddEntry(new DatabaseModel(
-                            5,
-                            _game.Winner.Name,
-                            _game.CurrentPlayer.Name,
-                            _game.CurrentPlayer.Points,
-                            _game.NextPlayer().Name,
-                            _game.CurrentPlayer.Points));
+                        PostWinCondition();
                     }
-                    _game.NextPlayer();
+                    else
+                    {
+                        _game.NextPlayer();
+                        if (_isAI)
+                        {
+                            UpdateScoreBoard();
+                            RedrawCanvas();
+                            (Coordinate, bool) aiShot = AIShoot();
+                            if (aiShot.Item2)
+                            {
+                                _game.CurrentPlayer.AddPoint();
+                                DrawPoint(aiShot.Item1, Type.Hit);
+                            }
+                            else
+                            {
+                                DrawPoint(aiShot.Item1, Type.Miss);
+                            }
+                            DrawPoint(new Coordinate(5, 5), Type.Miss);
+                            // To see what was it's decision
+                            Thread.Sleep(1000);
+                            if (_game.IsEnded())
+                            {
+                                PostWinCondition();
+                            }
+                            _game.NextPlayer();
+                        }
+                    }
                     UpdateScoreBoard();
                     RedrawCanvas();
                 }
@@ -315,12 +428,13 @@ namespace Torpedo
         }
 
         /// <summary>
-        /// Clicking on the New Game button call this method and starts the process of creating a new game
+        /// This method starts the process of creating a new game
         /// </summary>
         /// <param name="sender">The object we clicked</param>
         /// <param name="e">Data of the mouse related event</param>
         private void NewGame(object sender, RoutedEventArgs e)
         {
+            _currentShipSize = 2;
             ClearCanvas();
             _game = new Game();
             // Set Player Names
@@ -330,11 +444,23 @@ namespace Torpedo
             _game.AddPlayer(new Player (newGameWindow.Player2Name));
             player1Name.Text = newGameWindow.Player1Name;
             player2Name.Text = newGameWindow.Player2Name;
+            if (newGameWindow.Player2Name == "AI")
+            {
+                _isAI = true;
+            }
 
             shipPlacementGrid.Visibility = Visibility.Visible;
             ShipToPlace.Content = $"Place ship {_currentShipSize}";
+            // set the pointer to the first player
             _game.NextPlayer();
-            MessageBox.Show($"Ask {_game.NextPlayer().Name} to turn away and start your shipplacement turn!");
+            if (!_isAI)
+            {
+                MessageBox.Show($"Ask {_game.NextPlayer().Name} to turn away and start your shipplacement turn!");
+            }
+            else
+            {
+                _game.NextPlayer();
+            }
             // Set Player 1 ships...
             _game.NextPlayer();
             UpdateScoreBoard();
@@ -394,6 +520,26 @@ namespace Torpedo
             else
             {
                 MessageBox.Show("There is no database!");
+            }
+        }
+
+        private void ShowAIShips(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.S)
+            {
+                ClearCanvas();
+                _game.NextPlayer();
+                //Draw AI's Ships
+                _game.NextPlayer();
+                //_game.Turn -= 2;
+            }
+        }
+
+        private void HideAIShips(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.S)
+            {
+                RedrawCanvas();
             }
         }
     }

@@ -68,8 +68,9 @@
             <Label Name="ShipToPlace" Content="Placing ship 2" Width="150" Foreground="White"/>
             <CheckBox Content="Vertical Placement" Grid.Column="1" Margin="-4 3 0 0" Checked="SetVerticalPlaceMent" Unchecked="SetHorizontalPlaceMent" Foreground="White"/>
         </Grid>
+        <Label Name="VsAiLabel" Content="Press 's' to see, the enemy ship positions" Foreground="White" Width="220" Visibility="Collapsed"/>
         <Border Margin="20" BorderThickness="1" BorderBrush="Green">
-            <Canvas x:Name="canvas" Background="Black" Height="500" Width="500" MouseLeftButtonDown="CanvasClick">
+            <Canvas x:Name="canvas" Background="Black" Height="500" Width="500" MouseLeftButtonDown="CanvasClick" KeyDown="ShowAIShips" KeyUp="HideAIShips">
                 <!-- egy kattintható canvas grid legyen 50x50 -->
                 
                 <!-- horizontal lines -->
