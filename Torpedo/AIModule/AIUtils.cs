@@ -12,7 +12,10 @@ namespace Torpedo
     /// The directions enum is made to define the four directions we can shoot at after a successful hit.
     /// </summary>
     public enum Directions { Left, Right, Top, Bottom };
-    
+
+    /// <summary>
+    /// This class contains all static method wich helps the AI's decision
+    /// </summary>
     public static class AIUtils
     {
         /// <summary>
@@ -26,13 +29,19 @@ namespace Torpedo
             bool result = false;
             foreach (var shot in battlefield.Shots)
             {
-                if(coordinate.Equals(shot))
+                if (coordinate.Equals(shot))
                 {
                     result = true;
                 }
             }
             return result;
         }
+
+        /// <summary>
+        /// Checks if a given Coordinate is within the battlefield
+        /// </summary>
+        /// <param name="coordinate">The <see cref="Coordinate"/> to check</param>
+        /// <returns>bool</returns>
         public static bool IsInField(Coordinate coordinate)
         {
             return coordinate.X >= 0 && coordinate.X < MainWindow.BattlefieldWidth && coordinate.Y >= 0 && coordinate.Y < MainWindow.BattlefieldHeight;
@@ -40,7 +49,7 @@ namespace Torpedo
         /// <summary>
         /// This method generates a random (x,y) coordinate pair, so the AI will select a position randomly to shoot at.
         /// </summary>
-        /// <param name="battlefield">It defines the whole playground.</param>
+        /// <param name="battlefield">The used<see cref="Battlefield"/></param>
         /// <returns>It returns the coordinate in a form of (x,y) values.</returns>
         public static Coordinate GenerateRandomShoot(IBattlefield battlefield)
         {

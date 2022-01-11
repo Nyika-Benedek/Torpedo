@@ -104,6 +104,9 @@ namespace Torpedo
             canvas.Children.Add(shape);
         }
 
+        /// <summary>
+        /// Clear the canvas prom the Rectangles
+        /// </summary>
         private void ClearCanvas()
         {
             foreach (UIElement child in canvas.Children)
@@ -115,6 +118,9 @@ namespace Torpedo
             }
         }
 
+        /// <summary>
+        /// Draw the rectangles back based on the battlefield
+        /// </summary>
         private void DrawBattlefield()
         {
             foreach ((Coordinate, bool) item in _game.CurrentPlayer.EnemyBattlefield.Shots)
@@ -133,12 +139,18 @@ namespace Torpedo
             }
         }
 
+        /// <summary>
+        /// Clear then redraw the battlefield
+        /// </summary>
         private void RedrawCanvas()
         {
             ClearCanvas();
             DrawBattlefield();
         }
 
+        /// <summary>
+        /// Updates the Mainwindows scoreboard
+        /// </summary>
         public void UpdateScoreBoard()
         {
             player1Points.Text = Convert.ToString(value: _game.CurrentPlayer.Points, new NumberFormatInfo());
@@ -161,12 +173,19 @@ namespace Torpedo
             _isPlayer1 = !_isPlayer1;
         }
 
+        /// <summary>
+        /// Calls the AI to get a recommended choice to place a ship
+        /// </summary>
+        /// <returns>A</returns>
         private (Coordinate, MyVector) AIPlacingOneShip()
         {
             // TODO: Call the AI to get a random ship position
             return (new Coordinate(0, 0), new MyVector(IShips.Direction.Horizontal, 2));
         }
 
+        /// <summary>
+        /// Calls the AIPlacingOneShip() until its gives enough ship locations
+        /// </summary>
         private void AIPlacingShips()
         {
             while (_currentShipSize != 6)
@@ -176,6 +195,11 @@ namespace Torpedo
             }
         }
 
+        /// <summary>
+        /// Its like <see cref="PlaceShip"/>, just without the interaction with the player
+        /// </summary>
+        /// <param name="position">Coordinate: starting point</param>
+        /// <param name="vector">MyVector: (<see cref="IShips.Direction"/>, int: size) from the point</param>
         private void AddShipToAIBattlefield(Coordinate position, MyVector vector)
         {
             UpdateScoreBoard();
@@ -226,6 +250,12 @@ namespace Torpedo
             ClearCanvas();
         }
 
+        /// <summary>
+        /// Checks if the given ship is in the battlefield
+        /// </summary>
+        /// <param name="position"><see cref="Coordinate"/>: starting postion</param>
+        /// <param name="vector"><see cref="MyVector"/>: (<see cref="IShips.Direction"/>: direction, int: size)</param>
+        /// <returns>bool: Yes, if its within, no otherwise</returns>
         private bool IsShipWithinBattlefield(Coordinate position, MyVector vector)
         {
             if (vector.Way == IShips.Direction.Horizontal)
@@ -324,6 +354,10 @@ namespace Torpedo
             }
         }
 
+        /// <summary>
+        /// Calls th <see cref="AI"/> agent to get a shot
+        /// </summary>
+        /// <returns>A recommended shooting (<see cref="Coordinate"/>, bool: is hit any ship)</returns>
         private (Coordinate, bool) AIShoot()
         {
             // TODO: Get AI shoot recommendation
@@ -331,6 +365,9 @@ namespace Torpedo
             return (new Coordinate(0, 0), true /*_game.CurrentPlayer.EnemyBattlefield.Shoot(shoot)*/);
         }
 
+        /// <summary>
+        /// Checks if the game is at win condicion
+        /// </summary>
         private void PostWinCondition()
         {
             MessageBox.Show($"Congratulation {_game.CurrentPlayer.Name} you destroyed your enemies!");
@@ -523,6 +560,11 @@ namespace Torpedo
             }
         }
 
+        /// <summary>
+        /// If playing against AI pressing s will draw show it's ships location
+        /// </summary>
+        /// <param name="sender">The object we trigered</param>
+        /// <param name="e">Data of the key related event</param>
         private void ShowAIShips(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.S)
@@ -535,6 +577,11 @@ namespace Torpedo
             }
         }
 
+        /// <summary>
+        /// Like <see cref="ShowAIShips(object, KeyEventArgs)"/> just to hide it and redraw the player's battlefield
+        /// </summary>
+        /// <param name="sender">The object we trigered</param>
+        /// <param name="e">Data of the key related event</param>
         private void HideAIShips(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.S)

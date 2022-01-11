@@ -12,9 +12,9 @@ namespace Torpedo.Entity
     {
 
         /// <summary>
-        /// Give a DatabaseModel type in, and its adds to the active database.
+        /// Give a <see cref="DatabaseModel"/> type in, and it adds to the active database.
         /// </summary>
-        /// <param name="entry">Database type, like 1 row of the database</param>
+        /// <param name="entry"><see cref="DatabaseModel"/> type, like 1 row of the database</param>
         public void AddEntry(DatabaseModel entry)
         {
             using (var database = new Context())
@@ -29,7 +29,7 @@ namespace Torpedo.Entity
         /// <summary>
         /// It makes a query from whole the database
         /// </summary>
-        /// <returns>The whole database in List<DatabaseModel></returns>
+        /// <returns>The whole database in <see cref="List{T}"/></returns>
         public List<DatabaseModel> GetScoreBoard()
         {
             using (var database = new Context())

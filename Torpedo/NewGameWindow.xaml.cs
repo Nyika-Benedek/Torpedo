@@ -48,6 +48,11 @@ namespace Torpedo
             Player2.Text = string.Empty;
         }
 
+        /// <summary>
+        /// Checks if the names are valid, then send it to the main window, otherwise alert the user from the wrong names
+        /// </summary>
+        /// <param name="sender">The object we clicked</param>
+        /// <param name="e">Data of the mouse related event</param>
         private void GiveNames(object sender, RoutedEventArgs e)
         {
             var regex = new Regex(@"[^a-zA-Z0-9\s]");
@@ -65,7 +70,6 @@ namespace Torpedo
 
             Player1Name = Player1.Text;
             Player2Name = Player2.Text;
-            
             Close();
         }
     }

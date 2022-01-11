@@ -5,7 +5,7 @@ using System.Text;
 namespace Torpedo.Entity
 {
     /// <summary>
-    /// This Interface describes all the available operations that can be used on the database.
+    /// This Interface collects all the available operations that can be used on the database.
     /// </summary>
     public interface IDatabaseCommands
     {

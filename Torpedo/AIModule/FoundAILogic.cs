@@ -5,18 +5,26 @@ using Torpedo.Models;
 
 namespace Torpedo.AIModule
 {
+    /// <summary>
+    /// This class describe the behivaour of the AI, when its hits something on random
+    /// </summary>
     public class FoundAILogic : AILogic
     {
+        /// <summary>
+        /// Constructor of FoundAILogic
+        /// </summary>
+        /// <param name="aI">The used <see cref="AI"/> agent</param>
+        /// <param name="focus"></param>
         public FoundAILogic(AI aI, Coordinate focus) : base(aI)
         {
             Focus = focus;
         }
         public Coordinate Focus { get; private set; }
         /// <summary>
-        /// It gets a coordinate and tries to hit the four possible neighbours.
+        /// Tries to hit the four possible neighbours of the hit coordinate.
         /// </summary>
-        /// <param name="battlefield">It defines the whole playground.</param>
-        /// <returns>It returns the coordinate in a form of (x,y) values.</returns>
+        /// <param name="battlefield">The used <see cref="Battlefield"/></param>
+        /// <returns>It returns the recommended <see cref="Coordinate"/></returns>
         public override Coordinate Act()
         {
             Coordinate proposed;
@@ -33,6 +41,10 @@ namespace Torpedo.AIModule
         }
     }
 
+    /// <summary>
+    /// Own exception the indeicate nowhere left to shoot exception
+    /// <para>Throw this exception, when the whole battlefield is full and nowhere left to shoot</para>
+    /// </summary>
     [Serializable]
     public class NowhereToShootException : Exception
     {

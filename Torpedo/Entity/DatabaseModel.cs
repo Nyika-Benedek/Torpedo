@@ -65,6 +65,15 @@ namespace Torpedo.Entity
             Player2Score = player2Score;
         }
 
+        /// <summary>
+        /// Constructor of DatabaseModel, but this generate the actual date if not given
+        /// </summary>
+        /// <param name="turns">The number of turns</param>
+        /// <param name="winner">The winner's name</param>
+        /// <param name="player1">Name of player1</param>
+        /// <param name="player1Score">Score of Player1</param>
+        /// <param name="player2">Name of Player2</param>
+        /// <param name="player2Score">Score of Player2</param>
         public DatabaseModel(int turns, string winner, string player1, int player1Score, string player2, int player2Score)
         {
             Date = DateTime.Now;

@@ -3,16 +3,23 @@ using Torpedo.Interfaces;
 
 namespace Torpedo.Models
 {
+    /// <summary>
+    /// Represents a player as an object
+    /// </summary>
     public class Player : IPlayer
     {
         public string Name { get; private set; }
         public IBattlefield Battlefield { get; private set; }
         public IBattlefield EnemyBattlefield { get; private set; }
 
-        public BattlefieldBuilder BattlefieldBuilder { get; private set;}
+        public BattlefieldBuilder BattlefieldBuilder { get; private set; }
         public int Points { get; set; }
         public void AddPoint() { Points++; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name">string: Name of the player</param>
         public Player(string name)
         {
             Name = name;
@@ -20,12 +27,19 @@ namespace Torpedo.Models
             Points = 0;
         }
 
+        /// <summary>
+        /// Build the <see cref="Battlefield"/> of the player
+        /// </summary>
         public void BuildBattlefield()
         {
             Battlefield = BattlefieldBuilder.Build();
             BattlefieldBuilder = null;
         }
 
+        /// <summary>
+        /// Set the enemy battlefield to be able to shoot at
+        /// </summary>
+        /// <param name="enemyBattlefield"><see cref="IBattlefield"/>: enemy's battlefield</param>
         public void SetEnemyBattlefield(IBattlefield enemyBattlefield)
         {
             if (EnemyBattlefield == null)

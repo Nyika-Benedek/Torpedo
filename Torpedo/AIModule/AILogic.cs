@@ -6,13 +6,22 @@ using Torpedo.Interfaces;
 
 namespace Torpedo.AIModule
 {
+    /// <summary>
+    /// This class gives interface to access the AI's logics
+    /// </summary>
     public abstract class AILogic
     {
-        public AILogic(AI aI)
-        {
-            AI = aI;
-        }
+        /// <summary>
+        /// Constructor of AILogic
+        /// </summary>
+        /// <param name="aI">Used <see cref="AI"/> agent</param>
+        protected AILogic(AI aI) => AI = aI;
         public AI AI { get; private set; }
+
+        /// <summary>
+        /// The logic how the agent should make decision
+        /// </summary>
+        /// <returns>A <see cref="Coordinate"/></returns>
         public abstract Coordinate Act();
     }
 }

@@ -4,7 +4,14 @@ using Torpedo.Interfaces;
 
 namespace Torpedo.Models
 {
+    /// <summary>
+    /// Represents the states of the game
+    /// </summary>
     public enum GameState { NotStarted, ShipPlacement, Battle, Finished }
+
+    /// <summary>
+    /// Represents the game as an object
+    /// </summary>
     public class Game : IGame
     {
         public GameState State { get; set; } = GameState.NotStarted;
@@ -16,6 +23,10 @@ namespace Torpedo.Models
         private int _playerIndex = -1;
         private const int _maxPoints = 14;
 
+        /// <summary>
+        /// Is the game are in win condition
+        /// </summary>
+        /// <returns>bool: Yes, if its in win condition, no otherwise</returns>
         public bool IsEnded()
         {
             foreach (IPlayer player in Players)
@@ -29,12 +40,19 @@ namespace Torpedo.Models
             return false;
         }
 
+        /// <summary>
+        /// Set the current player into the next player
+        /// </summary>
+        /// <returns>Returns the next <see cref="IPlayer"/></returns>
         public IPlayer NextPlayer()
         {
             _playerIndex++;
             return CurrentPlayer = Players.ToArray()[_playerIndex % 2];
         }
 
+        /// <summary>
+        /// Set the necessary values, then change into battle state
+        /// </summary>
         public void Start()
         {
             IPlayer playerA = NextPlayer();
@@ -51,6 +69,9 @@ namespace Torpedo.Models
             State = GameState.Battle;
         }
 
+        /// <summary>
+        /// Randomize next player, used in the start
+        /// </summary>
         internal void RandomizeStartingPlayer()
         {
             _ = NextPlayer();
@@ -60,6 +81,9 @@ namespace Torpedo.Models
             }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Game()
         {
             Winner = null;
@@ -69,6 +93,10 @@ namespace Torpedo.Models
             State = GameState.ShipPlacement;
         }
 
+        /// <summary>
+        /// Add player to the game
+        /// </summary>
+        /// <param name="player"><see cref="IPlayer"/>: player</param>
         public void AddPlayer(IPlayer player)
         {
             if (Players.Count >= 2)

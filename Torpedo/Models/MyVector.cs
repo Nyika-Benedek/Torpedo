@@ -22,8 +22,8 @@ namespace Torpedo.Models
         /// <summary>
         /// Constructor of MyVector
         /// </summary>
-        /// <param name="way">Direction of the ship</param>
-        /// <param name="size">Size of the ship</param>
+        /// <param name="way"><see cref="IShips.Direction"/>: Direction of the ship</param>
+        /// <param name="size">int: Size of the ship</param>
         public MyVector(IShips.Direction way, int size)
         {
             Way = way;
