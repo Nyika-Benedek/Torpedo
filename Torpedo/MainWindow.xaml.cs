@@ -369,7 +369,7 @@ namespace Torpedo
                 _isAI = true;
                 _ai = new AI();
                 _game.AddPlayer(_ai);
-                GenerateAIShips();
+                _ai.GenerateShips();
                 player2Name.Text = _ai.Name;
             }
             else

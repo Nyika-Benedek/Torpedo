@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Torpedo.Models;
+using Torpedo.Interfaces;
 
 namespace Torpedo.AIModule
 {
@@ -15,7 +16,7 @@ namespace Torpedo.AIModule
         /// </summary>
         /// <param name="aI">The used <see cref="AI"/> agent</param>
         /// <param name="focus">Coordinate where the part of a ship was hit successfully.</param>
-        public FoundAILogic(AI aI, Coordinate focus) : base(aI) => Focus = focus;
+        public FoundAILogic(IBattlefield enemyBattlefield, Coordinate focus) : base(enemyBattlefield) => Focus = focus;
         public Coordinate Focus { get; private set; }
         /// <summary>
         /// Tries to hit the four possible neighbours of the hit coordinate.
@@ -29,7 +30,7 @@ namespace Torpedo.AIModule
             foreach (Directions direction in Enum.GetValues(typeof(Directions)))
             {
                 proposed = Focus.Shift(direction);
-                if (!AIUtils.IsCellShot(AI.EnemyBattlefield, proposed) && AIUtils.IsInField(proposed))
+                if (!AIUtils.IsCellShot(EnemyBattlefield, proposed) && AIUtils.IsInField(proposed))
                 {
                     return proposed;
                 }

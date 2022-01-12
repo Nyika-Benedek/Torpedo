@@ -15,7 +15,7 @@ namespace Torpedo.Models
         /// </summary>
         private enum PlayStyle { Random, Found, Sink }
         public List<(Coordinate, bool)> ShotHistory { get; } = new List<(Coordinate, bool)>(MainWindow.BattlefieldWidth * MainWindow.BattlefieldHeight);
-        public List<IShips> Ships { get => BattlefieldBuilder.Ships; }
+        public List<IShips> Ships { get; private set; } = new List<IShips>(4);
         private PlayStyle _playStyle = PlayStyle.Random;
         private static readonly string _aiName = "AI";
 
@@ -27,12 +27,6 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Build the <see cref="Battlefield"/> of the player
-        /// </summary>
-        /// BattlefieldBuilder is kept.
-        public new void BuildBattlefield() => Battlefield = BattlefieldBuilder.Build();
-
-        /// <summary>
         /// Calls an AI behivour based on the current agent playstyle, and the agent send an advised position to shoot at
         /// </summary>
         public void Act()
@@ -42,17 +36,17 @@ namespace Torpedo.Models
             {
                 case PlayStyle.Found:
                     {
-                        logic = new FoundAILogic(this, ShotHistory.Last().Item1);
+                        logic = new FoundAILogic(EnemyBattlefield, ShotHistory.Last().Item1);
                         break;
                     }
                 case PlayStyle.Random:
                     {
-                        logic = new RandomAILogic(this);
+                        logic = new RandomAILogic(EnemyBattlefield);
                         break;
                     }
                 default:
                     {
-                        logic = new RandomAILogic(this);
+                        logic = new RandomAILogic(EnemyBattlefield);
                         break;
                     }
             }
@@ -65,7 +59,7 @@ namespace Torpedo.Models
             catch (NowhereToShootException)
             {
                 _playStyle = PlayStyle.Random;
-                logic = new RandomAILogic(this);
+                logic = new RandomAILogic(EnemyBattlefield);
                 advised = logic.Act();
             }
 
@@ -79,5 +73,15 @@ namespace Torpedo.Models
         }
 
         public Ship GenerateRandomShip(int size) => new Ship(AIUtils.RandomCoordinate(), new MyVector(AIUtils.Random.Next(0, 1) == 0 ? IShips.Direction.Horizontal : IShips.Direction.Vertical, size));
+
+        public void GenerateShips()
+        {
+            // TODO: Get the AI to generate ships
+            for (int i = 2; i <= 5; i++)
+            {
+                while (!BattlefieldBuilder.TryToAddShip(GenerateRandomShip(i))) ;
+            }
+            Ships.AddRange(BattlefieldBuilder.Ships);
+        }
     }
 }
