@@ -85,15 +85,15 @@ namespace Torpedo
             var shape = new Rectangle();
             if (type == Type.Miss)
             {
-                shape.Fill = Brushes.Red;
+                shape.Fill = Brushes.LightBlue;
             }
             else if (type == Type.Ship)
             {
-                shape.Fill = Brushes.LightBlue;
+                shape.Fill = Brushes.Yellow;
             }
             else
             {
-                shape.Fill = Brushes.Yellow;
+                shape.Fill = Brushes.Red;
             }
             var unitY = canvas.Width / BattlefieldWidth;
             var unitX = canvas.Height / BattlefieldHeight;
@@ -231,8 +231,8 @@ namespace Torpedo
                     shipPlacementGrid.Visibility = Visibility.Collapsed;
                     VsAiLabel.Visibility = Visibility.Visible;
                     _ = MessageBox.Show("Let the battle begin!");
-                    UpdateScoreBoard();
                     _game.NextPlayer();
+                    UpdateScoreBoard();
                 }
                 _currentShipSize++;
             }
@@ -336,6 +336,13 @@ namespace Torpedo
                     if (_game.CurrentPlayer.EnemyBattlefield.Shoot(shot))
                     {
                         _game.CurrentPlayer.AddPoint();
+                        DrawPoint(shot, Type.Hit);
+                        DrawPoint(new Coordinate(0,0), Type.Hit);
+                    }
+                    else
+                    {
+                        DrawPoint(shot, Type.Miss);
+                        DrawPoint(new Coordinate(0, 0), Type.Miss);
                     }
                     if (_game.IsEnded())
                     {
@@ -343,7 +350,9 @@ namespace Torpedo
                     }
                     else
                     {
+                        UpdateScoreBoard();
                         _game.NextPlayer();
+                        UpdateScoreBoard();
                         if (_isAI)
                         {
                             UpdateScoreBoard();
@@ -359,8 +368,6 @@ namespace Torpedo
                                 DrawPoint(aiShot.Item1, Type.Miss);
                             }
                             DrawPoint(new Coordinate(5, 5), Type.Miss);
-                            // To see what was it's decision
-                            Thread.Sleep(1000);
                             if (_game.IsEnded())
                             {
                                 PostWinCondition();
@@ -368,7 +375,6 @@ namespace Torpedo
                             _game.NextPlayer();
                         }
                     }
-                    UpdateScoreBoard();
                     RedrawCanvas();
                 }
                 return;
