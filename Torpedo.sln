@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Torpedo.Test", "Torpedo.Test\Torpedo.Test.csproj", "{A1A3F915-F1C6-4D38-82D3-957AD802DA38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{2FF2F4FE-6F93-4AC2-8090-AF464EE4EA6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FF2F4FE-6F93-4AC2-8090-AF464EE4EA6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FF2F4FE-6F93-4AC2-8090-AF464EE4EA6B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1A3F915-F1C6-4D38-82D3-957AD802DA38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1A3F915-F1C6-4D38-82D3-957AD802DA38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1A3F915-F1C6-4D38-82D3-957AD802DA38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1A3F915-F1C6-4D38-82D3-957AD802DA38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
