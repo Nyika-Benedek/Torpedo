@@ -50,7 +50,6 @@ namespace Torpedo.Models
                 }
             }
             return result;
-            throw new System.NotImplementedException();
         }
 
         /// <summary>
