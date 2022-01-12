@@ -363,7 +363,7 @@ namespace Torpedo
                 _isAI = true;
                 _ai = new AI();
                 _game.AddPlayer(_ai);
-                GenerateAIShips();
+                _ai.GenerateShips();
                 player2Name.Text = _ai.Name;
             }
             else
@@ -382,15 +382,6 @@ namespace Torpedo
             }
             // Set Player 1 ships...
             UpdateScoreBoard();
-        }
-
-        private void GenerateAIShips()
-        {
-            // TODO: Get the AI to generate ships
-            for (int i = 2; i <= 5; i++)
-            {
-                while (!_ai.BattlefieldBuilder.TryToAddShip(_ai.GenerateRandomShip(i))) ;
-            }
         }
 
         /// <summary>

@@ -15,8 +15,8 @@ namespace Torpedo.AIModule
         /// Constructor of AILogic
         /// </summary>
         /// <param name="aI">Used <see cref="AI"/> agent</param>
-        protected AILogic(AI aI) => AI = aI;
-        public AI AI { get; private set; }
+        protected AILogic(IBattlefield enemyBattlefield) => EnemyBattlefield = enemyBattlefield;
+        public IBattlefield EnemyBattlefield{ get; private set; }
 
         /// <summary>
         /// The logic how the agent should make decision

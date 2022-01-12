@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Torpedo.Models;
+using Torpedo.Interfaces;
 
 namespace Torpedo.AIModule
 {
@@ -14,7 +15,7 @@ namespace Torpedo.AIModule
         /// Contructor
         /// </summary>
         /// <param name="aI">Used <see cref="AI"/> agent</param>
-        public RandomAILogic(AI aI) : base(aI)
+        public RandomAILogic(IBattlefield enemyBattlefield) : base(enemyBattlefield)
         {
         }
 
@@ -22,6 +23,6 @@ namespace Torpedo.AIModule
         /// It shooting radom to try hit something
         /// </summary>
         /// <returns>It returns the recommended <see cref="Coordinate"/></returns>
-        public override Coordinate Act() => AIUtils.GenerateRandomShoot(AI.EnemyBattlefield);
+        public override Coordinate Act() => AIUtils.GenerateRandomShoot(EnemyBattlefield);
     }
 }
