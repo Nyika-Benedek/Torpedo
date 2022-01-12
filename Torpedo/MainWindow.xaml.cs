@@ -468,10 +468,9 @@ namespace Torpedo
         {
             if (e.Key == Key.S)
             {
-                ClearCanvas();
-                if (typeof(AI) != _game.CurrentPlayer)
+                if (typeof(AI) != _game.CurrentPlayer && _game.State == GameState.Battle)
                 {
-                    // TODO get AI ships and draw it
+                    ClearCanvas();
                     foreach (var AIships in _ai.Ships)
                     {
                         foreach (var parts in AIships.Parts)
@@ -491,16 +490,12 @@ namespace Torpedo
         /// <param name="e">Data of the key related event</param>
         private void HideAIShips(object sender, KeyEventArgs e)
         {
-            if (_game.CurrentPlayer.EnemyBattlefield != null)
+            if (_game.CurrentPlayer.EnemyBattlefield != null && _game.State == GameState.Battle)
             {
                 if (e.Key == Key.S)
                 {
                     RedrawCanvas();
                 }
-            }
-            else
-            {
-                ClearCanvas();
             }
         }
     }
