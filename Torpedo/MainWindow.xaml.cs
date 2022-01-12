@@ -206,6 +206,11 @@ namespace Torpedo
             }
             _game.NextPlayer();
             UpdateScoreBoard();
+            if (_isAI)
+            {
+                VsAiLabel.Visibility = Visibility.Visible;
+            }
+            canvas.Focus();
         }
 
         /// <summary>
@@ -450,13 +455,6 @@ namespace Torpedo
         {
             if (e.Key == Key.S)
             {
-                // TODO
-                // if (typeof(_game.CurrentPlayer)!= AI)
-                // foreach(AI.Ships)
-                // {
-                        //foreach(item.ship>parts)
-                            //{ draw point}
-                // }
                 ClearCanvas();
                 if (typeof(AI) != _game.CurrentPlayer)
                 {
@@ -480,9 +478,16 @@ namespace Torpedo
         /// <param name="e">Data of the key related event</param>
         private void HideAIShips(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.S)
+            if (_game.CurrentPlayer.EnemyBattlefield != null)
             {
-                RedrawCanvas();
+                if (e.Key == Key.S)
+                {
+                    RedrawCanvas();
+                }
+            }
+            else
+            {
+                ClearCanvas();
             }
         }
     }
