@@ -8,9 +8,9 @@
         Title="Torpedo Game 2000"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize"
-        >
+        KeyDown="ShowAIShips" KeyUp="HideAIShips">
     
-    <StackPanel Background="Black">
+    <StackPanel Background="Black" >
         <ToolBar Grid.Row="0" VerticalAlignment="Bottom" Padding="0" >
             <Button Content="New Game" Click="NewGame"/>
             <Button Content="Query" Click="Query"/>
@@ -70,7 +70,7 @@
         </Grid>
         <Label Name="VsAiLabel" Content="Press 's' to see, the enemy ship positions" Foreground="White" Width="220" Visibility="Collapsed"/>
         <Border Margin="20" BorderThickness="1" BorderBrush="Green">
-            <Canvas x:Name="canvas" Background="Black" Height="500" Width="500" MouseLeftButtonDown="CanvasClick" KeyDown="ShowAIShips" KeyUp="HideAIShips">
+            <Canvas x:Name="canvas" Background="Black" Height="500" Width="500" MouseLeftButtonDown="CanvasClick">
                 <!-- egy kattintható canvas grid legyen 50x50 -->
                 
                 <!-- horizontal lines -->
