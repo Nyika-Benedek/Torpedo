@@ -297,8 +297,7 @@ namespace Torpedo
                     {
                         _game.CurrentPlayer.AddPoint();
                     }
-                    // TODO Turn only readable
-                    // _game.Turn++;
+                    _game.AddTurn();
                     if (_game.IsEnded())
                     {
                         PostWinCondition();

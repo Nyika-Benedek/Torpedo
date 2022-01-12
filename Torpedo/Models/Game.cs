@@ -95,5 +95,10 @@ namespace Torpedo.Models
             }
             Players.Add(player);
         }
+
+        public void AddTurn()
+        {
+            Turn++;
+        }
     }
 }
