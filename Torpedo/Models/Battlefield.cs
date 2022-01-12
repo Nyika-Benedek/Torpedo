@@ -30,7 +30,7 @@ namespace Torpedo.Models
             return isHitAny;
         }
 
-        public List<int> RemainingShips(IBattlefield battlefield)
+        public List<int> RemainingShips()
         {
             List<int> result = new List<int>(_ships.Count);
 

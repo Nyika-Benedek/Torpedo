@@ -153,10 +153,23 @@ namespace Torpedo
         /// </summary>
         public void UpdateScoreBoard()
         {
+            // Set player's points
             player1Points.Text = Convert.ToString(value: _game.CurrentPlayer.Points, new NumberFormatInfo());
             player2Points.Text = Convert.ToString(value: _game.CurrentPlayer.Points, new NumberFormatInfo());
+
+            // Set current turn
             turnCounter.Text = $"Turn: {_game.Turn}";
-            // TODO: Remaining Units
+
+            // Set Remaining Units
+            List<int> remainingShipsBuffer = _game.CurrentPlayer.Battlefield.RemainingShips();
+            string remainingShips = string.Join(' ', remainingShipsBuffer);
+            player1RemainingUnits.Text = remainingShips;
+
+            remainingShipsBuffer = _game.CurrentPlayer.EnemyBattlefield.RemainingShips();
+            remainingShips = string.Join(' ', remainingShipsBuffer);
+            player2RemainingUnits.Text = remainingShips;
+
+            // Highlight current player
             if (_game.CurrentPlayer.Name == player1Name.Text)
             {
                 player1Name.Foreground = Brushes.Red;
@@ -410,6 +423,7 @@ namespace Torpedo
             }
             else
             {
+                // TODO Generate AI's ship placement
                 _game.NextPlayer();
             }
             // Set Player 1 ships...
@@ -483,6 +497,13 @@ namespace Torpedo
         {
             if (e.Key == Key.S)
             {
+                // TODO
+                // if (typeof(_game.CurrentPlayer)!= AI)
+                // foreach(AI.Ships)
+                // {
+                        //foreach(item.ship>parts)
+                            //{ draw point}
+                // }
                 ClearCanvas();
                 _game.NextPlayer();
                 //Draw AI's Ships
