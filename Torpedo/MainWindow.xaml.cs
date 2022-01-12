@@ -153,23 +153,11 @@ namespace Torpedo
         /// </summary>
         public void UpdateScoreBoard()
         {
-            // Set player's points
-            player1Points.Text = Convert.ToString(value: _game.CurrentPlayer.Points, new NumberFormatInfo());
-            player2Points.Text = Convert.ToString(value: _game.CurrentPlayer.Points, new NumberFormatInfo());
-
+            // TODO _game.Turn is not giving the current turn
             // Set current turn
             turnCounter.Text = $"Turn: {_game.Turn}";
 
-            // Set Remaining Units
-            List<int> remainingShipsBuffer = _game.CurrentPlayer.Battlefield.RemainingShips();
-            string remainingShips = string.Join(' ', remainingShipsBuffer);
-            player1RemainingUnits.Text = remainingShips;
-
-            remainingShipsBuffer = _game.CurrentPlayer.EnemyBattlefield.RemainingShips();
-            remainingShips = string.Join(' ', remainingShipsBuffer);
-            player2RemainingUnits.Text = remainingShips;
-
-            // Highlight current player
+            // Highlight current player, and set its score
             if (_game.CurrentPlayer.Name == player1Name.Text)
             {
                 player1Name.Foreground = Brushes.Red;
@@ -177,11 +165,29 @@ namespace Torpedo
                 //player1Name.FontWeight = FontWeight.Bold;
                 player2Name.Foreground = Brushes.Black;
                 //MessageBox.Show(_game.CurrentPlayer.Name);
+                player1Points.Text = Convert.ToString(value: _game.CurrentPlayer.Points, new NumberFormatInfo());
+
+                // Set Remaining Units
+                if (_game.CurrentPlayer.Battlefield != null)
+                {
+                    List<int> remainingShipsBuffer = _game.CurrentPlayer.Battlefield.RemainingShips();
+                    string remainingShips = string.Join(' ', remainingShipsBuffer);
+                    player1RemainingUnits.Text = remainingShips;
+                }
             }
             else
             {
                 player2Name.Foreground = Brushes.Red;
                 player1Name.Foreground = Brushes.Black;
+                player2Points.Text = Convert.ToString(value: _game.CurrentPlayer.Points, new NumberFormatInfo());
+
+                // Set Remaining Units
+                if (_game.CurrentPlayer.Battlefield != null)
+                {
+                    List<int> remainingShipsBuffer = _game.CurrentPlayer.Battlefield.RemainingShips();
+                    string remainingShips = string.Join(' ', remainingShipsBuffer);
+                    player2RemainingUnits.Text = remainingShips;
+                }
             }
             _isPlayer1 = !_isPlayer1;
         }
@@ -428,7 +434,7 @@ namespace Torpedo
             }
             // Set Player 1 ships...
             _game.NextPlayer();
-            UpdateScoreBoard();
+            //UpdateScoreBoard();
         }
 
         /// <summary>

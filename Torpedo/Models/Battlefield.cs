@@ -32,13 +32,21 @@ namespace Torpedo.Models
 
         public List<int> RemainingShips()
         {
-            List<int> result = new List<int>(_ships.Count);
+            //List<int> result = new List<int>(_ships.Count);
+            List<int> result = new List<int>
+            {
+                2,
+                3,
+                4,
+                5
+            };
 
             foreach (IShips ship in _ships)
             {
                 if (ship.Sunk)
                 {
-                    result.Add(ship.Size);
+                    //result.Add(ship.Size);
+                    result.RemoveAll(p => p == ship.Size);
                 }
             }
             return result;
