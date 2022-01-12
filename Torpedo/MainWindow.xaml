@@ -52,8 +52,8 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0" Name="player1RemainingUnits" Text="0 0 0 0" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Name="player2RemainingUnits" Text="0 0 0 0" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="0" Name="player1RemainingUnits" Text="2 3 4 5" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Name="player2RemainingUnits" Text="2 3 4 5" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
 
                     <TextBlock Grid.Column="2" Name="player2Points" Text="Points:" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center"/>

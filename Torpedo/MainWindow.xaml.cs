@@ -280,6 +280,7 @@ namespace Torpedo
                     }
                 }
                 _currentShipSize++;
+                ShipToPlace.Content = $"Place ship {_currentShipSize}";
             }
             else
             {
