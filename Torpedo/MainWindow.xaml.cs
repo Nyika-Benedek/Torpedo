@@ -193,6 +193,9 @@ namespace Torpedo
             _isPlayer1 = !_isPlayer1;
         }
 
+        /// <summary>
+        /// Do everything which is necessary to start the game
+        /// </summary>
         private void StartGame()
         {
             _game.Start();
@@ -332,8 +335,6 @@ namespace Torpedo
                 }
                 return;
             }
-
-            // TODO: Ha mind a 2 játékos shipje el van tárolva az utolsó CanvasClick-nél akkor lépjen vissza !_inShipPlacement-be és töntesse el a ShipPlacementGrid-et
         }
 
         /// <summary>
@@ -389,6 +390,9 @@ namespace Torpedo
             UpdateScoreBoard();
         }
 
+        /// <summary>
+        /// Generating the AI's ships, then adding to it's battlefield
+        /// </summary>
         private void GenerateAIShips()
         {
             // TODO: Get the AI to generate ships
