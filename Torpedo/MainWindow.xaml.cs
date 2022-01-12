@@ -54,6 +54,7 @@ namespace Torpedo
         private bool _isDatabaseExists;
         private bool _isPlayer1 = true;
         private bool _isAI = false;
+        private AI _ai = new AI();
 
         /// <summary>
         /// This window will open on the start.
@@ -521,15 +522,15 @@ namespace Torpedo
                 if (typeof(AI) != _game.CurrentPlayer)
                 {
                     // TODO get AI ships and draw it
-                    foreach (var AIships in _game.Players)
+                    foreach (var AIships in _ai.Ships)
                     {
-
+                        foreach (var parts in AIships.Parts)
+                        {
+                            DrawPoint(parts, Type.Ship);
+                        }
                     }
                 }
-                _game.NextPlayer();
-                //Draw AI's Ships
-                _game.NextPlayer();
-                //_game.Turn -= 2;
+                //DrawPoint(new Coordinate(0, 0), Type.Hit);
             }
         }
 
