@@ -518,6 +518,14 @@ namespace Torpedo
                             //{ draw point}
                 // }
                 ClearCanvas();
+                if (typeof(AI) != _game.CurrentPlayer)
+                {
+                    // TODO get AI ships and draw it
+                    foreach (var AIships in _game.Players)
+                    {
+
+                    }
+                }
                 _game.NextPlayer();
                 //Draw AI's Ships
                 _game.NextPlayer();

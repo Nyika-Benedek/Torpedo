@@ -48,6 +48,11 @@ namespace Torpedo.Models
         {
             _playerIndex++;
             return CurrentPlayer = Players.ToArray()[_playerIndex % 2];
+            // TODO fix unreachable content
+            if (State.Equals(GameState.Battle))
+            {
+                Turn++;
+            }
         }
 
         /// <summary>
