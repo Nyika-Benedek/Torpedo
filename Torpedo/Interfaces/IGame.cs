@@ -18,5 +18,6 @@ namespace Torpedo.Interfaces
 
         abstract IPlayer NextPlayer();
         public abstract void AddPlayer(IPlayer player);
+        void RandomizeStartingPlayer();
     }
 }

@@ -48,11 +48,6 @@ namespace Torpedo.Models
         {
             _playerIndex++;
             return CurrentPlayer = Players.ToArray()[_playerIndex % 2];
-            // TODO fix unreachable content
-            if (State.Equals(GameState.Battle))
-            {
-                Turn++;
-            }
         }
 
         /// <summary>
@@ -68,16 +63,13 @@ namespace Torpedo.Models
 
             playerA.SetEnemyBattlefield(playerB.Battlefield);
             playerB.SetEnemyBattlefield(playerA.Battlefield);
-
-            RandomizeStartingPlayer();
-
             State = GameState.Battle;
         }
 
         /// <summary>
         /// Randomize next player, used in the start
         /// </summary>
-        internal void RandomizeStartingPlayer()
+        public void RandomizeStartingPlayer()
         {
             _ = NextPlayer();
             if (new Random().Next(2) == 1)

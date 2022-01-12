@@ -54,7 +54,7 @@ namespace Torpedo
         private bool _isDatabaseExists;
         private bool _isPlayer1 = true;
         private bool _isAI = false;
-        private AI _ai = new AI();
+        private AI _ai;
 
         /// <summary>
         /// This window will open on the start.
@@ -193,51 +193,19 @@ namespace Torpedo
             _isPlayer1 = !_isPlayer1;
         }
 
-        /// <summary>
-        /// Calls the AI to get a recommended choice to place a ship
-        /// </summary>
-        /// <returns>A</returns>
-        private (Coordinate, MyVector) AIPlacingOneShip() // TODO to AI
+        private void StartGame()
         {
-            // TODO: Call the AI to get a random ship position
-            return (new Coordinate(0, 0), new MyVector(IShips.Direction.Horizontal, 2));
-        }
-
-        /// <summary>
-        /// Calls the AIPlacingOneShip() until its gives enough ship locations
-        /// </summary>
-        private void AIPlacingShips() //TODO to AI
-        {
-            while (_currentShipSize != 6)
-            {
-                (Coordinate position, MyVector vector) = AIPlacingOneShip();
-                AddShipToAIBattlefield(position, vector);
-            }
-        }
-
-        /// <summary>
-        /// Its like <see cref="PlaceShip"/>, just without the interaction with the player
-        /// </summary>
-        /// <param name="position">Coordinate: starting point</param>
-        /// <param name="vector">MyVector: (<see cref="IShips.Direction"/>, int: size) from the point</param>
-        private void AddShipToAIBattlefield(Coordinate position, MyVector vector)
-        {
-            UpdateScoreBoard();
-            IShips newShip = new Ship(position, vector);
-            if (_game.CurrentPlayer.BattlefieldBuilder.TryToAddShip(newShip))
-            {
-                if (_currentShipSize == 5)
-                {
-                    _game.Start();
-                    shipPlacementGrid.Visibility = Visibility.Collapsed;
-                    VsAiLabel.Visibility = Visibility.Visible;
-                    _ = MessageBox.Show("Let the battle begin!");
-                    _game.NextPlayer();
-                    UpdateScoreBoard();
-                }
-                _currentShipSize++;
-            }
+            _game.Start();
+            shipPlacementGrid.Visibility = Visibility.Collapsed;
             ClearCanvas();
+            MessageBox.Show("Let the battle begin!");
+            _currentShipSize = 2;
+            if (!_isAI)
+            {
+                _game.RandomizeStartingPlayer();
+            }
+            _game.NextPlayer();
+            UpdateScoreBoard();
         }
 
         /// <summary>
@@ -260,19 +228,10 @@ namespace Torpedo
                 {
                     if (_game.NextPlayer().BattlefieldBuilder.Ships.Count != 0)
                     {
-                        _game.Start();
-                        shipPlacementGrid.Visibility = Visibility.Collapsed;
-                        ClearCanvas();
-                        MessageBox.Show("Let the battle begin!");
-                        _currentShipSize = 2;
-                        UpdateScoreBoard();
+                        StartGame();
                         return;
                     }
-                    if (_isAI)
-                    {
-                        AIPlacingShips();
-                    }
-                    else
+                    if (!_isAI)
                     {
                         MessageBox.Show($"Ask {_game.NextPlayer().Name} to turn away and start your shipplacement turn!");
                         _game.NextPlayer();
@@ -290,21 +249,12 @@ namespace Torpedo
         }
 
         /// <summary>
-        /// Calls th <see cref="AI"/> agent to get a shot
-        /// </summary>
-        /// <returns>A recommended shooting (<see cref="Coordinate"/>, bool: is hit any ship)</returns>
-        private (Coordinate, bool) AIShoot()
-        {
-            // TODO: Get AI shoot recommendation
-            // _game.CurrentPlayer.EnemyBattlefield.Shoot(shoot)
-            return (new Coordinate(0, 0), true /*_game.CurrentPlayer.EnemyBattlefield.Shoot(shoot)*/);
-        }
-
-        /// <summary>
         /// Checks if the game is at win condicion
         /// </summary>
         private void PostWinCondition()
         {
+            RedrawCanvas();
+            UpdateScoreBoard();
             MessageBox.Show($"Congratulation {_game.CurrentPlayer.Name} you destroyed your enemies!");
             _game.State = GameState.Finished;
             DatabaseCommands database = new DatabaseCommands();
@@ -315,6 +265,14 @@ namespace Torpedo
                 _game.CurrentPlayer.Points,
                 _game.NextPlayer().Name,
                 _game.CurrentPlayer.Points));
+            /*
+            string line = "";
+            foreach (var item in _ai.ShotHistory)
+            {
+                line += item;
+            }
+            MessageBox.Show(line);
+            */
         }
 
         /// <summary>
@@ -338,14 +296,9 @@ namespace Torpedo
                     if (_game.CurrentPlayer.EnemyBattlefield.Shoot(shot))
                     {
                         _game.CurrentPlayer.AddPoint();
-                        DrawPoint(shot, Type.Hit);
-                        DrawPoint(new Coordinate(0,0), Type.Hit);
                     }
-                    else
-                    {
-                        DrawPoint(shot, Type.Miss);
-                        DrawPoint(new Coordinate(0, 0), Type.Miss);
-                    }
+                    // TODO Turn only readable
+                    // _game.Turn++;
                     if (_game.IsEnded())
                     {
                         PostWinCondition();
@@ -357,24 +310,9 @@ namespace Torpedo
                         UpdateScoreBoard();
                         if (_isAI)
                         {
-                            UpdateScoreBoard();
-                            RedrawCanvas();
-                            (Coordinate, bool) aiShot = AIShoot();
-                            if (aiShot.Item2)
-                            {
-                                _game.CurrentPlayer.AddPoint();
-                                DrawPoint(aiShot.Item1, Type.Hit);
-                            }
-                            else
-                            {
-                                DrawPoint(aiShot.Item1, Type.Miss);
-                            }
-                            DrawPoint(new Coordinate(5, 5), Type.Miss);
-                            if (_game.IsEnded())
-                            {
-                                PostWinCondition();
-                            }
+                            _ai.Act();
                             _game.NextPlayer();
+                            UpdateScoreBoard();
                         }
                     }
                     RedrawCanvas();
@@ -412,6 +350,7 @@ namespace Torpedo
         /// <param name="e">Data of the mouse related event</param>
         private void NewGame(object sender, RoutedEventArgs e)
         {
+            _isAI = false;
             _currentShipSize = 2;
             ClearCanvas();
             _game = new Game();
@@ -419,14 +358,20 @@ namespace Torpedo
             var newGameWindow = new NewGameWindow();
             newGameWindow.ShowDialog();
             _game.AddPlayer(new Player(newGameWindow.Player1Name));
-            _game.AddPlayer(new Player(newGameWindow.Player2Name));
             player1Name.Text = newGameWindow.Player1Name;
-            player2Name.Text = newGameWindow.Player2Name;
             if (newGameWindow.Player2Name == "AI")
             {
                 _isAI = true;
+                _ai = new AI();
+                _game.AddPlayer(_ai);
+                GenerateAIShips();
+                player2Name.Text = _ai.Name;
             }
-
+            else
+            {
+                _game.AddPlayer(new Player(newGameWindow.Player2Name));
+                player2Name.Text = newGameWindow.Player2Name;
+            }
             shipPlacementGrid.Visibility = Visibility.Visible;
             ShipToPlace.Content = $"Place ship {_currentShipSize}";
             // set the pointer to the first player
@@ -434,15 +379,19 @@ namespace Torpedo
             if (!_isAI)
             {
                 MessageBox.Show($"Ask {_game.NextPlayer().Name} to turn away and start your shipplacement turn!");
-            }
-            else
-            {
-                // TODO Generate AI's ship placement
                 _game.NextPlayer();
             }
             // Set Player 1 ships...
-            _game.NextPlayer();
-            //UpdateScoreBoard();
+            UpdateScoreBoard();
+        }
+
+        private void GenerateAIShips()
+        {
+            // TODO: Get the AI to generate ships
+            for (int i = 2; i <= 5; i++)
+            {
+                while (!_ai.BattlefieldBuilder.TryToAddShip(_ai.GenerateRandomShip(i))) ;
+            }
         }
 
         /// <summary>

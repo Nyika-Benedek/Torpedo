@@ -77,5 +77,7 @@ namespace Torpedo.Models
                 _playStyle = PlayStyle.Found;
             }
         }
+
+        public Ship GenerateRandomShip(int size) => new Ship(AIUtils.RandomCoordinate(), new MyVector(AIUtils.Random.Next(0, 1) == 0 ? IShips.Direction.Horizontal : IShips.Direction.Vertical, size));
     }
 }

@@ -18,6 +18,7 @@ namespace Torpedo
     /// </summary>
     public static class AIUtils
     {
+        public static Random Random { get; } = new Random();
         /// <summary>
         /// This method decides that if a unit is shooted already or not.
         /// </summary>
@@ -50,18 +51,18 @@ namespace Torpedo
         /// <returns>It returns the coordinate in a form of (x,y) values.</returns>
         public static Coordinate GenerateRandomShoot(IBattlefield battlefield)
         {
-            Coordinate coordinate;
-            int x;
-            int y;
-            Random random = new Random();
-            do
-            {
-                y = random.Next(0, 9 + 1);
-                x = random.Next(0, 9 + 1);
-                coordinate = new Coordinate(x, y);
-            }
+            Coordinate coordinate = RandomCoordinate();
             while (AIUtils.IsCellShot(battlefield, coordinate) == true);
             return coordinate;
+        }
+
+        public static Coordinate RandomCoordinate()
+        {
+            int x;
+            int y;
+            y = Random.Next(0, MainWindow.BattlefieldHeight);
+            x = Random.Next(0, MainWindow.BattlefieldWidth);
+            return new Coordinate(x, y);
         }
     }
 }
