@@ -13,9 +13,9 @@ namespace Torpedo.AIModule
     /// </summary>
     public class SinkAILogic : AILogic
     {
-        private Directions direction;
-        public Coordinate proposed { get; set; }
-        private Coordinate nonRandomHit, lastRandomHit;
+        private Directions _direction;
+        public Coordinate Proposed { get; set; }
+        private Coordinate _nonRandomHit, _lastRandomHit;
 
         /// <summary>
         /// Constructor
@@ -36,7 +36,7 @@ namespace Torpedo.AIModule
         private void Propose()
         {
             _direction = AIUtils.GetDirection(origin: _lastRandomHit, shifted: _nonRandomHit);
-            _proposed = _nonRandomHit.Shift(_direction);
+            Proposed = _nonRandomHit.Shift(_direction);
         }
 
         /// <summary>
@@ -46,9 +46,9 @@ namespace Torpedo.AIModule
         public override List<Coordinate> Plan()
         {
             var result = new List<Coordinate>();
-            if (!AIUtils.IsCellShot(EnemyBattlefield, _proposed) && AIUtils.IsInField(_proposed))
+            if (!AIUtils.IsCellShot(EnemyBattlefield, Proposed) && AIUtils.IsInField(Proposed))
             {
-                result.Add(_proposed);
+                result.Add(Proposed);
             }
             return result;
         }
