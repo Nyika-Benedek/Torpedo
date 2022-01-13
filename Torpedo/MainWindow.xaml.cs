@@ -383,19 +383,6 @@ namespace Torpedo
         }
 
         /// <summary>
-        /// Generating the AI's ships, then adding to it's battlefield
-        /// </summary>
-        private void GenerateAIShips()
-        {
-            for (int i = 2; i <= 5; i++)
-            {
-                while (!_ai.BattlefieldBuilder.TryToAddShip(_ai.GenerateRandomShip(i)))
-                {
-                }
-            }
-        }
-
-        /// <summary>
         /// Set the ship placement's direction to vertical
         /// </summary>
         /// <param name="sender">The object we clicked</param>
