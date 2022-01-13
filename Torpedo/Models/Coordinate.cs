@@ -56,17 +56,30 @@ namespace Torpedo.Models
         /// <summary>
         /// Get hash of a coordinate
         /// </summary>
-        /// <returns>Hash<see cref="int"/>X,</returns>
+        /// <returns>HashCode.Combine(<see cref="int"/> X, <see cref="int"/> Y</returns>
         public override int GetHashCode()
         {
             return HashCode.Combine(this.X, this.Y);
         }
 
+
+        /// <summary>
+        /// Override <see cref="Coordinate"/> == <see cref="Coordinate"/> operation
+        /// </summary>
+        /// <param name="left"><see cref="Coordinate"/> left</param>
+        /// <param name="right"><see cref="Coordinate"/> right</param>
+        /// <returns><see cref="bool"/> true, if left.X equals right.X and left.Y equals left.Y, false otherwise</returns>
         public static bool operator ==(Coordinate left, Coordinate right)
         {
             return left.Equals(right);
         }
 
+        /// <summary>
+        /// Override <see cref="Coordinate"/> != <see cref="Coordinate"/> operation
+        /// </summary>
+        /// <param name="left"><see cref="Coordinate"/> left</param>
+        /// <param name="right"><see cref="Coordinate"/> right</param>
+        /// <returns>!(<see cref="Coordinate"/> left == <see cref="Coordinate"/> right)</returns>
         public static bool operator !=(Coordinate left, Coordinate right)
         {
             return !(left == right);
@@ -76,6 +89,12 @@ namespace Torpedo.Models
             return "X" + this.X + "Y" + this.Y;
         }
 
+        /// <summary>
+        /// Shift a <see cref="Coordinate"/> into one <see cref="IShips.Direction"/>
+        /// </summary>
+        /// <param name="direction"><see cref="IShips.Direction"/> to shift at</param>
+        /// <returns>The shifted <see cref="Coordinate"/></returns>
+        // TODO: NI: ?!
         public Coordinate Shift(Directions direction)
         {
             switch (direction)
