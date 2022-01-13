@@ -14,7 +14,8 @@ namespace Torpedo.AIModule
     public class SinkAILogic : AILogic
     {
         private Directions direction;
-        private Coordinate proposed, nonRandomHit, lastRandomHit;
+        public Coordinate proposed { get; set; }
+        private Coordinate nonRandomHit, lastRandomHit;
 
         /// <summary>
         /// Constructor
