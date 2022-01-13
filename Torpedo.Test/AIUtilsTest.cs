@@ -129,5 +129,4 @@ namespace TestProject3
             Assert.IsFalse(AIUtils.IsCellShot(battlefield, y));
         }
     }
-#pragma warning restore NI1007 // Test classes must ultimately inherit from 'AutoTest'
 }

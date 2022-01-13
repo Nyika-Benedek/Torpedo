@@ -6,3 +6,4 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Correctness", "NI1007:Test classes must ultimately inherit from 'AutoTest'", Justification = "Not reachable", Scope = "type", Target = "~T:TestProject3.AIUtilsTest")]
+[assembly: SuppressMessage("Correctness", "NI1007:Test classes must ultimately inherit from 'AutoTest'", Justification = "Not reachable", Scope = "type", Target = "~T:Torpedo.Test.SinkAILogicTest")]
