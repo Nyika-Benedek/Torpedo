@@ -162,10 +162,7 @@ namespace Torpedo
             if (_game.CurrentPlayer.Name == player1Name.Text)
             {
                 player1Name.Foreground = Brushes.Red;
-                //player1Name.FontWeight = SystemFonts.;
-                //player1Name.FontWeight = FontWeight.Bold;
                 player2Name.Foreground = Brushes.Black;
-                //MessageBox.Show(_game.CurrentPlayer.Name);
                 player1Points.Text = Convert.ToString(value: _game.CurrentPlayer.Points, new NumberFormatInfo());
 
                 // Set Remaining Units
@@ -273,14 +270,6 @@ namespace Torpedo
                 _game.CurrentPlayer.Points,
                 _game.NextPlayer().Name,
                 _game.CurrentPlayer.Points));
-            /*
-            string line = "";
-            foreach (var item in _ai.ShotHistory)
-            {
-                line += item;
-            }
-            MessageBox.Show(line);
-            */
         }
 
         /// <summary>
@@ -359,6 +348,7 @@ namespace Torpedo
             _currentShipSize = 2;
             ClearCanvas();
             _game = new Game();
+
             // Set Player Names
             var newGameWindow = new NewGameWindow();
             newGameWindow.ShowDialog();
@@ -379,6 +369,7 @@ namespace Torpedo
             }
             shipPlacementGrid.Visibility = Visibility.Visible;
             ShipToPlace.Content = $"Place ship {_currentShipSize}";
+
             // set the pointer to the first player
             _game.NextPlayer();
             if (!_isAI)
@@ -386,6 +377,7 @@ namespace Torpedo
                 MessageBox.Show($"Ask {_game.NextPlayer().Name} to turn away and start your shipplacement turn!");
                 _game.NextPlayer();
             }
+
             // Set Player 1 ships...
             UpdateScoreBoard();
         }
@@ -395,10 +387,11 @@ namespace Torpedo
         /// </summary>
         private void GenerateAIShips()
         {
-            // TODO: Get the AI to generate ships
             for (int i = 2; i <= 5; i++)
             {
-                while (!_ai.BattlefieldBuilder.TryToAddShip(_ai.GenerateRandomShip(i))) ;
+                while (!_ai.BattlefieldBuilder.TryToAddShip(_ai.GenerateRandomShip(i)))
+                {
+                }
             }
         }
 
@@ -479,7 +472,6 @@ namespace Torpedo
                         }
                     }
                 }
-                //DrawPoint(new Coordinate(0, 0), Type.Hit);
             }
         }
 
