@@ -193,6 +193,9 @@ namespace Torpedo
             _isPlayer1 = !_isPlayer1;
         }
 
+        /// <summary>
+        /// Do everything which is necessary to start the game
+        /// </summary>
         private void StartGame()
         {
             _game.Start();
@@ -332,8 +335,6 @@ namespace Torpedo
                 }
                 return;
             }
-
-            // TODO: Ha mind a 2 játékos shipje el van tárolva az utolsó CanvasClick-nél akkor lépjen vissza !_inShipPlacement-be és töntesse el a ShipPlacementGrid-et
         }
 
         /// <summary>
@@ -387,6 +388,18 @@ namespace Torpedo
             }
             // Set Player 1 ships...
             UpdateScoreBoard();
+        }
+
+        /// <summary>
+        /// Generating the AI's ships, then adding to it's battlefield
+        /// </summary>
+        private void GenerateAIShips()
+        {
+            // TODO: Get the AI to generate ships
+            for (int i = 2; i <= 5; i++)
+            {
+                while (!_ai.BattlefieldBuilder.TryToAddShip(_ai.GenerateRandomShip(i))) ;
+            }
         }
 
         /// <summary>
@@ -455,10 +468,9 @@ namespace Torpedo
         {
             if (e.Key == Key.S)
             {
-                ClearCanvas();
-                if (typeof(AI) != _game.CurrentPlayer) // TODO SEVERE This is true the the current player is not an AI, not in case of theres an AI in the game!!!
+                if (typeof(AI) != _game.CurrentPlayer && _game.State == GameState.Battle) // TODO SEVERE This is true the the current player is not an AI, not in case of theres an AI in the game!!!
                 {
-                    // TODO get AI ships and draw it
+                    ClearCanvas();
                     foreach (var AIships in _ai.Ships)
                     {
                         foreach (var parts in AIships.Parts)
@@ -478,16 +490,12 @@ namespace Torpedo
         /// <param name="e">Data of the key related event</param>
         private void HideAIShips(object sender, KeyEventArgs e)
         {
-            if (_game.CurrentPlayer.EnemyBattlefield != null)
+            if (_game.CurrentPlayer.EnemyBattlefield != null && _game.State == GameState.Battle)
             {
                 if (e.Key == Key.S)
                 {
                     RedrawCanvas();
                 }
-            }
-            else
-            {
-                ClearCanvas();
             }
         }
     }
