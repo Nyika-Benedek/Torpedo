@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Torpedo.AIModule;
 using Torpedo.Interfaces;
@@ -53,7 +54,14 @@ namespace Torpedo.Models
                         story += "found a ship randomly, \n";
                         _playStyle = PlayStyle.Found;
                         story += "plan, and shoot it around carefully, \n";
-                        logic = new FoundAILogic(EnemyBattlefield, last.Value.Item1); // comes up with at most four possible ship part location
+                        try
+                        {
+                            logic = new FoundAILogic(EnemyBattlefield, last.Value.Item1); // comes up with at most four possible ship part location
+                        }
+                        catch (ArgumentException)
+                        {
+                            logic = new RandomAILogic(EnemyBattlefield);
+                        }
                     }
                     else
                     {
@@ -67,7 +75,14 @@ namespace Torpedo.Models
                             lastRandomHit = lastRandomHit.Previous;
                         }
 
-                        logic = new SinkAILogic(EnemyBattlefield, last.Value.Item1, lastRandomHit.Value.Item1);
+                        try
+                        {
+                            logic = new SinkAILogic(EnemyBattlefield, last.Value.Item1, lastRandomHit.Value.Item1);
+                        }
+                        catch (ArgumentException)
+                        {
+                            logic = new RandomAILogic(EnemyBattlefield);
+                        }
                     }
                 }
                 else // The last shot missed
@@ -104,13 +119,16 @@ namespace Torpedo.Models
 
         }
 
-        public Ship GenerateRandomShip(int size)
+        private Ship GenerateRandomShip(int size)
         {
             return new Ship(
                 AIUtils.RandomCoordinate(),
                 new MyVector(AIUtils.Random.Next(0, 2) == 0 ? IShips.Direction.Horizontal : IShips.Direction.Vertical, size));
         }
 
+        /// <summary>
+        /// Generating the AI's ships, then adding to it's battlefield
+        /// </summary>
         public void GenerateShips()
         {
             for (int i = 2; i <= 5; i++)

@@ -67,5 +67,37 @@ namespace Torpedo
             x = Random.Next(0, MainWindow.BattlefieldWidth);
             return new Coordinate(x, y);
         }
+
+        public static Directions GetDirection(Coordinate origin, Coordinate shifted)
+        {
+            Coordinate delta = new Coordinate(x: shifted.X, y: shifted.Y);
+            delta.X -= origin.X;
+            delta.Y -= origin.Y;
+
+            if (delta.X != 0 && delta.Y != 0)
+            {
+                throw new ArgumentException("shots are not aligned");
+            }
+
+            if (delta.X < 0)
+            {
+                return Directions.Left;
+            }
+            if (delta.X > 0)
+            {
+                return Directions.Right;
+            }
+            if (delta.Y < 0)
+            {
+                return Directions.Top;
+            }
+            if (delta.Y > 0)
+            {
+                return Directions.Bottom;
+            }
+
+            throw new ArgumentException("shots are on the same spot");
+
+        }
     }
 }
