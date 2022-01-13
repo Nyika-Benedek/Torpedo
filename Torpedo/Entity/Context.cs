@@ -41,11 +41,11 @@ namespace Torpedo.Entity
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite($"Data Source={DatabaseName}");
-            //optionsBuilder.UseSqlServer(Configuration.GetConnectionString("ServerDb"));
+            // optionsBuilder.UseSqlServer(Configuration.GetConnectionString("ServerDb"));
             optionsBuilder.UseLazyLoadingProxies();
             base.OnConfiguring(optionsBuilder);
-            //base.OnConfiguring(optionsBuilder);
-            //DatabaseModel database = new DatabaseModel();
+            // base.OnConfiguring(optionsBuilder);
+            // DatabaseModel database = new DatabaseModel();
         }
 
 
