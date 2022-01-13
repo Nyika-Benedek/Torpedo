@@ -456,7 +456,7 @@ namespace Torpedo
             if (e.Key == Key.S)
             {
                 ClearCanvas();
-                if (typeof(AI) != _game.CurrentPlayer)
+                if (typeof(AI) != _game.CurrentPlayer) // TODO SEVERE This is true the the current player is not an AI, not in case of theres an AI in the game!!!
                 {
                     // TODO get AI ships and draw it
                     foreach (var AIships in _ai.Ships)

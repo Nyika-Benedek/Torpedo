@@ -22,6 +22,6 @@ namespace Torpedo.AIModule
         /// The logic how the agent should make decision
         /// </summary>
         /// <returns>A <see cref="Coordinate"/></returns>
-        public abstract Coordinate Act();
+        public abstract List<Coordinate> Plan();
     }
 }

@@ -5,6 +5,7 @@ using Torpedo.Interfaces;
 
 namespace Torpedo.Models
 {
+    public enum PlayStyle { Random, Found, Sink, FollowPlan }
     /// <summary>
     /// This class provides an agent to act like a player
     /// </summary>
@@ -13,11 +14,12 @@ namespace Torpedo.Models
         /// <summary>
         /// There are 3 different behivaur the AI could act
         /// </summary>
-        private enum PlayStyle { Random, Found, Sink }
-        public List<(Coordinate, bool)> ShotHistory { get; } = new List<(Coordinate, bool)>(MainWindow.BattlefieldWidth * MainWindow.BattlefieldHeight);
+        public LinkedList<(Coordinate, bool, PlayStyle)> ShotHistory { get; } = new LinkedList<(Coordinate, bool, PlayStyle)>();
         public List<IShips> Ships { get; private set; } = new List<IShips>(4);
         private PlayStyle _playStyle = PlayStyle.Random;
         private static readonly string _aiName = "AI";
+
+        public Queue<(Coordinate, PlayStyle)> Planned { get; } = new Queue<(Coordinate, PlayStyle)>();
 
         /// <summary>
         /// Constructor of <see cref="AI"/>, its sets the first behivour of the agent
@@ -31,48 +33,78 @@ namespace Torpedo.Models
         /// </summary>
         public void Act()
         {
-            AILogic logic;
-            switch (_playStyle)
+            string story = string.Empty;
+            AILogic logic = new RandomAILogic(EnemyBattlefield);
+
+            if (ShotHistory.Count != 0)
             {
-                case PlayStyle.Found:
+                LinkedListNode<(Coordinate, bool, PlayStyle)> last = ShotHistory.Last;
+
+                if (last.Value.Item2) // Last shot hit
+                {
+                    story += "the last shot hit, \n";
+                    if (last.Value.Item3 == PlayStyle.Random) // Last shot was random
                     {
-                        logic = new FoundAILogic(EnemyBattlefield, ShotHistory.Last().Item1);
-                        break;
+                        story += "found a ship randomly, \n";
+                        _playStyle = PlayStyle.Found;
+                        story += "plan, and shoot it around carefully, \n";
+                        logic = new FoundAILogic(EnemyBattlefield, last.Value.Item1); // comes up with at most four possible ship part location
                     }
-                case PlayStyle.Random:
+                    else
                     {
-                        logic = new RandomAILogic(EnemyBattlefield);
-                        break;
+                        story += "my aim was true, \n";
+                        _playStyle = PlayStyle.Sink;
+                        story += "lets think it through carefully, \n";
+
+                        LinkedListNode<(Coordinate, bool, PlayStyle)> lastRandomHit = last; // the last definitely wasn't random
+                        while (lastRandomHit.Value.Item3 != PlayStyle.Random)
+                        {
+                            lastRandomHit = lastRandomHit.Previous;
+                        }
+
+                        logic = new SinkAILogic(EnemyBattlefield, last.Value.Item1, lastRandomHit.Value.Item1);
                     }
-                default:
+                }
+                else // The last shot missed
+                {
+                    story += "missed the ship, \n";
+                    if (Planned.Count != 0) // Any options?
                     {
-                        logic = new RandomAILogic(EnemyBattlefield);
-                        break;
+                        story += "but I remember that I hit it before, \n";
+                        _playStyle = PlayStyle.FollowPlan;
+                        story += "lets not think hard, just follow the plan, \n";
+                        logic = new PlannedAILogic(EnemyBattlefield); // does not advise at all, follows the plan
                     }
+                    else // No plan, default back to shooting randomly
+                    {
+                        story += "I have no clue where to shoot anymore, \n";
+                        _playStyle = PlayStyle.Random;
+                        story += "lets not think hard, just shoot somewhere, \n";
+                        logic = new RandomAILogic(EnemyBattlefield); // comes up with random coordinates
+                    }
+                }
+
+                StorePlan(logic.Plan(), _playStyle);
             }
 
-            Coordinate advised;
-            try
+            if (Planned.Count == 0) // after all these thinking theres still no plan.. shoot randomly
             {
-                 advised = logic.Act();
-            }
-            catch (NowhereToShootException)
-            {
-                _playStyle = PlayStyle.Random;
-                logic = new RandomAILogic(EnemyBattlefield);
-                advised = logic.Act();
+                story += "Ran out of ideas, \nforgot where to shoot \n";
+                logic = new RandomAILogic(EnemyBattlefield); // comes up with random coordinates
+                StorePlan(logic.Plan(), PlayStyle.Random);
             }
 
-            bool isHit = EnemyBattlefield.Shoot(advised);
-            ShotHistory.Add((advised, isHit));
+            ExecutePlan();
+            return;
 
-            if (isHit)
-            {
-                _playStyle = PlayStyle.Found;
-            }
         }
 
-        public Ship GenerateRandomShip(int size) => new Ship(AIUtils.RandomCoordinate(), new MyVector(AIUtils.Random.Next(0, 1) == 0 ? IShips.Direction.Horizontal : IShips.Direction.Vertical, size));
+        public Ship GenerateRandomShip(int size)
+        {
+            return new Ship(
+                AIUtils.RandomCoordinate(),
+                new MyVector(AIUtils.Random.Next(0, 2) == 0 ? IShips.Direction.Horizontal : IShips.Direction.Vertical, size));
+        }
 
         public void GenerateShips()
         {
@@ -82,6 +114,23 @@ namespace Torpedo.Models
                 while (!BattlefieldBuilder.TryToAddShip(GenerateRandomShip(i))) ;
             }
             Ships.AddRange(BattlefieldBuilder.Ships);
+        }
+
+        private void ExecutePlan()
+        {
+            Coordinate advised;
+            PlayStyle reason;
+            (advised, reason) = Planned.Dequeue();
+            bool isHit = EnemyBattlefield.Shoot(advised);
+            ShotHistory.AddLast(new LinkedListNode<(Coordinate, bool, PlayStyle)>((advised, isHit, reason)));
+        }
+
+        private void StorePlan(List<Coordinate> coordinates, PlayStyle reason)
+        {
+            foreach (Coordinate coordinate in coordinates)
+            {
+                Planned.Enqueue((coordinate, reason));
+            }
         }
     }
 }

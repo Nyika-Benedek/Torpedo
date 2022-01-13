@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Torpedo.Models;
 using Torpedo.Interfaces;
+using Torpedo.Models;
 
 namespace Torpedo.AIModule
 {
@@ -23,35 +23,19 @@ namespace Torpedo.AIModule
         /// </summary>
         /// <param name="battlefield">The used <see cref="Battlefield"/></param>
         /// <returns>It returns the recommended <see cref="Coordinate"/>.</returns>
-        public override Coordinate Act()
+        public override List<Coordinate> Plan()
         {
-            Coordinate proposed;
+            List<Coordinate> result = new List<Coordinate>();
 
             foreach (Directions direction in Enum.GetValues(typeof(Directions)))
             {
-                proposed = Focus.Shift(direction);
+                Coordinate proposed = Focus.Shift(direction);
                 if (!AIUtils.IsCellShot(EnemyBattlefield, proposed) && AIUtils.IsInField(proposed))
                 {
-                    return proposed;
+                    result.Add(proposed);
                 }
             }
-            throw new NowhereToShootException();
+            return result;
         }
-    }
-
-    /// <summary>
-    /// Own exception the indeicate nowhere left to shoot exception
-    /// <para>Throw this exception, when the whole battlefield is full and nowhere left to shoot</para>
-    /// </summary>
-    [Serializable]
-    public class NowhereToShootException : Exception
-    {
-        public NowhereToShootException() : base() { }
-        public NowhereToShootException(string message) : base(message) { }
-        public NowhereToShootException(string message, Exception inner) : base(message, inner) { }
-        protected NowhereToShootException(
-            System.Runtime.Serialization.SerializationInfo info,
-            System.Runtime.Serialization.StreamingContext context) : base(info, context)
-        { }
     }
 }
