@@ -13,7 +13,7 @@ namespace Torpedo.Test
     public class SinkAILogicTest
     {
         [TestMethod]
-        public void HappyPath_Plan()
+        public void Plan_WithProposed_Accepted()
         {
             List<IShips> ships = new List<IShips>();
             Battlefield battlefield = new Battlefield(ships);
@@ -27,7 +27,7 @@ namespace Torpedo.Test
         }
 
         [TestMethod]
-        public void SadPath_Plan()
+        public void Plan_WithProposedOutside_Rejected()
         {
             List<IShips> ships = new List<IShips>();
             Battlefield battlefield = new Battlefield(ships);
@@ -39,8 +39,11 @@ namespace Torpedo.Test
             Assert.AreEqual(planned.Count, 0);
         }
 
+        /// <summary>
+        /// Testing SinkAILogic.Plan() with custom, already shot position.
+        /// </summary>
         [TestMethod]
-        public void SadPath_AlreadyShot_Plan()
+        public void Plan_ProposedAlreadyShot_Rejected()
         {
             List<IShips> ships = new List<IShips>();
             Battlefield battlefield = new Battlefield(ships);
