@@ -31,11 +31,21 @@ namespace Torpedo.Models
             this.Y = y;
         }
 
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="obj"><see cref="object"/>obj</param>
+        /// <returns><see cref="bool"/> true if equals, false otherwise</returns>
         public override bool Equals(object obj)
         {
             return Equals(obj as Coordinate);
         }
 
+        /// <summary>
+        /// Equals
+        /// </summary>
+        /// <param name="other"><see cref="Coordinate"/> other</param>
+        /// <returns><see cref="bool"/> true if equals, false otherwise</returns>
         public bool Equals(Coordinate other)
         {
             return !(other is null)
@@ -43,6 +53,10 @@ namespace Torpedo.Models
                 && this.Y == other.Y;
         }
 
+        /// <summary>
+        /// Get hash of a coordinate
+        /// </summary>
+        /// <returns>Hash<see cref="int"/>X,</returns>
         public override int GetHashCode()
         {
             return HashCode.Combine(this.X, this.Y);
