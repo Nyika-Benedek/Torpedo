@@ -52,10 +52,12 @@ namespace Torpedo
         /// <returns>It returns the coordinate in a form of (x,y) values.</returns>
         public static Coordinate GenerateRandomShoot(IBattlefield battlefield)
         {
-            Coordinate coordinate = RandomCoordinate();
-            while (AIUtils.IsCellShot(battlefield, coordinate) == true)
+            Coordinate coordinate;
+            do
             {
+                coordinate = RandomCoordinate();
             }
+            while (AIUtils.IsCellShot(battlefield, coordinate) == true);
             return coordinate;
         }
 
