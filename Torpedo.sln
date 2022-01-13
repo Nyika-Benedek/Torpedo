@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Torpedo.Test", "TestProject3\Torpedo.Test.csproj", "{039EA9F4-FC52-432D-B18F-5ACEEC5A8DB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Torpedo.Test", "Torpedo.Test\Torpedo.Test.csproj", "{455FFCF1-6E15-42B4-BD41-FA5C124E72DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,10 +22,10 @@ Global
 		{2FF2F4FE-6F93-4AC2-8090-AF464EE4EA6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FF2F4FE-6F93-4AC2-8090-AF464EE4EA6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FF2F4FE-6F93-4AC2-8090-AF464EE4EA6B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{039EA9F4-FC52-432D-B18F-5ACEEC5A8DB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{039EA9F4-FC52-432D-B18F-5ACEEC5A8DB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{039EA9F4-FC52-432D-B18F-5ACEEC5A8DB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{039EA9F4-FC52-432D-B18F-5ACEEC5A8DB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{455FFCF1-6E15-42B4-BD41-FA5C124E72DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{455FFCF1-6E15-42B4-BD41-FA5C124E72DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{455FFCF1-6E15-42B4-BD41-FA5C124E72DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{455FFCF1-6E15-42B4-BD41-FA5C124E72DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
