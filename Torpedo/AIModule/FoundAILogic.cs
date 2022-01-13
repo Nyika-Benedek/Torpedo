@@ -14,9 +14,17 @@ namespace Torpedo.AIModule
         /// <summary>
         /// Constructor of FoundAILogic
         /// </summary>
-        /// <param name="aI">The used <see cref="AI"/> agent</param>
+        /// <param name="enemyBattlefield">The enemy's <see cref="Battlefield"/> containing previous shots</param>
         /// <param name="focus">Coordinate where the part of a ship was hit successfully.</param>
-        public FoundAILogic(IBattlefield enemyBattlefield, Coordinate focus) : base(enemyBattlefield) => Focus = focus;
+        public FoundAILogic(IBattlefield enemyBattlefield, Coordinate focus) : base(enemyBattlefield)
+        {
+            if (!AIUtils.IsInField(focus))
+            {
+                throw new ArgumentException("no shooting outside the battlefield");
+            }
+            
+            Focus = focus;
+        }
 
         /// <summary>
         /// The <see cref="Coordinate"/> which the AI will shoot around

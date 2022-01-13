@@ -1,5 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Torpedo;
 using Torpedo.AIModule;
 using Torpedo.Interfaces;
@@ -11,23 +12,8 @@ namespace Torpedo.Test
     [TestClass]
     public class FoundAILogicTest
     {
-        //[TestMethod]
-        /*public void Plan_IsEmpty()
-        {
-            List<IShips> ships = new List<IShips>();
-            ships.Add(new Ship(new List<Coordinate>() { new Coordinate(0, 0) }));
-            ships.Add(new Ship(new List<Coordinate>() { new Coordinate(-1, -1) }));
-            ships.Add(new Ship(new List<Coordinate>() { new Coordinate(-2, 0) }));
-            ships.Add(new Ship(new List<Coordinate>() { new Coordinate(-1, 1) }));
-            Battlefield battlefield = new Battlefield(ships);
-            Coordinate focus = new Coordinate(-1, 0);
-            FoundAILogic logic = new FoundAILogic(battlefield, focus);
-            List<Coordinate> logicList = logic.Plan();
-            Assert.AreEqual(new List<Coordinate>(), logicList);
-        }*/
-
         [TestMethod]
-        public void Plan_AllCorrect()
+        public void Plan_EmptyMiddle_AllCorrect()
         {
             List<IShips> ships = new List<IShips>();
             Battlefield battlefield = new Battlefield(ships);
@@ -39,7 +25,7 @@ namespace Torpedo.Test
         }
 
         [TestMethod]
-        public void Plan_OneNotCorrect()
+        public void Plan_OneSwot_MissingShotAndFocus()
         {
             List<IShips> ships = new List<IShips>();
             Battlefield battlefield = new Battlefield(ships);
@@ -53,7 +39,7 @@ namespace Torpedo.Test
         }
 
         [TestMethod]
-        public void Plan_TwoNotCorrect()
+        public void Plan_WithShot_MissingCoordinates()
         {
             List<IShips> ships = new List<IShips>();
             Battlefield battlefield = new Battlefield(ships);
@@ -69,14 +55,12 @@ namespace Torpedo.Test
         }
 
         [TestMethod]
-        public void Plan_AllNotCorrect()
+        public void Ctor_OutOfBattleField_ThrowsError()
         {
             List<IShips> ships = new List<IShips>();
             Battlefield battlefield = new Battlefield(ships);
-            Coordinate focus = new Coordinate(-2, 0);
-            FoundAILogic logic = new FoundAILogic(battlefield, focus);
-            List<Coordinate> actual = logic.Plan();
-            Assert.IsTrue(actual.Count == 0);
+            Coordinate focus = new Coordinate(-1, 0);
+            Assert.ThrowsException<ArgumentException>(() => new FoundAILogic(battlefield, focus));
         }
     }
 #pragma warning restore NI1007 // Test classes must ultimately inherit from 'AutoTest'

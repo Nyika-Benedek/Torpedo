@@ -71,9 +71,12 @@ namespace Torpedo.Models
         {
             for (int i = 2; i <= 5; i++)
             {
-                while (!BattlefieldBuilder.TryToAddShip(GenerateRandomShip(i)))
+                Ship ship;
+                do
                 {
+                    ship = GenerateRandomShip(i);
                 }
+                while (!BattlefieldBuilder.TryToAddShip(ship));
             }
             Ships.AddRange(BattlefieldBuilder.Ships);
         }
