@@ -17,7 +17,13 @@ namespace Torpedo.AIModule
         /// <param name="aI">The used <see cref="AI"/> agent</param>
         /// <param name="focus">Coordinate where the part of a ship was hit successfully.</param>
         public FoundAILogic(IBattlefield enemyBattlefield, Coordinate focus) : base(enemyBattlefield) => Focus = focus;
+
+        /// <summary>
+        /// The <see cref="Coordinate"/> which the AI will shoot around
+        /// <para>This is a position, where the AI randomly hit a ship.<para>
+        /// </summary>
         public Coordinate Focus { get; private set; }
+
         /// <summary>
         /// Tries to hit the four possible neighbours of the hit coordinate.
         /// </summary>

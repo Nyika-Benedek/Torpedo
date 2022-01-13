@@ -45,6 +45,7 @@ namespace Torpedo
         /// <param name="coordinate">The <see cref="Coordinate"/> to check</param>
         /// <returns>bool</returns>
         public static bool IsInField(Coordinate coordinate) => coordinate.X >= 0 && coordinate.X < MainWindow.BattlefieldWidth && coordinate.Y >= 0 && coordinate.Y < MainWindow.BattlefieldHeight;
+
         /// <summary>
         /// This method generates a random (x,y) coordinate pair, so the AI will select a position randomly to shoot at.
         /// </summary>
@@ -61,6 +62,10 @@ namespace Torpedo
             return coordinate;
         }
 
+        /// <summary>
+        /// Generate a random <see cref="Coordinate"/>
+        /// </summary>
+        /// <returns>A random <see cref="Coordinate"/> coordinate</returns>
         public static Coordinate RandomCoordinate()
         {
             int x;
@@ -70,6 +75,12 @@ namespace Torpedo
             return new Coordinate(x, y);
         }
 
+        /// <summary>
+        /// Describes the <see cref="Directions"/> of shifted coordinate from th origin
+        /// </summary>
+        /// <param name="origin"><see cref="Coordinate"/> origin</param>
+        /// <param name="shifted"><see cref="Coordinate"/> shifted</param>
+        /// <returns><see cref="Directions"/> direction</returns>
         public static Directions GetDirection(Coordinate origin, Coordinate shifted)
         {
             Coordinate delta = new Coordinate(x: shifted.X, y: shifted.Y);
@@ -99,7 +110,6 @@ namespace Torpedo
             }
 
             throw new ArgumentException("shots are on the same spot");
-
         }
     }
 }
