@@ -28,9 +28,9 @@ namespace Torpedo
         public static bool IsCellShot(IBattlefield battlefield, Coordinate coordinate)
         {
             bool result = false;
-            foreach (var shot in battlefield.Shots)
+            foreach ((Coordinate, bool) shot in battlefield.Shots)
             {
-                if (coordinate.Equals(shot))
+                if (coordinate.Equals(shot.Item1))
                 {
                     result = true;
                 }

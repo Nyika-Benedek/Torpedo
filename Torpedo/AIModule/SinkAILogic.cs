@@ -29,7 +29,7 @@ namespace Torpedo.AIModule
 
         private Directions GetDirection()
         {
-            // TODO SEVERE please provide a direction between the two coordinates. for explanation call from 10am if needed 
+            // TODO SEVERE please provide a direction between the two coordinates.
             // please implement if possible
             // the direction that if I shift enough time the lastRandomHit coordinate I get the nonRandomHit coordinate
             return Directions.Top;
@@ -42,7 +42,7 @@ namespace Torpedo.AIModule
         public override List<Coordinate> Plan()
         {
             var result = new List<Coordinate>();
-            result.Add(nonRandomHit.Shift(GetDirection()));
+            result.Add(nonRandomHit.Shift(  ()));
             return result;
         }
     }
