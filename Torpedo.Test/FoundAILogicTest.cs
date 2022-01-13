@@ -14,7 +14,7 @@
     public class FoundAILogicTest
     {
         /// <summary>
-        /// Tests plan with empty middle.
+        /// Tests plan with empty <see cref="Battlefield"/>.
         /// </summary>
         [TestMethod]
         public void Plan_EmptyMiddle_AllCorrect()
@@ -34,7 +34,7 @@
         }
 
         /// <summary>
-        /// Tests Plan shoting once, will miss and focus.
+        /// Tests Plan with <see cref="Battlefield"/> shot once, leaving out the focused <see cref="Coordinate"/>, and the shot one as well.
         /// </summary>
         [TestMethod]
         public void Plan_OneSot_MissingShotAndFocus()
@@ -56,7 +56,7 @@
         }
 
         /// <summary>
-        /// Tests Plan with shot, will moss coordinate.
+        /// Tests Plan with <see cref="Battlefield"/> shot once, will leaving out the shot <see cref="Coordinate"/>.
         /// </summary>
         [TestMethod]
         public void Plan_WithShot_MissingCoordinates()
@@ -80,7 +80,7 @@
         }
 
         /// <summary>
-        /// Tests constructor of battlefield with illegal argument.
+        /// Tests constructor of <see cref="FoundAILogic"/> with illegal argument.
         /// </summary>
         [TestMethod]
         public void Constructor_OutOfBattleField_ThrowsError()
