@@ -8,6 +8,7 @@ namespace Torpedo.Models
     /// </summary>
     public class Ship : IShips
     {
+        // TODO: NI: ?!
         public Ship(List<Coordinate> parts)
         {
             Parts = parts;

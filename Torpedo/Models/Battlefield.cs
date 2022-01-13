@@ -15,7 +15,7 @@ namespace Torpedo.Models
         /// Shoot at a coordinate and checks if it was a hit
         /// </summary>
         /// <param name="coordinate">A <see cref="Coordinate"/> to shoot at</param>
-        /// <returns>bool: Yes if it hits a ship, no otherwise</returns>
+        /// <returns>bool: True if it hits a ship, false otherwise</returns>
         public bool Shoot(Coordinate coordinate)
         {
             bool isHitAny = false;
@@ -30,6 +30,10 @@ namespace Torpedo.Models
             return isHitAny;
         }
 
+        /// <summary>
+        /// Gives the list of the remaing ships
+        /// </summary>
+        /// <returns><see cref="List{int}"/> of the remaining ships</returns>
         public List<int> RemainingShips()
         {
             List<int> result = new List<int>(_ships.Count);
@@ -47,6 +51,7 @@ namespace Torpedo.Models
         /// Constructor
         /// </summary>
         /// <param name="ships">List of <see cref="IShips"/> to place it on the battlefield</param>
+        // TODO: NI: ?!
         public Battlefield(List<IShips> ships) => _ships = ships;
     }
 }
