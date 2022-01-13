@@ -29,6 +29,9 @@ namespace Torpedo.AIModule
             Propose();
         }
 
+        /// <summary>
+        /// Propose a possible <see cref="Coordinate"/>, where the ships remaining parts is
+        /// </summary>
         private void Propose()
         {
             direction = AIUtils.GetDirection(origin: lastRandomHit, shifted: nonRandomHit);
@@ -36,9 +39,9 @@ namespace Torpedo.AIModule
         }
 
         /// <summary>
-        /// It shooting radom to try hit something
+        /// The conclusion of where could be the enemy's hips
         /// </summary>
-        /// <returns>It returns the recommended <see cref="Coordinate"/></returns>
+        /// <returns>List of <see cref="Coordinate"/>, where the enemy ships could be located</returns>
         public override List<Coordinate> Plan()
         {
             var result = new List<Coordinate>();
