@@ -6,7 +6,7 @@ using Torpedo.Interfaces;
 namespace Torpedo.Models
 {
     /// <summary>
-    /// This class is define the grids of the battlefield.
+    /// Mutable representation of position on the battlefield
     /// </summary>
     public class Coordinate
     {
