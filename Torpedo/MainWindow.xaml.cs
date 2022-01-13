@@ -468,7 +468,7 @@ namespace Torpedo
         {
             if (e.Key == Key.S)
             {
-                if (typeof(AI) != _game.CurrentPlayer && _game.State == GameState.Battle) // TODO SEVERE This is true the the current player is not an AI, not in case of theres an AI in the game!!!
+                if (_isAI && _game.State == GameState.Battle) // TODO SEVERE This is true the the current player is not an AI, not in case of theres an AI in the game!!!
                 {
                     ClearCanvas();
                     foreach (var AIships in _ai.Ships)
@@ -490,7 +490,7 @@ namespace Torpedo
         /// <param name="e">Data of the key related event</param>
         private void HideAIShips(object sender, KeyEventArgs e)
         {
-            if (_game.CurrentPlayer.EnemyBattlefield != null && _game.State == GameState.Battle)
+            if (_isAI && _game.CurrentPlayer.EnemyBattlefield != null && _game.State == GameState.Battle)
             {
                 if (e.Key == Key.S)
                 {
