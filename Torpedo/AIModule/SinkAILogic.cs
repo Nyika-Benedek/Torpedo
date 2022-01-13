@@ -42,7 +42,11 @@ namespace Torpedo.AIModule
         public override List<Coordinate> Plan()
         {
             var result = new List<Coordinate>();
-            result.Add(nonRandomHit.Shift(  ()));
+            Coordinate proposed = nonRandomHit.Shift(GetDirection());
+            if (!AIUtils.IsCellShot(EnemyBattlefield, proposed) && AIUtils.IsInField(proposed))
+            {
+                result.Add(proposed);
+            }
             return result;
         }
     }
