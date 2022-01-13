@@ -15,13 +15,16 @@ namespace Torpedo.AIModule
         /// Constructor of AILogic
         /// </summary>
         /// <param name="aI">Used <see cref="AI"/> agent</param>
-        protected AILogic(IBattlefield enemyBattlefield) => EnemyBattlefield = enemyBattlefield;
-        public IBattlefield EnemyBattlefield{ get; private set; }
+        // TODO: NI: ?!
+        protected AILogic(IBattlefield enemyBattlefield) => EnemyBattlefield = enemyBattlefield ?? throw new ArgumentNullException(nameof(enemyBattlefield));
+
+        public IBattlefield EnemyBattlefield { get; private set; }
 
         /// <summary>
         /// The logic how the agent should make decision
         /// </summary>
         /// <returns>A <see cref="Coordinate"/></returns>
+        // TODO: NI: Replayce plan with property
         public abstract List<Coordinate> Plan();
     }
 }

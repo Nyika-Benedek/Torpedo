@@ -16,6 +16,7 @@ namespace Torpedo
     /// <summary>
     /// This class contains all static method wich helps the AI's decision
     /// </summary>
+    // TODO: NI: Move to namespace
     public static class AIUtils
     {
         public static Random Random { get; } = new Random();
@@ -52,7 +53,9 @@ namespace Torpedo
         public static Coordinate GenerateRandomShoot(IBattlefield battlefield)
         {
             Coordinate coordinate = RandomCoordinate();
-            while (AIUtils.IsCellShot(battlefield, coordinate) == true);
+            while (AIUtils.IsCellShot(battlefield, coordinate) == true)
+            {
+            }
             return coordinate;
         }
 
