@@ -264,7 +264,7 @@ namespace Torpedo
             _game.State = GameState.Finished;
             DatabaseCommands database = new DatabaseCommands();
             database.AddEntry(new DatabaseModel(
-                5,
+                _game.Turn,
                 _game.Winner.Name,
                 _game.CurrentPlayer.Name,
                 _game.CurrentPlayer.Points,
