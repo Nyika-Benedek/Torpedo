@@ -5,6 +5,9 @@ using Torpedo.Interfaces;
 
 namespace Torpedo.Models
 {
+    /// <summary>
+    /// Represents the a playstyle of the AI
+    /// </summary>
     public enum PlayStyle { Random, Found, Sink, FollowPlan }
     /// <summary>
     /// This class provides an agent to act like a player
@@ -15,10 +18,12 @@ namespace Torpedo.Models
         /// There are 3 different behivaur the AI could act
         /// </summary>
         public LinkedList<(Coordinate, bool, PlayStyle)> ShotHistory { get; } = new LinkedList<(Coordinate, bool, PlayStyle)>();
+        // TODO: NI: replace Ships with method
         public List<IShips> Ships { get; private set; } = new List<IShips>(4);
         private PlayStyle _playStyle = PlayStyle.Random;
         private static readonly string _aiName = "AI";
 
+        // TODO: NI: convert (Coordinate, Playstyle) with struct
         public Queue<(Coordinate, PlayStyle)> Planned { get; } = new Queue<(Coordinate, PlayStyle)>();
 
         /// <summary>
@@ -108,10 +113,11 @@ namespace Torpedo.Models
 
         public void GenerateShips()
         {
-            // TODO: Get the AI to generate ships
             for (int i = 2; i <= 5; i++)
             {
-                while (!BattlefieldBuilder.TryToAddShip(GenerateRandomShip(i))) ;
+                while (!BattlefieldBuilder.TryToAddShip(GenerateRandomShip(i)))
+                {
+                }
             }
             Ships.AddRange(BattlefieldBuilder.Ships);
         }
