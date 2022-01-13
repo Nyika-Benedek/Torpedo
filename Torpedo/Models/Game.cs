@@ -96,6 +96,9 @@ namespace Torpedo.Models
             Players.Add(player);
         }
 
+        /// <summary>
+        /// Increase turn counter
+        /// </summary>
         public void AddTurn()
         {
             Turn++;

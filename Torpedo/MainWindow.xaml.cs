@@ -162,10 +162,7 @@ namespace Torpedo
             if (_game.CurrentPlayer.Name == player1Name.Text)
             {
                 player1Name.Foreground = Brushes.Red;
-                //player1Name.FontWeight = SystemFonts.;
-                //player1Name.FontWeight = FontWeight.Bold;
                 player2Name.Foreground = Brushes.Black;
-                //MessageBox.Show(_game.CurrentPlayer.Name);
                 player1Points.Text = Convert.ToString(value: _game.CurrentPlayer.Points, new NumberFormatInfo());
 
                 // Set Remaining Units
@@ -263,24 +260,16 @@ namespace Torpedo
         {
             RedrawCanvas();
             UpdateScoreBoard();
-            MessageBox.Show($"Congratulation {_game.CurrentPlayer.Name} you destroyed your enemies!");
+            MessageBox.Show($"Congratulation {_game.Winner.Name} you destroyed your enemies!");
             _game.State = GameState.Finished;
             DatabaseCommands database = new DatabaseCommands();
             database.AddEntry(new DatabaseModel(
-                5,
+                _game.Turn,
                 _game.Winner.Name,
                 _game.CurrentPlayer.Name,
                 _game.CurrentPlayer.Points,
                 _game.NextPlayer().Name,
                 _game.CurrentPlayer.Points));
-            /*
-            string line = "";
-            foreach (var item in _ai.ShotHistory)
-            {
-                line += item;
-            }
-            MessageBox.Show(line);
-            */
         }
 
         /// <summary>
@@ -317,7 +306,11 @@ namespace Torpedo
                         UpdateScoreBoard();
                         if (_isAI)
                         {
-                            _ai.Act();
+                            if (_ai.Act())
+                            {
+                                _ai.AddPoint();
+                            }
+                            _game.AddTurn();
                             _game.NextPlayer();
                             UpdateScoreBoard();
                         }
@@ -359,6 +352,7 @@ namespace Torpedo
             _currentShipSize = 2;
             ClearCanvas();
             _game = new Game();
+
             // Set Player Names
             var newGameWindow = new NewGameWindow();
             newGameWindow.ShowDialog();
@@ -379,6 +373,7 @@ namespace Torpedo
             }
             shipPlacementGrid.Visibility = Visibility.Visible;
             ShipToPlace.Content = $"Place ship {_currentShipSize}";
+
             // set the pointer to the first player
             _game.NextPlayer();
             if (!_isAI)
@@ -386,20 +381,9 @@ namespace Torpedo
                 MessageBox.Show($"Ask {_game.NextPlayer().Name} to turn away and start your shipplacement turn!");
                 _game.NextPlayer();
             }
+
             // Set Player 1 ships...
             UpdateScoreBoard();
-        }
-
-        /// <summary>
-        /// Generating the AI's ships, then adding to it's battlefield
-        /// </summary>
-        private void GenerateAIShips()
-        {
-            // TODO: Get the AI to generate ships
-            for (int i = 2; i <= 5; i++)
-            {
-                while (!_ai.BattlefieldBuilder.TryToAddShip(_ai.GenerateRandomShip(i))) ;
-            }
         }
 
         /// <summary>
@@ -468,7 +452,7 @@ namespace Torpedo
         {
             if (e.Key == Key.S)
             {
-                if (typeof(AI) != _game.CurrentPlayer && _game.State == GameState.Battle) // TODO SEVERE This is true the the current player is not an AI, not in case of theres an AI in the game!!!
+                if (_isAI && _game.State == GameState.Battle) // TODO SEVERE This is true the the current player is not an AI, not in case of theres an AI in the game!!!
                 {
                     ClearCanvas();
                     foreach (var AIships in _ai.Ships)
@@ -479,7 +463,6 @@ namespace Torpedo
                         }
                     }
                 }
-                //DrawPoint(new Coordinate(0, 0), Type.Hit);
             }
         }
 
@@ -490,7 +473,7 @@ namespace Torpedo
         /// <param name="e">Data of the key related event</param>
         private void HideAIShips(object sender, KeyEventArgs e)
         {
-            if (_game.CurrentPlayer.EnemyBattlefield != null && _game.State == GameState.Battle)
+            if (_isAI && _game.CurrentPlayer.EnemyBattlefield != null && _game.State == GameState.Battle)
             {
                 if (e.Key == Key.S)
                 {

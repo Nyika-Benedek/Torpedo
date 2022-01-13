@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Torpedo.Models;
 using Torpedo.Interfaces;
+using Torpedo.Models;
 
 namespace Torpedo.AIModule
 {
@@ -14,15 +14,15 @@ namespace Torpedo.AIModule
         /// <summary>
         /// Contructor
         /// </summary>
-        /// <param name="aI">Used <see cref="AI"/> agent</param>
+        /// <param name="enemyBattlefield"><see cref="IBattlefield"/> enemy's battlefield</param>
         public RandomAILogic(IBattlefield enemyBattlefield) : base(enemyBattlefield)
         {
         }
 
         /// <summary>
-        /// It shooting radom to try hit something
+        /// The conclusion of where could be the enemy's hips
         /// </summary>
-        /// <returns>It returns the recommended <see cref="Coordinate"/></returns>
+        /// <returns>List of <see cref="Coordinate"/>, where the enemy ships could be located</returns>
         public override List<Coordinate> Plan()
         {
             var result = new List<Coordinate>();

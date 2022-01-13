@@ -8,6 +8,10 @@ namespace Torpedo.Models
     /// </summary>
     public class Ship : IShips
     {
+        public List<Coordinate> Parts { get; set; }
+        public int Hits { get; private set; }
+
+        // TODO: NI: ?!
         public Ship(List<Coordinate> parts)
         {
             Parts = parts;
@@ -31,9 +35,6 @@ namespace Torpedo.Models
             }
             return false;
         }
-
-        public List<Coordinate> Parts { get; set; }
-        public int Hits { get; private set; }
 
         /// <summary>
         /// Constructor, descibe a ship with a coordinate and a vector, to creat a ship

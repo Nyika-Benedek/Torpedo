@@ -14,6 +14,10 @@ namespace Torpedo.Models
 
         public BattlefieldBuilder BattlefieldBuilder { get; private set; } = new BattlefieldBuilder();
         public int Points { get; set; } = 0;
+
+        /// <summary>
+        /// Increase current player's point
+        /// </summary>
         public void AddPoint() { Points++; }
 
         /// <summary>

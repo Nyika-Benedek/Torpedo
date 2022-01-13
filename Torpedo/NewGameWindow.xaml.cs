@@ -31,7 +31,7 @@ namespace Torpedo
         /// </summary>
         /// <param name="sender">The object we clicked</param>
         /// <param name="e">Data of the mouse related event</param>
-        private void onChecked(object sender, RoutedEventArgs e)
+        private void OnChecked(object sender, RoutedEventArgs e)
         {
             Player2.IsEnabled = false;
             Player2.Text = "AI";
@@ -42,7 +42,7 @@ namespace Torpedo
         /// </summary>
         /// <param name="sender">The object we clicked</param>
         /// <param name="e">Data of the mouse related event</param>
-        private void onUnchecked(object sender, RoutedEventArgs e)
+        private void OnUnchecked(object sender, RoutedEventArgs e)
         {
             Player2.IsEnabled = true;
             Player2.Text = string.Empty;
