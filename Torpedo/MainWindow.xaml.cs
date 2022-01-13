@@ -260,7 +260,7 @@ namespace Torpedo
         {
             RedrawCanvas();
             UpdateScoreBoard();
-            MessageBox.Show($"Congratulation {_game.CurrentPlayer.Name} you destroyed your enemies!");
+            MessageBox.Show($"Congratulation {_game.Winner.Name} you destroyed your enemies!");
             _game.State = GameState.Finished;
             DatabaseCommands database = new DatabaseCommands();
             database.AddEntry(new DatabaseModel(
@@ -306,7 +306,11 @@ namespace Torpedo
                         UpdateScoreBoard();
                         if (_isAI)
                         {
-                            _ai.Act();
+                            if (_ai.Act())
+                            {
+                                _ai.AddPoint();
+                            }
+                            _game.AddTurn();
                             _game.NextPlayer();
                             UpdateScoreBoard();
                         }

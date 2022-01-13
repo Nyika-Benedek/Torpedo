@@ -37,7 +37,7 @@ namespace Torpedo.Models
         /// <summary>
         /// Calls an AI behivour based on the current agent playstyle, and the agent send an advised position to shoot at
         /// </summary>
-        public void Act()
+        public bool Act()
         {
             string story = string.Empty;
             AILogic logic = new RandomAILogic(EnemyBattlefield);
@@ -114,8 +114,7 @@ namespace Torpedo.Models
                 StorePlan(logic.Plan(), PlayStyle.Random);
             }
 
-            ExecutePlan();
-            return;
+            return ExecutePlan();
 
         }
 
@@ -140,13 +139,14 @@ namespace Torpedo.Models
             Ships.AddRange(BattlefieldBuilder.Ships);
         }
 
-        private void ExecutePlan()
+        private bool ExecutePlan()
         {
             Coordinate advised;
             PlayStyle reason;
             (advised, reason) = Planned.Dequeue();
             bool isHit = EnemyBattlefield.Shoot(advised);
             ShotHistory.AddLast(new LinkedListNode<(Coordinate, bool, PlayStyle)>((advised, isHit, reason)));
+            return isHit;
         }
 
         private void StorePlan(List<Coordinate> coordinates, PlayStyle reason)
