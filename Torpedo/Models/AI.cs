@@ -128,7 +128,7 @@ namespace Torpedo.Models
                     }
                     catch (ArgumentException)
                     {
-                        _playStyle = PlayStyle.Random;
+                        PlayStyle = PlayStyle.Random;
                         logic = new RandomAILogic(EnemyBattlefield);
                     }
                 }
@@ -148,7 +148,7 @@ namespace Torpedo.Models
                     }
                     catch (ArgumentException)
                     {
-                        _playStyle = PlayStyle.Random;
+                        PlayStyle = PlayStyle.Random;
                         logic = new RandomAILogic(EnemyBattlefield);
                     }
                 }

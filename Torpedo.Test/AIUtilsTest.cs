@@ -3,6 +3,7 @@ namespace TestProject3
     using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Torpedo;
+    using Torpedo.AIModule;
     using Torpedo.Interfaces;
     using Torpedo.Models;
 
