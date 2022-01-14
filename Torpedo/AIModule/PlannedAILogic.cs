@@ -25,7 +25,7 @@ namespace Torpedo.AIModule
         /// No operation.
         /// </summary>
         /// <returns> empty List of <see cref="Coordinate"/>.</returns>
-        public override List<Coordinate> Plan()
+        public override ICollection<Coordinate> Plan()
         {
             return new List<Coordinate>();
         }

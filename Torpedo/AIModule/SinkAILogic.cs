@@ -43,7 +43,7 @@ namespace Torpedo.AIModule
         /// Tries to hit in one row were a <see cref="Ship"/> could be.
         /// </summary>
         /// <returns>List of <see cref="Coordinate"/>, containing the proposed target.</returns>
-        public override List<Coordinate> Plan()
+        public override ICollection<Coordinate> Plan()
         {
             var result = new List<Coordinate>();
             if (!AIUtils.IsCellShot(EnemyBattlefield, Proposed) && AIUtils.IsInField(Proposed))

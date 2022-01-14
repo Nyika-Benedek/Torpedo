@@ -35,7 +35,7 @@ namespace Torpedo.AIModule
         /// Tries to hit the four possible neighbours of the hit  <see cref="Coordinate"/>.
         /// </summary>
         /// <returns> the recommended <see cref="Coordinate"/>.</returns>
-        public override List<Coordinate> Plan()
+        public override ICollection<Coordinate> Plan()
         {
             List<Coordinate> result = new List<Coordinate>();
 

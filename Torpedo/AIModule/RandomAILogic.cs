@@ -23,7 +23,7 @@ namespace Torpedo.AIModule
         /// Generate a random <see cref="Coordinate"/> to shoot at.
         /// </summary>
         /// <returns>List of <see cref="Coordinate"/>, containing a single coordinate.</returns>
-        public override List<Coordinate> Plan()
+        public override ICollection<Coordinate> Plan()
         {
             var result = new List<Coordinate>();
             result.Add(AIUtils.GenerateRandomShoot(EnemyBattlefield));
