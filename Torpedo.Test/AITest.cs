@@ -23,7 +23,7 @@
         public void Analyze_FalseEmptyPlanned_ReturnsRandom()
         {
             AI ai = new AI();
-            ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
+            ai.SetEnemyBattlefield(new Battlefield(new List<IShip>()));
             ai.ShotHistory.AddLast((new Coordinate(5, 5), false, PlayStyle.Random));
             ai.Analyze();
             Assert.AreEqual(ai.PlayStyle, PlayStyle.Random);
@@ -36,7 +36,7 @@
         public void Analyze_FalseWidthPlanned_ReturnsRandom()
         {
             AI ai = new AI();
-            ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
+            ai.SetEnemyBattlefield(new Battlefield(new List<IShip>()));
             ai.ShotHistory.AddLast((new Coordinate(5, 5), false, PlayStyle.Random));
             ai.Planned.Push((new Coordinate(5, 5), PlayStyle.Random));
             ai.Analyze();
@@ -50,7 +50,7 @@
         public void Analyze_TrueWidthRandom_ReturnsFound()
         {
             AI ai = new AI();
-            ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
+            ai.SetEnemyBattlefield(new Battlefield(new List<IShip>()));
             ai.ShotHistory.AddLast((new Coordinate(5, 5), true, PlayStyle.Random));
             ai.Planned.Push((new Coordinate(5, 5), PlayStyle.Random));
             ai.Analyze();
@@ -64,7 +64,7 @@
         public void Analyze_TrueWidthRandom_ReturnsRandom()
         {
             AI ai = new AI();
-            ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
+            ai.SetEnemyBattlefield(new Battlefield(new List<IShip>()));
             ai.ShotHistory.AddLast((new Coordinate(-2, -2), true, PlayStyle.Random));
             //ai.Planned.Enqueue((new Coordinate(-1, -1), PlayStyle.Random));
             ai.Analyze();
@@ -78,7 +78,7 @@
         public void Analyze_TrueWidthFoundCoordinateMatched_ReturnsSink()
         {
             AI ai = new AI();
-            ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
+            ai.SetEnemyBattlefield(new Battlefield(new List<IShip>()));
             ai.ShotHistory.AddLast((new Coordinate(5, 5), true, PlayStyle.Found));
             ai.Planned.Push((new Coordinate(5, 5), PlayStyle.Random));
             ai.Analyze();
@@ -92,7 +92,7 @@
         public void Analyze_TrueWidthSinkCoordinateMatched_ReturnsSink()
         {
             AI ai = new AI();
-            ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
+            ai.SetEnemyBattlefield(new Battlefield(new List<IShip>()));
             ai.ShotHistory.AddLast((new Coordinate(5, 5), true, PlayStyle.Sink));
             ai.Planned.Push((new Coordinate(5, 5), PlayStyle.Random));
             ai.Analyze();
@@ -106,7 +106,7 @@
         public void Analyze_TrueWidthFoundDiagonal_ReturnsSink()
         {
             AI ai = new AI();
-            ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
+            ai.SetEnemyBattlefield(new Battlefield(new List<IShip>()));
             ai.ShotHistory.AddLast((new Coordinate(5, 5), true, PlayStyle.Found));
             ai.Planned.Push((new Coordinate(5, 5), PlayStyle.Random));
             ai.Analyze();
@@ -120,7 +120,7 @@
         public void Analyze_TrueWidthSinkDiagonal_ReturnsSink()
         {
             AI ai = new AI();
-            ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
+            ai.SetEnemyBattlefield(new Battlefield(new List<IShip>()));
             ai.ShotHistory.AddLast((new Coordinate(5, 5), true, PlayStyle.Sink));
             ai.Planned.Push((new Coordinate(5, 5), PlayStyle.Random));
             ai.Analyze();

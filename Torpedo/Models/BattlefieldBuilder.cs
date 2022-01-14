@@ -11,7 +11,7 @@ namespace Torpedo.Models
     /// </summary>
     public class BattlefieldBuilder
     {
-        public IList<IShips> Ships { get; } = new List<IShips>(4);
+        public IList<IShip> Ships { get; } = new List<IShip>(4);
 
         /// <summary>
         /// Finalizes the Battlefiled, where ship positions are inaccessable.
@@ -22,9 +22,9 @@ namespace Torpedo.Models
         /// <summary>
         /// Add a ship to the builder object.
         /// </summary>
-        /// <param name="newShip"><see cref="IShips"/> ship to add.</param>
+        /// <param name="newShip"><see cref="IShip"/> ship to add.</param>
         /// <returns><see cref="bool"/> True if successful, false if it would violate rules.</returns>
-        public bool TryToAddShip(IShips newShip)
+        public bool TryToAddShip(IShip newShip)
         {
             try
             {
@@ -42,8 +42,8 @@ namespace Torpedo.Models
         /// <summary>
         /// Checks if the ship would be colliding upon placement.
         /// </summary>
-        /// <param name="newShip"><see cref="IShips"/> ship to check.</param>
-        private void CheckForCollision(IShips newShip)
+        /// <param name="newShip"><see cref="IShip"/> ship to check.</param>
+        private void CheckForCollision(IShip newShip)
         {
             var shipPositions = new List<Coordinate>(14);
 
@@ -70,7 +70,7 @@ namespace Torpedo.Models
         /// Checks if the given ship is in the battlefield.
         /// </summary>
         /// <param name="ship"><see cref="IShip"/>New ship.</param>
-        private static void IsShipWithinBattlefield(IShips ship)
+        private static void IsShipWithinBattlefield(IShip ship)
         {
             foreach (Coordinate part in ship.Parts)
             {

@@ -19,8 +19,8 @@ namespace Torpedo.Models
         /// There are 3 different behivaur the AI could act.
         /// </summary>
         public LinkedList<(Coordinate, bool, PlayStyle)> ShotHistory { get; } = new LinkedList<(Coordinate, bool, PlayStyle)>();
-        public List<IShips> Ships { get; private set; } = new List<IShips>(4);
-        public PlayStyle PlayStyle = PlayStyle.Random;
+        public IList<IShip> Ships { get; private set; } = new List<IShip>(4);
+        public PlayStyle PlayStyle { get; private set; } = PlayStyle.Random;
         private static readonly string _aiName = "AI";
         public Stack<(Coordinate, PlayStyle)> Planned { get; } = new Stack<(Coordinate, PlayStyle)>();
 
@@ -51,7 +51,6 @@ namespace Torpedo.Models
             }
 
             return ExecutePlan();
-
         }
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace Torpedo.Models
         {
             return new Ship(
                 AIUtils.RandomCoordinate(),
-                new MyVector(AIUtils.Random.Next(0, 2) == 0 ? IShips.Direction.Horizontal : IShips.Direction.Vertical, size));
+                new MyVector(AIUtils.Random.Next(0, 2) == 0 ? IShip.Direction.Horizontal : IShip.Direction.Vertical, size));
         }
 
         /// <summary>
@@ -78,7 +77,10 @@ namespace Torpedo.Models
                 }
                 while (!BattlefieldBuilder.TryToAddShip(ship));
             }
-            Ships.AddRange(BattlefieldBuilder.Ships);
+            foreach (IShip ship in BattlefieldBuilder.Ships)
+            {
+                Ships.Add(ship);
+            }
         }
 
         /// <summary>

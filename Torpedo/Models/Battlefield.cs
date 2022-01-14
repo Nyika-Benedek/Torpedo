@@ -9,7 +9,7 @@ namespace Torpedo.Models
     public class Battlefield : IBattlefield
     {
         public IList<(Coordinate, bool)> Shots { get; } = new List<(Coordinate, bool)>();
-        private readonly IList<IShips> _ships;
+        private readonly IList<IShip> _ships;
 
         /// <summary>
         /// Shoot at a <see cref="Coordinate"/> and checks if it was a hit.
@@ -37,7 +37,7 @@ namespace Torpedo.Models
         public IList<int> RemainingShips()
         {
             List<int> result = new List<int>(_ships.Count);
-            foreach (IShips ship in _ships)
+            foreach (IShip ship in _ships)
             {
                 if (!ship.Sunk)
                 {
@@ -50,7 +50,7 @@ namespace Torpedo.Models
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="ships">List of <see cref="IShips"/> to place it on the battlefield.</param>
-        public Battlefield(IList<IShips> ships) => _ships = ships;
+        /// <param name="ships">List of <see cref="IShip"/> to place it on the battlefield.</param>
+        public Battlefield(IList<IShip> ships) => _ships = ships;
     }
 }

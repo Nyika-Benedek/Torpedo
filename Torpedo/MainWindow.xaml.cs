@@ -50,7 +50,7 @@ namespace Torpedo
         // states
         private IGame _game;
         private int _currentShipSize = 2;
-        private IShips.Direction _currentDirection = IShips.Direction.Horizontal;
+        private IShip.Direction _currentDirection = IShip.Direction.Horizontal;
         private bool _isDatabaseExists;
         private bool _isPlayer1 = true;
         private bool _isAI = false;
@@ -221,7 +221,7 @@ namespace Torpedo
         private void PlaceShip(Coordinate position, MyVector vector)
         {
             UpdateScoreBoard();
-            IShips newShip = new Ship(position, vector);
+            IShip newShip = new Ship(position, vector);
 
             if (_game.CurrentPlayer.BattlefieldBuilder.TryToAddShip(newShip))
             {
@@ -393,7 +393,7 @@ namespace Torpedo
         /// <param name="e">Data of the mouse related event</param>
         private void SetVerticalPlacement(object sender, RoutedEventArgs e)
         {
-            _currentDirection = IShips.Direction.Vertical;
+            _currentDirection = IShip.Direction.Vertical;
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Torpedo
         /// <param name="e">Data of the mouse related event</param>
         private void SetHorizontalPlacement(object sender, RoutedEventArgs e)
         {
-            _currentDirection = IShips.Direction.Horizontal;
+            _currentDirection = IShip.Direction.Horizontal;
         }
 
         /// <summary>
@@ -455,9 +455,9 @@ namespace Torpedo
                 if (_isAI && _game.State == GameState.Battle) // TODO SEVERE This is true the the current player is not an AI, not in case of theres an AI in the game!!!
                 {
                     ClearCanvas();
-                    foreach (var AIships in _ai.Ships)
+                    foreach (var ship in _ai.Ships)
                     {
-                        foreach (var parts in AIships.Parts)
+                        foreach (var parts in ship.Parts)
                         {
                             DrawPoint(parts, Type.Ship);
                         }

@@ -48,14 +48,6 @@ namespace Torpedo.Entity
             // DatabaseModel database = new DatabaseModel();
         }
 
-
-        /*
-        public Context([NotNull] DbContextOptions options) : base(options)
-        {
-        }
-        */
-
-
         /// <summary>
         /// This defines the propertis of the database.
         /// </summary>

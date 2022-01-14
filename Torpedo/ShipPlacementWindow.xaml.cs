@@ -22,16 +22,16 @@ namespace Torpedo
             InitializeComponent();
         }
 
-        public bool isHorizontal { get; private set; }
+        public bool IsHorizontal { get; private set; }
         private void GivePosition(object sender, RoutedEventArgs e)
         {
             if ((bool)Horizontal.IsChecked)
             {
-                isHorizontal = true;
+                IsHorizontal = true;
             }
             else
             {
-                isHorizontal = false;
+                IsHorizontal = false;
             }
             Close();
         }

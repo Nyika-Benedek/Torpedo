@@ -20,7 +20,7 @@
         public void Plan_EmptyMiddle_AllCorrect()
         {
             // Arrange
-            List<IShips> ships = new List<IShips>();
+            List<IShip> ships = new List<IShip>();
             Battlefield battlefield = new Battlefield(ships);
             Coordinate focus = new Coordinate(1, 1);
             FoundAILogic logic = new FoundAILogic(battlefield, focus);
@@ -40,7 +40,7 @@
         public void Plan_OneSot_MissingShotAndFocus()
         {
             // Arrange
-            List<IShips> ships = new List<IShips>();
+            List<IShip> ships = new List<IShip>();
             Battlefield battlefield = new Battlefield(ships);
             Coordinate x = new Coordinate(0, 1);
 
@@ -62,7 +62,7 @@
         public void Plan_WithShot_MissingCoordinates()
         {
             // Arrange
-            List<IShips> ships = new List<IShips>();
+            List<IShip> ships = new List<IShip>();
             Battlefield battlefield = new Battlefield(ships);
             Coordinate x = new Coordinate(1, 1);
             Coordinate y = new Coordinate(-1, 1);
@@ -86,7 +86,7 @@
         public void Constructor_OutOfBattleField_ThrowsError()
         {
             // Arrange
-            List<IShips> ships = new List<IShips>();
+            List<IShip> ships = new List<IShip>();
             Battlefield battlefield = new Battlefield(ships);
             Coordinate focus = new Coordinate(-1, 0);
 

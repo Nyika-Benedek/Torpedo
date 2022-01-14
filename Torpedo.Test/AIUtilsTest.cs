@@ -76,9 +76,9 @@ namespace TestProject3
         public void IsCellShot_Hit_True()
         {
             // Arrange
-            MyVector vector = new MyVector(IShips.Direction.Horizontal, 5);
+            MyVector vector = new MyVector(IShip.Direction.Horizontal, 5);
             Ship ship = new Ship(new Coordinate(0, 0), vector);
-            List<IShips> list = new List<IShips>();
+            List<IShip> list = new List<IShip>();
             list.Add(ship);
             Battlefield battlefield = new Battlefield(list);
             Coordinate x = new Coordinate(0, 0);
@@ -97,9 +97,9 @@ namespace TestProject3
         public void IsCellShot_Miss_True()
         {
             // Arrange
-            MyVector vector = new MyVector(IShips.Direction.Horizontal, 5);
+            MyVector vector = new MyVector(IShip.Direction.Horizontal, 5);
             Ship ship = new Ship(new Coordinate(0, 0), vector);
-            List<IShips> list = new List<IShips>();
+            List<IShip> list = new List<IShip>();
             list.Add(ship);
             Battlefield battlefield = new Battlefield(list);
             Coordinate x = new Coordinate(0, 4);
@@ -118,7 +118,7 @@ namespace TestProject3
         public void IsCellShot_EmptyBattlefield_False()
         {
             // Arrange
-            List<IShips> list = new List<IShips>();
+            List<IShip> list = new List<IShip>();
             Battlefield battlefield = new Battlefield(list);
             Coordinate x = new Coordinate(0, 0);
 

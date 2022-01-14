@@ -6,12 +6,12 @@ namespace Torpedo.Models
     /// <summary>
     /// Represents a Ship.
     /// </summary>
-    public class Ship : IShips
+    public class Ship : IShip
     {
         public IList<Coordinate> Parts { get; set; }
         public int Hits { get; private set; }
 
-        public Ship(List<Coordinate> parts)
+        public Ship(IList<Coordinate> parts)
         {
             Parts = parts;
             Hits = 0;
@@ -39,14 +39,14 @@ namespace Torpedo.Models
         /// Constructor, descibe a ship with a coordinate and a vector, to create a ship.
         /// </summary>
         /// <param name="coordinate"><see cref="Coordinate"/>: starting coordinate.</param>
-        /// <param name="vector">MyVector: <see cref="IShips.Direction"/>{horizontal: to the right from the given coordinate || Vertical: to the bottom of the given coordinate}, int: size of the ship.</param>
+        /// <param name="vector">MyVector: <see cref="IShip.Direction"/>{horizontal: to the right from the given coordinate || Vertical: to the bottom of the given coordinate}, int: size of the ship.</param>
         public Ship(Coordinate coordinate, MyVector vector)
         {
             Parts = new List<Coordinate>(vector.Size);
             for (int i = 0; i < vector.Size; i++)
             {
                 Parts.Add(new Coordinate(coordinate.X, coordinate.Y));
-                if (vector.Way == IShips.Direction.Horizontal)
+                if (vector.Way == IShip.Direction.Horizontal)
                 {
                     coordinate.X++;
                 }

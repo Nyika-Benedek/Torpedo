@@ -62,7 +62,6 @@ namespace Torpedo.Models
             return HashCode.Combine(this.X, this.Y);
         }
 
-
         /// <summary>
         /// Overrides <see cref="Coordinate"/> == <see cref="Coordinate"/> operation.
         /// </summary>
@@ -90,9 +89,9 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Shift a <see cref="Coordinate"/> into a <see cref="IShips.Direction"/>.
+        /// Shift a <see cref="Coordinate"/> into a <see cref="IShip.Direction"/>.
         /// </summary>
-        /// <param name="direction"><see cref="IShips.Direction"/> to shift to.</param>
+        /// <param name="direction"><see cref="IShip.Direction"/> to shift to.</param>
         /// <returns>A new, shifted <see cref="Coordinate"/>. Distance 1.</returns>
         // TODO: NI: ?!
         public Coordinate Shift(Directions direction)

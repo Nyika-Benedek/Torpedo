@@ -21,7 +21,7 @@ namespace Torpedo.Test
         public void Plan_WithProposed_Accepted()
         {
             // Arrange
-            List<IShips> ships = new List<IShips>();
+            List<IShip> ships = new List<IShip>();
             Battlefield battlefield = new Battlefield(ships);
             Coordinate x = new Coordinate(5, 7);
             Coordinate y = new Coordinate(5, 8);
@@ -43,7 +43,7 @@ namespace Torpedo.Test
         public void Plan_WithProposedOutside_Rejected()
         {
             // Arrange
-            List<IShips> ships = new List<IShips>();
+            List<IShip> ships = new List<IShip>();
             Battlefield battlefield = new Battlefield(ships);
             Coordinate x = new Coordinate(5, 7);
             Coordinate y = new Coordinate(5, 8);
@@ -64,7 +64,7 @@ namespace Torpedo.Test
         public void Plan_ProposedAlreadyShot_Rejected()
         {
             // Arrange
-            List<IShips> ships = new List<IShips>();
+            List<IShip> ships = new List<IShip>();
             Battlefield battlefield = new Battlefield(ships);
             battlefield.Shoot(new Coordinate(0, 0));
             Coordinate x = new Coordinate(5, 7);
