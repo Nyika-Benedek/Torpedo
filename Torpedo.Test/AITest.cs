@@ -38,7 +38,7 @@
             AI ai = new AI();
             ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
             ai.ShotHistory.AddLast((new Coordinate(5, 5), false, PlayStyle.Random));
-            ai.Planned.Enqueue((new Coordinate(5, 5), PlayStyle.Random));
+            ai.Planned.Push((new Coordinate(5, 5), PlayStyle.Random));
             ai.Analyze();
             Assert.AreEqual(ai.PlayStyle, PlayStyle.FollowPlan);
         }
@@ -52,7 +52,7 @@
             AI ai = new AI();
             ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
             ai.ShotHistory.AddLast((new Coordinate(5, 5), true, PlayStyle.Random));
-            ai.Planned.Enqueue((new Coordinate(5, 5), PlayStyle.Random));
+            ai.Planned.Push((new Coordinate(5, 5), PlayStyle.Random));
             ai.Analyze();
             Assert.AreEqual(ai.PlayStyle, PlayStyle.Found);
         }
@@ -75,12 +75,12 @@
         /// Tests analyze gets a random last shot, will return the <see cref="PlayStyle.Sink"/>.
         /// </summary>
         [TestMethod]
-        public void Analyze_TrueWidthFound_ReturnsSink()
+        public void Analyze_TrueWidthFoundCoordinateMatched_ReturnsSink()
         {
             AI ai = new AI();
             ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
             ai.ShotHistory.AddLast((new Coordinate(5, 5), true, PlayStyle.Found));
-            ai.Planned.Enqueue((new Coordinate(5, 5), PlayStyle.Random));
+            ai.Planned.Push((new Coordinate(5, 5), PlayStyle.Random));
             ai.Analyze();
             Assert.AreEqual(ai.PlayStyle, PlayStyle.Sink);
         }
@@ -89,12 +89,40 @@
         /// Tests analyze gets a random last shot, will return the <see cref="PlayStyle.Sink"/>.
         /// </summary>
         [TestMethod]
-        public void Analyze_TrueWidthFound_ReturnsSink()
+        public void Analyze_TrueWidthSinkCoordinateMatched_ReturnsSink()
+        {
+            AI ai = new AI();
+            ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
+            ai.ShotHistory.AddLast((new Coordinate(5, 5), true, PlayStyle.Sink));
+            ai.Planned.Push((new Coordinate(5, 5), PlayStyle.Random));
+            ai.Analyze();
+            Assert.AreEqual(ai.PlayStyle, PlayStyle.Sink);
+        }
+
+        /// <summary>
+        /// Tests analyze gets a random last shot, will return the <see cref="PlayStyle.Sink"/>.
+        /// </summary>
+        [TestMethod]
+        public void Analyze_TrueWidthFoundDiagonal_ReturnsSink()
         {
             AI ai = new AI();
             ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
             ai.ShotHistory.AddLast((new Coordinate(5, 5), true, PlayStyle.Found));
-            ai.Planned.Enqueue((new Coordinate(5, 5), PlayStyle.Random));
+            ai.Planned.Push((new Coordinate(5, 5), PlayStyle.Random));
+            ai.Analyze();
+            Assert.AreEqual(ai.PlayStyle, PlayStyle.Sink);
+        }
+
+        /// <summary>
+        /// Tests analyze gets a random last shot, will return the <see cref="PlayStyle.Sink"/>.
+        /// </summary>
+        [TestMethod]
+        public void Analyze_TrueWidthSinkDiagonal_ReturnsSink()
+        {
+            AI ai = new AI();
+            ai.SetEnemyBattlefield(new Battlefield(new List<IShips>()));
+            ai.ShotHistory.AddLast((new Coordinate(5, 5), true, PlayStyle.Sink));
+            ai.Planned.Push((new Coordinate(5, 5), PlayStyle.Random));
             ai.Analyze();
             Assert.AreEqual(ai.PlayStyle, PlayStyle.Sink);
         }
