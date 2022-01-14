@@ -20,7 +20,7 @@ namespace Torpedo.Models
         /// </summary>
         public LinkedList<(Coordinate, bool, PlayStyle)> ShotHistory { get; } = new LinkedList<(Coordinate, bool, PlayStyle)>();
         public List<IShips> Ships { get; private set; } = new List<IShips>(4);
-        private PlayStyle _playStyle = PlayStyle.Random;
+        public PlayStyle PlayStyle = PlayStyle.Random;
         private static readonly string _aiName = "AI";
         public Stack<(Coordinate, PlayStyle)> Planned { get; } = new Stack<(Coordinate, PlayStyle)>();
 
@@ -41,7 +41,7 @@ namespace Torpedo.Models
             if (ShotHistory.Count != 0)
             {
                 logic = Analyze();
-                StorePlan(logic.Plan(), _playStyle);
+                StorePlan(logic.Plan(), PlayStyle);
             }
 
             if (Planned.Count == 0) // after all these thinking theres still no plan.. shoot randomly
@@ -112,7 +112,7 @@ namespace Torpedo.Models
         /// Decides which logic should the agent follow.
         /// </summary>
         /// <returns><see cref="AILogic"/> to follow.</returns>
-        private AILogic Analyze()
+        public AILogic Analyze()
         {
             AILogic logic = new RandomAILogic(EnemyBattlefield);
             LinkedListNode<(Coordinate, bool, PlayStyle)> last = ShotHistory.Last;
@@ -121,7 +121,7 @@ namespace Torpedo.Models
             {
                 if (last.Value.Item3 == PlayStyle.Random) // Last shot was random
                 {
-                    _playStyle = PlayStyle.Found;
+                    PlayStyle = PlayStyle.Found;
                     try
                     {
                         logic = new FoundAILogic(EnemyBattlefield, last.Value.Item1); // comes up with at most four possible ship part location
@@ -134,7 +134,7 @@ namespace Torpedo.Models
                 }
                 else
                 {
-                    _playStyle = PlayStyle.Sink;
+                    PlayStyle = PlayStyle.Sink;
 
                     LinkedListNode<(Coordinate, bool, PlayStyle)> lastRandomHit = last; // the last definitely wasn't random
                     while (lastRandomHit.Value.Item3 != PlayStyle.Random)
@@ -157,12 +157,12 @@ namespace Torpedo.Models
             {
                 if (Planned.Count != 0) // Any options?
                 {
-                    _playStyle = PlayStyle.FollowPlan;
+                    PlayStyle = PlayStyle.FollowPlan;
                     logic = new PlannedAILogic(EnemyBattlefield); // does not advise at all, follows the plan
                 }
                 else // No plan, default back to shooting randomly
                 {
-                    _playStyle = PlayStyle.Random;
+                    PlayStyle = PlayStyle.Random;
                     logic = new RandomAILogic(EnemyBattlefield); // comes up with random coordinates
                 }
             }
