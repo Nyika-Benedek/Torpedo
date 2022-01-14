@@ -37,7 +37,7 @@ namespace Torpedo.Entity
         /// <summary>
         /// This calls the parent database OnConfigurin method, then defines the meta propeties of the database.
         /// </summary>
-        /// <param name="optionsBuilder">Provides a simple API surface for configuring the DbContextOptions.Database</param>
+        /// <param name="optionsBuilder">Provides a simple API surface for configuring the DbContextOptions.Database.</param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite($"Data Source={DatabaseName}");
@@ -59,7 +59,7 @@ namespace Torpedo.Entity
         /// <summary>
         /// This defines the propertis of the database.
         /// </summary>
-        /// <param name="modelBuilder">Provides a simple API surface for configuring a Microsoft.EntityFrameworkCore.Metadata.IMutableModel that defines the shape of your entities</param>
+        /// <param name="modelBuilder">Provides a simple API surface for configuring a Microsoft.EntityFrameworkCore.Metadata.IMutableModel that defines the shape of your entities.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
