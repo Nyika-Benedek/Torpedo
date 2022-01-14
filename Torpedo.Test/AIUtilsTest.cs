@@ -128,5 +128,89 @@ namespace TestProject3
             Coordinate y = new Coordinate(1, 0);
             Assert.IsFalse(AIUtils.IsCellShot(battlefield, y));
         }
+
+        /// <summary>
+        /// Tests GetDirection when is shifted on top, should return <see cref="Directions.Top"/>.
+        /// </summary>
+        [TestMethod]
+        public void GetDirection_ShiftedOnTop_ReturnsTop()
+        {
+            // Arrange
+            Coordinate origin = new Coordinate(5, 5);
+            Coordinate shifted = new Coordinate(5, 4);
+
+            // Act + Assert
+            Assert.AreEqual(AIUtils.GetDirection(origin, shifted), Directions.Top);
+        }
+
+        /// <summary>
+        /// Tests GetDirection when is shifted on bottom, should return <see cref="Directions.Bottom"/>.
+        /// </summary>
+        [TestMethod]
+        public void GetDirection_ShiftedOnBottom_ReturnsBottom()
+        {
+            // Arrange
+            Coordinate origin = new Coordinate(5, 5);
+            Coordinate shifted = new Coordinate(5, 6);
+
+            // Act + Assert
+            Assert.AreEqual(AIUtils.GetDirection(origin, shifted), Directions.Bottom);
+        }
+
+        /// <summary>
+        /// Tests GetDirection when is shifted on left, should return <see cref="Directions.Left"/>.
+        /// </summary>
+        [TestMethod]
+        public void GetDirection_ShiftedOnTop_ReturnsLeft()
+        {
+            // Arrange
+            Coordinate origin = new Coordinate(5, 5);
+            Coordinate shifted = new Coordinate(4, 5);
+
+            // Act + Assert
+            Assert.AreEqual(AIUtils.GetDirection(origin, shifted), Directions.Left);
+        }
+
+        /// <summary>
+        /// Tests GetDirection when is shifted on right, should return <see cref="Directions.Right"/>.
+        /// </summary>
+        [TestMethod]
+        public void GetDirection_ShiftedOnTop_ReturnsRight()
+        {
+            // Arrange
+            Coordinate origin = new Coordinate(5, 5);
+            Coordinate shifted = new Coordinate(6, 5);
+
+            // Act + Assert
+            Assert.AreEqual(AIUtils.GetDirection(origin, shifted), Directions.Right);
+        }
+
+        /// <summary>
+        /// Tests GetDirection is when shifted on itself, should return <see cref="System.ArgumentException"/>.
+        /// </summary>
+        [TestMethod]
+        public void GetDirection_ShiftedOnItself_ReturnsArgumentException()
+        {
+            // Arrange
+            Coordinate origin = new Coordinate(5, 5);
+            Coordinate shifted = new Coordinate(5, 5);
+
+            // Act + Assert
+            Assert.ThrowsException<System.ArgumentException>(() => AIUtils.GetDirection(origin, shifted));
+        }
+
+        /// <summary>
+        /// Tests GetDirection when is shifted diagonally , should return <see cref="System.ArgumentException"/>.
+        /// </summary>
+        [TestMethod]
+        public void GetDirection_ShiftedDiagonally_ReturnsArgumentException()
+        {
+            // Arrange
+            Coordinate origin = new Coordinate(5, 5);
+            Coordinate shifted = new Coordinate(4, 4);
+
+            // Act + Assert
+            Assert.ThrowsException<System.ArgumentException>(() => AIUtils.GetDirection(origin, shifted));
+        }
     }
 }
