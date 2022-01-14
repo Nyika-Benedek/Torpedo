@@ -31,10 +31,10 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Gives the list of the remaing ships
+        /// Gives the list of the remaing ships.
         /// </summary>
-        /// <returns><see cref="List{int}"/> of the remaining ships</returns>
-        public List<int> RemainingShips()
+        /// <returns><see cref="List{int}"/> of the remaining ships.</returns>
+        public IList<int> RemainingShips()
         {
             List<int> result = new List<int>(_ships.Count);
             foreach (IShips ship in _ships)
@@ -48,10 +48,9 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Constructor
+        /// Constructor.
         /// </summary>
-        /// <param name="ships">List of <see cref="IShips"/> to place it on the battlefield</param>
-        // TODO: NI: ?!
+        /// <param name="ships">List of <see cref="IShips"/> to place it on the battlefield.</param>
         public Battlefield(List<IShips> ships) => _ships = ships;
     }
 }

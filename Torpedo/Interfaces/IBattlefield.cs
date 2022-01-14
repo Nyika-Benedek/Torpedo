@@ -7,6 +7,6 @@ namespace Torpedo.Interfaces
     {
         List<(Coordinate, bool)> Shots { get; }
         abstract bool Shoot(Coordinate coordinate);
-        abstract List<int> RemainingShips();
+        abstract IList<int> RemainingShips();
     }
 }

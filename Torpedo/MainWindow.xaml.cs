@@ -168,7 +168,7 @@ namespace Torpedo
                 // Set Remaining Units
                 if (_game.CurrentPlayer.Battlefield != null)
                 {
-                    List<int> remainingShipsBuffer = _game.CurrentPlayer.Battlefield.RemainingShips();
+                    IList<int> remainingShipsBuffer = _game.CurrentPlayer.Battlefield.RemainingShips();
                     string remainingShips = string.Join(' ', remainingShipsBuffer);
                     player1RemainingUnits.Text = remainingShips;
                 }
@@ -182,7 +182,7 @@ namespace Torpedo
                 // Set Remaining Units
                 if (_game.CurrentPlayer.Battlefield != null)
                 {
-                    List<int> remainingShipsBuffer = _game.CurrentPlayer.Battlefield.RemainingShips();
+                    IList<int> remainingShipsBuffer = _game.CurrentPlayer.Battlefield.RemainingShips();
                     string remainingShips = string.Join(' ', remainingShipsBuffer);
                     player2RemainingUnits.Text = remainingShips;
                 }
