@@ -5,5 +5,5 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Correctness", "NI1007:Test classes must ultimately inherit from 'AutoTest'", Justification = "Not reachable", Scope = "type", Target = "~T:TestProject3.AIUtilsTest")]
-[assembly: SuppressMessage("Correctness", "NI1007:Test classes must ultimately inherit from 'AutoTest'", Justification = "Not reachable", Scope = "type", Target = "~T:Torpedo.Test.SinkAILogicTest")]
+[assembly: SuppressMessage("Correctness", "NI1007:Test classes must ultimately inherit from 'AutoTest'", Justification = "Not reachable", Scope = "namespace", Target = "~N:Torpedo.Test")]
+[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1633:File should have header", Justification = "Not applicable", Scope = "namespace", Target = "~N:Torpedo.Test")]

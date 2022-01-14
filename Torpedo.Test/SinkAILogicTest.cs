@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using Torpedo;
-using Torpedo.AIModule;
-using Torpedo.Interfaces;
-using Torpedo.Models;
-using System.Linq;
-
-namespace Torpedo.Test
+﻿namespace Torpedo.Test
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using Torpedo;
+    using Torpedo.AIModule;
+    using Torpedo.Interfaces;
+    using Torpedo.Models;
+
     /// <summary>
     /// Tests the <see cref="SinkAILogic"/>.
     /// </summary>
@@ -29,7 +29,7 @@ namespace Torpedo.Test
             logic.Proposed = new Coordinate(0, 0);
 
             // Act
-            List<Coordinate> planned = logic.Plan();
+            List<Coordinate> planned = new List<Coordinate>(logic.Plan());
 
             // Assert
             Assert.AreEqual(planned.Count, 1);
@@ -51,7 +51,7 @@ namespace Torpedo.Test
             logic.Proposed = new Coordinate(-1, 0);
 
             // Act
-            List<Coordinate> planned = logic.Plan();
+            List<Coordinate> planned = new List<Coordinate>(logic.Plan());
 
             // Assert
             Assert.AreEqual(planned.Count, 0);
@@ -73,11 +73,10 @@ namespace Torpedo.Test
             logic.Proposed = new Coordinate(0, 0);
 
             // Act
-            List<Coordinate> planned = logic.Plan();
+            List<Coordinate> planned = new List<Coordinate>(logic.Plan());
 
             // Assert
             Assert.AreEqual(planned.Count, 0);
         }
-
     }
 }

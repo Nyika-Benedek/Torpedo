@@ -1,4 +1,4 @@
-namespace TestProject3
+namespace Torpedo.Test
 {
     using System.Collections.Generic;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -131,7 +131,7 @@ namespace TestProject3
         }
 
         /// <summary>
-        /// Tests GetDirection when is shifted on top, should return <see cref="Directions.Top"/>.
+        /// Tests GetDirection when <see cref="Coordinate"/> is shifted on top, should return <see cref="Directions.Top"/>.
         /// </summary>
         [TestMethod]
         public void GetDirection_ShiftedOnTop_ReturnsTop()
@@ -145,7 +145,7 @@ namespace TestProject3
         }
 
         /// <summary>
-        /// Tests GetDirection when is shifted on bottom, should return <see cref="Directions.Bottom"/>.
+        /// Tests GetDirection when <see cref="Coordinate"/> is shifted on bottom, should return <see cref="Directions.Bottom"/>.
         /// </summary>
         [TestMethod]
         public void GetDirection_ShiftedOnBottom_ReturnsBottom()
@@ -159,10 +159,10 @@ namespace TestProject3
         }
 
         /// <summary>
-        /// Tests GetDirection when is shifted on left, should return <see cref="Directions.Left"/>.
+        /// Tests GetDirection when <see cref="Coordinate"/> is shifted on left, should return <see cref="Directions.Left"/>.
         /// </summary>
         [TestMethod]
-        public void GetDirection_ShiftedOnTop_ReturnsLeft()
+        public void GetDirection_ShiftedOnLeft_ReturnsLeft()
         {
             // Arrange
             Coordinate origin = new Coordinate(5, 5);
@@ -173,10 +173,10 @@ namespace TestProject3
         }
 
         /// <summary>
-        /// Tests GetDirection when is shifted on right, should return <see cref="Directions.Right"/>.
+        /// Tests GetDirection when <see cref="Coordinate"/> is shifted on right, should return <see cref="Directions.Right"/>.
         /// </summary>
         [TestMethod]
-        public void GetDirection_ShiftedOnTop_ReturnsRight()
+        public void GetDirection_ShiftedOnRight_ReturnsRight()
         {
             // Arrange
             Coordinate origin = new Coordinate(5, 5);
@@ -187,10 +187,10 @@ namespace TestProject3
         }
 
         /// <summary>
-        /// Tests GetDirection is when shifted on itself, should return <see cref="System.ArgumentException"/>.
+        /// Tests GetDirection when <see cref="Coordinate"/>s identical, should return <see cref="System.ArgumentException"/>.
         /// </summary>
         [TestMethod]
-        public void GetDirection_ShiftedOnItself_ReturnsArgumentException()
+        public void GetDirection_CoordintatesIdentical_ReturnsArgumentException()
         {
             // Arrange
             Coordinate origin = new Coordinate(5, 5);
@@ -201,7 +201,7 @@ namespace TestProject3
         }
 
         /// <summary>
-        /// Tests GetDirection when is shifted diagonally , should return <see cref="System.ArgumentException"/>.
+        /// Tests GetDirection when <see cref="Coordinate"/> is shifted diagonally , should return <see cref="System.ArgumentException"/>.
         /// </summary>
         [TestMethod]
         public void GetDirection_ShiftedDiagonally_ReturnsArgumentException()

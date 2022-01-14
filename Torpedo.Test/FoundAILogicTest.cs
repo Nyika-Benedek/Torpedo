@@ -26,7 +26,7 @@
             FoundAILogic logic = new FoundAILogic(battlefield, focus);
 
             // Act
-            List<Coordinate> actual = logic.Plan();
+            List<Coordinate> actual = new List<Coordinate>(logic.Plan());
             List<Coordinate> expected = new List<Coordinate>() { new Coordinate(0, 1), new Coordinate(2, 1), new Coordinate(1, 0), new Coordinate(1, 2) };
 
             // Assert
@@ -48,7 +48,7 @@
             battlefield.Shoot(x);
             Coordinate focus = new Coordinate(1, 1);
             FoundAILogic logic = new FoundAILogic(battlefield, focus);
-            List<Coordinate> actual = logic.Plan();
+            List<Coordinate> actual = new List<Coordinate>(logic.Plan());
 
             // Assert
             Assert.IsFalse(actual.Contains(x));
@@ -71,7 +71,7 @@
             battlefield.Shoot(x);
             Coordinate focus = new Coordinate(0, 1);
             FoundAILogic logic = new FoundAILogic(battlefield, focus);
-            List<Coordinate> actual = logic.Plan();
+            List<Coordinate> actual = new List<Coordinate>(logic.Plan());
 
             // Assert
             Assert.IsFalse(actual.Contains(x));
