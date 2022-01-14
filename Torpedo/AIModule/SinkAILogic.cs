@@ -9,7 +9,7 @@ using Torpedo.Models;
 namespace Torpedo.AIModule
 {
     /// <summary>
-    /// This logic tries to sink a ship witch position (exactly or partly) has been determined
+    /// This logic tries to sink a ship witch position has been determined.
     /// </summary>
     public class SinkAILogic : AILogic
     {
@@ -18,12 +18,12 @@ namespace Torpedo.AIModule
         private Coordinate _nonRandomHit, _lastRandomHit;
 
         /// <summary>
-        /// Constructor
+        /// Constructor.
         /// </summary>
-        /// <param name="enemyBattlefield"><see cref="IBattlefield"/> enemy's battlefield</param>
-        /// <param name="nonRandomHit"><see cref="Coordinate"/> a non random hit</param>
+        /// <param name="enemyBattlefield">The enemy's <see cref="Battlefield"/> containing previous shots.</param>
+        /// <param name="nonRandomHit"><see cref="Coordinate"/> a non random hit.</param>
         /// <param name="lastRandomHit"><see cref="Coordinate"/> last random hit</param>
-        public SinkAILogic(IBattlefield enemyBattlefield, Coordinate nonRandomHit, Coordinate lastRandomHit) : base(enemyBattlefield) // TODO test if the args match
+        public SinkAILogic(IBattlefield enemyBattlefield, Coordinate nonRandomHit, Coordinate lastRandomHit) : base(enemyBattlefield)
         {
             this._nonRandomHit = nonRandomHit;
             this._lastRandomHit = lastRandomHit;
@@ -31,7 +31,7 @@ namespace Torpedo.AIModule
         }
 
         /// <summary>
-        /// Propose a possible <see cref="Coordinate"/>, where the ships remaining parts is
+        /// Store a possible <see cref="Coordinate"/>, where the <see cref="Ship"/>'s remaining part could be.
         /// </summary>
         private void Propose()
         {
@@ -40,9 +40,9 @@ namespace Torpedo.AIModule
         }
 
         /// <summary>
-        /// The conclusion of where could be the enemy's hips
+        /// Tries to hit in one row were a <see cref="Ship"/> could be.
         /// </summary>
-        /// <returns>List of <see cref="Coordinate"/>, where the enemy ships could be located</returns>
+        /// <returns>List of <see cref="Coordinate"/>, containing the proposed target.</returns>
         public override List<Coordinate> Plan()
         {
             var result = new List<Coordinate>();

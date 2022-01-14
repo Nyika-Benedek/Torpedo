@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Torpedo.Interfaces;
 using Torpedo.Models;
 
-namespace Torpedo
+namespace Torpedo.AIModule
 {
     /// <summary>
     /// The directions enum is made to define the four directions we can shoot at after a successful hit.
@@ -14,18 +14,18 @@ namespace Torpedo
     public enum Directions { Left, Right, Top, Bottom }
 
     /// <summary>
-    /// This class contains all static method wich helps the AI's decision
+    /// This class contains all static method wich helps the AI's decision.
     /// </summary>
-    // TODO: NI: Move to namespace
     public static class AIUtils
     {
         public static Random Random { get; } = new Random();
+
         /// <summary>
-        /// This method decides that if a unit is shooted already or not.
+        /// This method decides whether a <see cref="Coordinate"/> is shot already.
         /// </summary>
-        /// <param name="battlefield">It defines the whole playground.</param>
-        /// <param name="coordinate">Defines the exact position of the unit which we would like to shoot at in a form of (x,y)</param>
-        /// <returns>Returns a boolean, true if a unit is already shooted and false if it is not.</returns>
+        /// <param name="battlefield"> defines the playground.</param>
+        /// <param name="coordinate"> defines the <see cref="Coordinate"/> which we would like to shoot at.</param>
+        /// <returns> <see cref="bool"/> true if a  <see cref="Coordinate"/> is already shot or otherwise false.</returns>
         public static bool IsCellShot(IBattlefield battlefield, Coordinate coordinate)
         {
             bool result = false;
@@ -40,17 +40,17 @@ namespace Torpedo
         }
 
         /// <summary>
-        /// Checks if a given Coordinate is within the battlefield
+        /// Checks if a given <see cref="Coordinate"/> is within the <see cref="Battlefield"/>.
         /// </summary>
-        /// <param name="coordinate">The <see cref="Coordinate"/> to check</param>
-        /// <returns>bool</returns>
+        /// <param name="coordinate">The <see cref="Coordinate"/> to check.</param>
+        /// <returns><see cref="bool"/> true if a <see cref="Coordinate"/> is within the <see cref="Battlefield"/>.</returns>
         public static bool IsInField(Coordinate coordinate) => coordinate.X >= 0 && coordinate.X < MainWindow.BattlefieldWidth && coordinate.Y >= 0 && coordinate.Y < MainWindow.BattlefieldHeight;
 
         /// <summary>
-        /// This method generates a random (x,y) coordinate pair, so the AI will select a position randomly to shoot at.
+        /// This method generates a random <see cref="Coordinate"/>, that wasn't shot before.
         /// </summary>
-        /// <param name="battlefield">The used<see cref="Battlefield"/></param>
-        /// <returns>It returns the coordinate in a form of (x,y) values.</returns>
+        /// <param name="battlefield">The used <see cref="Battlefield"/>.</param>
+        /// <returns>It returns the <see cref="Coordinate"/>.</returns>
         public static Coordinate GenerateRandomShoot(IBattlefield battlefield)
         {
             Coordinate coordinate;
@@ -63,9 +63,9 @@ namespace Torpedo
         }
 
         /// <summary>
-        /// Generate a random <see cref="Coordinate"/>
+        /// Generate a random <see cref="Coordinate"/>.
         /// </summary>
-        /// <returns>A random <see cref="Coordinate"/> coordinate</returns>
+        /// <returns>A random <see cref="Coordinate"/> coordinate.</returns>
         public static Coordinate RandomCoordinate()
         {
             int x;
@@ -76,11 +76,12 @@ namespace Torpedo
         }
 
         /// <summary>
-        /// Describes the <see cref="Directions"/> of shifted coordinate from th origin
+        /// Describes the <see cref="Directions"/> of shifted <see cref="Coordinate"/> from the origin.
+        /// <para>Inverse of  <see cref="Coordinate.Shift(Directions)"/>.</para>
         /// </summary>
-        /// <param name="origin"><see cref="Coordinate"/> origin</param>
-        /// <param name="shifted"><see cref="Coordinate"/> shifted</param>
-        /// <returns><see cref="Directions"/> direction</returns>
+        /// <param name="origin"><see cref="Coordinate"/></param>
+        /// <param name="shifted"><see cref="Coordinate"/></param>
+        /// <returns><see cref="Directions"/></returns>
         public static Directions GetDirection(Coordinate origin, Coordinate shifted)
         {
             Coordinate delta = new Coordinate(x: shifted.X, y: shifted.Y);

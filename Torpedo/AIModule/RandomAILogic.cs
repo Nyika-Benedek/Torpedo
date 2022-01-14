@@ -7,22 +7,22 @@ using Torpedo.Models;
 namespace Torpedo.AIModule
 {
     /// <summary>
-    /// This class describe the behivaour of the AI, when there is no sign where could be ships
+    /// This class describe the default behivaour of the AI.
     /// </summary>
     public class RandomAILogic : AILogic
     {
         /// <summary>
-        /// Contructor
+        /// Contructor.
         /// </summary>
-        /// <param name="enemyBattlefield"><see cref="IBattlefield"/> enemy's battlefield</param>
+        /// <param name="enemyBattlefield">The enemy's <see cref="Battlefield"/> containing previous shots.</param>
         public RandomAILogic(IBattlefield enemyBattlefield) : base(enemyBattlefield)
         {
         }
 
         /// <summary>
-        /// The conclusion of where could be the enemy's hips
+        /// Generate a random <see cref="Coordinate"/> to shoot at.
         /// </summary>
-        /// <returns>List of <see cref="Coordinate"/>, where the enemy ships could be located</returns>
+        /// <returns>List of <see cref="Coordinate"/>, containing a single coordinate.</returns>
         public override List<Coordinate> Plan()
         {
             var result = new List<Coordinate>();

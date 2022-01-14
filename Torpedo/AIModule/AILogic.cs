@@ -7,24 +7,25 @@ using Torpedo.Models;
 namespace Torpedo.AIModule
 {
     /// <summary>
-    /// This class gives interface to access the AI's logics
+    /// This class gives class abstraction for the AI's logics.
     /// </summary>
     public abstract class AILogic
     {
+        /// <summary>
+        /// Stores the enemy <see cref="Battlefield"/> to check the known coordinates.
+        /// </summary>
         public IBattlefield EnemyBattlefield { get; private set; }
 
         /// <summary>
-        /// Constructor of AILogic
+        /// Constructor of AILogic.
         /// </summary>
-        /// <param name="enemyBattlefield"><see cref="IBattlefield"/> enemy's bettlafield</param>
-        // TODO: NI: ?!
+        /// <param name="enemyBattlefield">The enemy's <see cref="Battlefield"/> containing previous shots.</param>
         protected AILogic(IBattlefield enemyBattlefield) => EnemyBattlefield = enemyBattlefield ?? throw new ArgumentNullException(nameof(enemyBattlefield));
 
         /// <summary>
-        /// The logic how the agent should make decision
+        /// The logic how the agent should make decision.
         /// </summary>
-        /// <returns>A list of <see cref="Coordinate"/></returns>
-        // TODO: NI: Replayce plan with property
-        public abstract List<Coordinate> Plan();
+        /// <returns>A list of <see cref="Coordinate"/>.</returns>
+        public abstract ICollection<Coordinate> Plan();
     }
 }
