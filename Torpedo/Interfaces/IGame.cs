@@ -6,8 +6,6 @@ namespace Torpedo.Interfaces
     public interface IGame
     {
         public GameState State { get; set; }
-
-        // TODO: NI: replace Player with methods
         public List<IPlayer> Players { get; }
         public IPlayer CurrentPlayer { get; }
 

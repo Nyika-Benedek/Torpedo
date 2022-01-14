@@ -4,7 +4,7 @@ using Torpedo.Interfaces;
 namespace Torpedo.Models
 {
     /// <summary>
-    /// Stores data of one players's battle
+    /// Stores data of one players's battle.
     /// </summary>
     public class Battlefield : IBattlefield
     {
@@ -12,10 +12,10 @@ namespace Torpedo.Models
         private readonly List<IShips> _ships;
 
         /// <summary>
-        /// Shoot at a coordinate and checks if it was a hit
+        /// Shoot at a coordinate and checks if it was a hit.
         /// </summary>
-        /// <param name="coordinate">A <see cref="Coordinate"/> to shoot at</param>
-        /// <returns>bool: True if it hits a ship, false otherwise</returns>
+        /// <param name="coordinate">A <see cref="Coordinate"/> to shoot at.</param>
+        /// <returns>bool: True if it hits a ship, false otherwise.</returns>
         public bool Shoot(Coordinate coordinate)
         {
             bool isHitAny = false;

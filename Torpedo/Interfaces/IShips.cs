@@ -6,8 +6,6 @@ namespace Torpedo.Interfaces
     public interface IShips
     {
         public enum Direction { Horizontal, Vertical }
-
-        // TODO: NI:  replace parts with method
         List<Coordinate> Parts { get; set; }
         int Size { get => Parts.Count; }
         int Hits { get; }

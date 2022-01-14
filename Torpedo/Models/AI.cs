@@ -7,35 +7,32 @@ using Torpedo.Interfaces;
 namespace Torpedo.Models
 {
     /// <summary>
-    /// Represents the a playstyle of the AI
+    /// Represents the a playstyle of the AI.
     /// </summary>
     public enum PlayStyle { Random, Found, Sink, FollowPlan }
     /// <summary>
-    /// This class provides an agent to act like a player
+    /// This class provides an agent to act like a player.
     /// </summary>
     public class AI : Player
     {
         /// <summary>
-        /// There are 3 different behivaur the AI could act
+        /// There are 3 different behivaur the AI could act.
         /// </summary>
         public LinkedList<(Coordinate, bool, PlayStyle)> ShotHistory { get; } = new LinkedList<(Coordinate, bool, PlayStyle)>();
-        // TODO: NI: replace Ships with method
         public List<IShips> Ships { get; private set; } = new List<IShips>(4);
         private PlayStyle _playStyle = PlayStyle.Random;
         private static readonly string _aiName = "AI";
-
-        // TODO: NI: convert (Coordinate, Playstyle) with struct
-        public Queue<(Coordinate, PlayStyle)> Planned { get; } = new Queue<(Coordinate, PlayStyle)>();
+        public Stack<(Coordinate, PlayStyle)> Planned { get; } = new Stack<(Coordinate, PlayStyle)>();
 
         /// <summary>
-        /// Constructor of <see cref="AI"/>, its sets the first behivour of the agent
+        /// Constructor of <see cref="AI"/>, its sets the name of the agent.
         /// </summary>
         public AI() : base(_aiName)
         {
         }
 
         /// <summary>
-        /// Calls an AI behivour based on the current agent playstyle, and the agent send an advised position to shoot at
+        /// The player agent makes its move.
         /// </summary>
         public bool Act()
         {
@@ -57,6 +54,9 @@ namespace Torpedo.Models
 
         }
 
+        /// <summary>
+        /// Generating a randomly lacated ship.
+        /// </summary>
         private Ship GenerateRandomShip(int size)
         {
             return new Ship(
@@ -65,7 +65,7 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Generating the AI's ships, then adding to it's battlefield
+        /// Generating the AI's ships, then adding to it's battlefield.
         /// </summary>
         public void GenerateShips()
         {
@@ -81,24 +81,37 @@ namespace Torpedo.Models
             Ships.AddRange(BattlefieldBuilder.Ships);
         }
 
+        /// <summary>
+        /// Gets the last <see cref="Coordinate"/> planned then shoots at it.
+        /// <para>Stores the shot for later reference.</para>
+        /// </summary>
+        /// <returns> whether the shot hit.</returns>
         private bool ExecutePlan()
         {
             Coordinate advised;
             PlayStyle reason;
-            (advised, reason) = Planned.Dequeue();
+            (advised, reason) = Planned.Pop();
             bool isHit = EnemyBattlefield.Shoot(advised);
             ShotHistory.AddLast(new LinkedListNode<(Coordinate, bool, PlayStyle)>((advised, isHit, reason)));
             return isHit;
         }
 
-        private void StorePlan(List<Coordinate> coordinates, PlayStyle reason)
+        /// <summary>
+        /// Adds the advised shooting location to the Planned <see cref="Stack{T}"/> (LIFO).
+        /// </summary>
+        /// <param name="coordinates">Collection of <see cref="Coordinate"/> advised.</param>
+        /// <param name="reason"> <see cref="PlayStyle"/> for later reference to aid decison.</param>
+        private void StorePlan(ICollection<Coordinate> coordinates, PlayStyle reason)
         {
             foreach (Coordinate coordinate in coordinates)
             {
-                Planned.Enqueue((coordinate, reason));
+                Planned.Push((coordinate, reason));
             }
         }
-
+        /// <summary>
+        /// Decides which logic should the agent follow.
+        /// </summary>
+        /// <returns><see cref="AILogic"/> to follow.</returns>
         private AILogic Analyze()
         {
             AILogic logic = new RandomAILogic(EnemyBattlefield);
@@ -115,6 +128,7 @@ namespace Torpedo.Models
                     }
                     catch (ArgumentException)
                     {
+                        _playStyle = PlayStyle.Random;
                         logic = new RandomAILogic(EnemyBattlefield);
                     }
                 }
@@ -134,6 +148,7 @@ namespace Torpedo.Models
                     }
                     catch (ArgumentException)
                     {
+                        _playStyle = PlayStyle.Random;
                         logic = new RandomAILogic(EnemyBattlefield);
                     }
                 }

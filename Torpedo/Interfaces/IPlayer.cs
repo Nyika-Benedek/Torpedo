@@ -7,9 +7,7 @@ namespace Torpedo.Interfaces
         public string Name { get; }
         public IBattlefield Battlefield { get; }
         public BattlefieldBuilder BattlefieldBuilder { get; }
-
         public IBattlefield EnemyBattlefield { get; }
-
         public int Points { get; }
         public abstract void AddPoint();
         public abstract void BuildBattlefield();
