@@ -5,7 +5,7 @@ namespace Torpedo.Interfaces
 {
     public interface IBattlefield
     {
-        List<(Coordinate, bool)> Shots { get; }
+        IList<(Coordinate, bool)> Shots { get; }
         abstract bool Shoot(Coordinate coordinate);
         abstract IList<int> RemainingShips();
     }

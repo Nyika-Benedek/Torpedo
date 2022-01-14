@@ -55,7 +55,7 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Generating a randomly lacated ship.
+        /// Generating a randomly lacated <see cref="Ship"/>.
         /// </summary>
         private Ship GenerateRandomShip(int size)
         {
@@ -65,7 +65,7 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Generating the AI's ships, then adding to it's battlefield.
+        /// Generating the AI's <see cref="Ship"/>, then adding to it's <see cref="Battlefield"/>.
         /// </summary>
         public void GenerateShips()
         {
@@ -85,7 +85,7 @@ namespace Torpedo.Models
         /// Gets the last <see cref="Coordinate"/> planned then shoots at it.
         /// <para>Stores the shot for later reference.</para>
         /// </summary>
-        /// <returns> whether the shot hit.</returns>
+        /// <returns><see cref="bool"/>true if the shot hit, false otherwise.</returns>
         private bool ExecutePlan()
         {
             Coordinate advised;
@@ -109,7 +109,7 @@ namespace Torpedo.Models
             }
         }
         /// <summary>
-        /// Decides which logic should the agent follow.
+        /// Decides which <see cref="AILogic"/> should the agent follow.
         /// </summary>
         /// <returns><see cref="AILogic"/> to follow.</returns>
         public AILogic Analyze()

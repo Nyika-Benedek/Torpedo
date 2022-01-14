@@ -4,7 +4,7 @@ using Torpedo.Interfaces;
 namespace Torpedo.Models
 {
     /// <summary>
-    /// Represents a player as an object
+    /// Represents a player.
     /// </summary>
     public class Player : IPlayer
     {
@@ -16,18 +16,18 @@ namespace Torpedo.Models
         public int Points { get; set; } = 0;
 
         /// <summary>
-        /// Increase current player's point
+        /// Increase current player's point.
         /// </summary>
         public void AddPoint() { Points++; }
 
         /// <summary>
-        /// Constructor
+        /// Constructor.
         /// </summary>
-        /// <param name="name">string: Name of the player</param>
+        /// <param name="name">Name of the player.</param>
         public Player(string name) => Name = name;
 
         /// <summary>
-        /// Build the <see cref="Battlefield"/> of the player
+        /// Build the <see cref="Battlefield"/> of the player.
         /// </summary>
         public void BuildBattlefield()
         {
@@ -36,9 +36,9 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Set the enemy battlefield to be able to shoot at
+        /// Set the enemy battlefield to be able to shoot at.
         /// </summary>
-        /// <param name="enemyBattlefield"><see cref="IBattlefield"/>: enemy's battlefield</param>
+        /// <param name="enemyBattlefield"><see cref="IBattlefield"/> enemy's battlefield.</param>
         public void SetEnemyBattlefield(IBattlefield enemyBattlefield)
         {
             if (EnemyBattlefield == null)

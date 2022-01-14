@@ -45,7 +45,7 @@ namespace Torpedo.AIModule
         /// <returns>List of <see cref="Coordinate"/>, containing the proposed target.</returns>
         public override ICollection<Coordinate> Plan()
         {
-            var result = new List<Coordinate>();
+            ICollection<Coordinate> result = new List<Coordinate>();
             if (!AIUtils.IsCellShot(EnemyBattlefield, Proposed) && AIUtils.IsInField(Proposed))
             {
                 result.Add(Proposed);

@@ -5,12 +5,12 @@ using Torpedo.Interfaces;
 namespace Torpedo.Models
 {
     /// <summary>
-    /// Represents the states of the game
+    /// Represents the states of the game.
     /// </summary>
     public enum GameState { NotStarted, ShipPlacement, Battle, Finished }
 
     /// <summary>
-    /// Represents the game as an object
+    /// Represents the game.
     /// </summary>
     public class Game : IGame
     {
@@ -24,9 +24,9 @@ namespace Torpedo.Models
         private const int _maxPoints = 14;
 
         /// <summary>
-        /// Is the game are in win condition
+        /// Checks wherther the game is in win condition.
         /// </summary>
-        /// <returns>bool: Yes, if its in win condition, no otherwise</returns>
+        /// <returns><see cref="bool"/> true, if a <see cref="Player"/> won, false otherwise.</returns>
         public bool IsEnded()
         {
             foreach (IPlayer player in Players)
@@ -41,9 +41,9 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Set the current player into the next player
+        /// Set the current player into the next player.
         /// </summary>
-        /// <returns>Returns the next <see cref="IPlayer"/></returns>
+        /// <returns>Returns the next <see cref="IPlayer"/>.</returns>
         public IPlayer NextPlayer()
         {
             _playerIndex++;
@@ -51,7 +51,7 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Set the necessary values, then change into battle state
+        /// Set the necessary values, then change into battle state.
         /// </summary>
         public void Start()
         {
@@ -67,7 +67,7 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Randomize next player, used in the start
+        /// Randomize next player, used in the start.
         /// </summary>
         public void RandomizeStartingPlayer()
         {
@@ -79,14 +79,14 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Constructor
+        /// Constructor.
         /// </summary>
         public Game() => State = GameState.ShipPlacement;
 
         /// <summary>
         /// Add player to the game
         /// </summary>
-        /// <param name="player"><see cref="IPlayer"/>: player</param>
+        /// <param name="player"><see cref="IPlayer"/> New player.</param>
         public void AddPlayer(IPlayer player)
         {
             if (Players.Count >= 2)
@@ -97,7 +97,7 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Increase turn counter
+        /// Increase turn counter.
         /// </summary>
         public void AddTurn()
         {

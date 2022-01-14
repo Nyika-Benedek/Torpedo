@@ -4,14 +4,13 @@ using Torpedo.Interfaces;
 namespace Torpedo.Models
 {
     /// <summary>
-    /// Represents a Ship as on object
+    /// Represents a Ship.
     /// </summary>
     public class Ship : IShips
     {
-        public List<Coordinate> Parts { get; set; }
+        public IList<Coordinate> Parts { get; set; }
         public int Hits { get; private set; }
 
-        // TODO: NI: ?!
         public Ship(List<Coordinate> parts)
         {
             Parts = parts;
@@ -19,10 +18,10 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Check if yous shoot at a <see cref="Coordinate"/>, there will hit a ship's part
+        /// Checks if a shot is hitting this <see cref="Ship"/> at <see cref="Coordinate"/>.
         /// </summary>
-        /// <param name="coordinate"><see cref="Coordinate"/> to shoot at</param>
-        /// <returns>bool: True, if it hits a ship, false otherwise</returns>
+        /// <param name="coordinate"><see cref="Coordinate"/> to shoot at.</param>
+        /// <returns><see cref="bool"/> true, if it hits the ship, false otherwise.</returns>
         public bool IsHit(Coordinate coordinate)
         {
             foreach (Coordinate part in Parts)
@@ -37,10 +36,10 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Constructor, descibe a ship with a coordinate and a vector, to creat a ship
+        /// Constructor, descibe a ship with a coordinate and a vector, to create a ship.
         /// </summary>
-        /// <param name="coordinate"><see cref="Coordinate"/>: starting coordinate</param>
-        /// <param name="vector">MyVector: <see cref="IShips.Direction"/>{horizontal: to the right from the given coordinate || Vertical: to the bottom of the given coordinate}, int: size of the vector</param>
+        /// <param name="coordinate"><see cref="Coordinate"/>: starting coordinate.</param>
+        /// <param name="vector">MyVector: <see cref="IShips.Direction"/>{horizontal: to the right from the given coordinate || Vertical: to the bottom of the given coordinate}, int: size of the ship.</param>
         public Ship(Coordinate coordinate, MyVector vector)
         {
             Parts = new List<Coordinate>(vector.Size);
@@ -59,9 +58,9 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Gives the string of every ship parts
+        /// Describes the ship as <see cref="string"/>.
         /// </summary>
-        /// <returns>string: line of ship parts</returns>
+        /// <returns>Concatenated line of ship part <see cref="Coordinate"/>s.</returns>
         public override string ToString()
         {
             string result = string.Empty;

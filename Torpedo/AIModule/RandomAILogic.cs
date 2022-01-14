@@ -25,7 +25,7 @@ namespace Torpedo.AIModule
         /// <returns>List of <see cref="Coordinate"/>, containing a single coordinate.</returns>
         public override ICollection<Coordinate> Plan()
         {
-            var result = new List<Coordinate>();
+            ICollection<Coordinate> result = new List<Coordinate>();
             result.Add(AIUtils.GenerateRandomShoot(EnemyBattlefield));
             return result;
         }

@@ -4,18 +4,18 @@ using Torpedo.Interfaces;
 namespace Torpedo.Models
 {
     /// <summary>
-    /// Stores data of one players's battle.
+    /// Stores data of one <see cref="Player"/>'s battle.
     /// </summary>
     public class Battlefield : IBattlefield
     {
-        public List<(Coordinate, bool)> Shots { get; } = new List<(Coordinate, bool)>();
-        private readonly List<IShips> _ships;
+        public IList<(Coordinate, bool)> Shots { get; } = new List<(Coordinate, bool)>();
+        private readonly IList<IShips> _ships;
 
         /// <summary>
-        /// Shoot at a coordinate and checks if it was a hit.
+        /// Shoot at a <see cref="Coordinate"/> and checks if it was a hit.
         /// </summary>
         /// <param name="coordinate">A <see cref="Coordinate"/> to shoot at.</param>
-        /// <returns>bool: True if it hits a ship, false otherwise.</returns>
+        /// <returns>bool: True if it hits a <see cref="Ship"/>, false otherwise.</returns>
         public bool Shoot(Coordinate coordinate)
         {
             bool isHitAny = false;
@@ -31,7 +31,7 @@ namespace Torpedo.Models
         }
 
         /// <summary>
-        /// Gives the list of the remaing ships.
+        /// Gives the list of the size of the remaing <see cref="Ship"/>s.
         /// </summary>
         /// <returns><see cref="List{int}"/> of the remaining ships.</returns>
         public IList<int> RemainingShips()
@@ -51,6 +51,6 @@ namespace Torpedo.Models
         /// Constructor.
         /// </summary>
         /// <param name="ships">List of <see cref="IShips"/> to place it on the battlefield.</param>
-        public Battlefield(List<IShips> ships) => _ships = ships;
+        public Battlefield(IList<IShips> ships) => _ships = ships;
     }
 }

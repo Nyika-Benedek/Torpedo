@@ -37,7 +37,7 @@ namespace Torpedo.AIModule
         /// <returns> the recommended <see cref="Coordinate"/>.</returns>
         public override ICollection<Coordinate> Plan()
         {
-            List<Coordinate> result = new List<Coordinate>();
+            ICollection<Coordinate> result = new List<Coordinate>();
 
             foreach (Directions direction in Enum.GetValues(typeof(Directions)))
             {
